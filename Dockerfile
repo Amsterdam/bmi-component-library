@@ -1,4 +1,4 @@
-FROM node:12.13.0-alpine
+FROM node:14.16.1-alpine
 
 RUN apk --no-cache add ca-certificates git
 
