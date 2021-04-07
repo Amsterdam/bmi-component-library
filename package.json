@@ -1,0 +1,23 @@
+{
+  "name": "component-library",
+  "version": "0.0.1",
+  "description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "echo \"TODO: build\" && exit 1",
+    "test": "echo \"TODO: tests\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.data.amsterdam.nl:bmi/component-library.git"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "bmi",
+    "asc",
+    "material-ui"
+  ],
+  "author": "",
+  "license": "ISC"
+}

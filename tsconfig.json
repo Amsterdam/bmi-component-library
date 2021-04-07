@@ -1,0 +1,36 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"downlevelIteration": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": false,
+		"noEmit": true,
+		"jsx": "preserve",
+		"noImplicitAny": false,
+		"typeRoots": ["node_modules/@types", "/types"],
+		"baseUrl": ".",
+		"paths": {
+			"~/tests/*": ["./tests/*"],
+			"~/*": ["./src/*"]
+		},
+		"rootDir": "./src",
+		"outDir": "./dist"
+	},
+	"files": ["./src/index.ts"],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"tests/**/*.ts",
+		"tests/**/*.tsx",
+	],
+	"exclude": ["build/**/*", "node_modules"]
+}
