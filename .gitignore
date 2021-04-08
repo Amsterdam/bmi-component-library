@@ -74,3 +74,4 @@ junit.xml
 node_modules/
 
 dist/
+reports/
