@@ -63,15 +63,15 @@ pipeline {
                     steps {
                         script {
                             container.inside {
-                                sh 'cd /var/service && node_modules/.bin/prettier --help'
+                                sh 'cd /var/service && node_modules/.bin/eslint --help'
                             }
                         }
                     }
-                    post {
-                        always {
-                            junit allowEmptyResults: true, testResults: 'reports/eslint.xml'
-                        }
-                    }
+//                     post {
+//                         always {
+//                             junit allowEmptyResults: true, testResults: 'reports/eslint.xml'
+//                         }
+//                     }
                 }
                 stage("Jest") {
                     agent any
@@ -84,7 +84,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit allowEmptyResults: true, testResults: 'reports/unit.xml'
+                            junit allowEmptyResults: true, testResults: 'reports/tests.xml'
                         }
                     }
                 }
