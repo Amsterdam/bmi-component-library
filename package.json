@@ -14,7 +14,8 @@
     "fix": "npm-run-all --parallel fix:js fix:css",
     "fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
     "fix:css": "stylelint --fix --config-basedir ./ --ignore-path .stylelintignore --config .stylelintrc.js \"./src/**/*.{tsx,ts}\"",
-    "ci:test": "JEST_JUNIT_OUTPUT_DIR=./reports JEST_JUNIT_OUTPUT_NAME=tests.xml jest --ci --reporters=default --reporters=jest-junit"
+    "ci:test": "JEST_JUNIT_OUTPUT_DIR=./reports JEST_JUNIT_OUTPUT_NAME=tests.xml jest --ci --reporters=default --reporters=jest-junit",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,7 @@
     "material-ui"
   ],
   "author": "",
-  "license": "ISC",  
+  "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
@@ -86,16 +87,10 @@
     "react-dom": "^17.0.2",
     "styled-components": "^5.2.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint && npm run test"
-    }
-  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write --parser \"typescript\" --loglevel error",
       "git add"
     ]
-  },
+  }
 }
