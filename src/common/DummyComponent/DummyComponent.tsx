@@ -7,7 +7,7 @@ type Props = {
 };
 
 const DummyComponent: React.FC<Props> = ({ label, text }: Props) => (
-	<DummyComponentStyle>
+	<DummyComponentStyle data-testid="dummy-component">
 		<h1>{label}</h1>
 		<p>{text}</p>
 	</DummyComponentStyle>
