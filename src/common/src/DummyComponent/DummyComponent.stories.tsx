@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import { Story } from '@storybook/react';
 
-import DummyComponent from './DummyComponent/DummyComponent';
+import DummyComponent from './DummyComponent';
 
 //👇 This default export determines where your story goes in the story list
 export default {
@@ -16,6 +16,6 @@ const Template: Story<ComponentProps<typeof DummyComponent>> = (args) => <DummyC
 export const Default = Template.bind({});
 Default.args = {
 	/*👇 The args you need here will depend on your component */
-	label: 'This is a heading',
-	text: 'This is a body text',
+	label: 'Welcome at the component library',
+	text: 'In the panel to your left you can find several components',
 };

@@ -11,11 +11,11 @@
 		"test:watch": "jest --watch",
 		"lint": "npm-run-all --parallel lint:js lint:css lint:types",
 		"lint:js": "eslint --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
-		"lint:css": "stylelint --config-basedir ./ --ignore-path .stylelintignore --config .stylelintrc.js \"./src/**/*.{tsx,ts}\"",
+		"lint:css": "stylelint --config-basedir ./ --ignore-path .stylelintignore --config .stylelintrc.js \"src/**/*.{tsx,ts}\"",
 		"lint:types": "tsc --noEmit",
 		"fix": "npm-run-all --parallel fix:js fix:css",
 		"fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
-		"fix:css": "stylelint --fix --config-basedir ./ --ignore-path .stylelintignore --config .stylelintrc.js \"./src/**/*.{tsx,ts}\"",
+		"fix:css": "prettier --write \"src/**/*.{tsx,ts}\"",
 		"ci:test": "JEST_JUNIT_OUTPUT_DIR=./reports JEST_JUNIT_OUTPUT_NAME=tests.xml jest --ci --reporters=default --reporters=jest-junit",
 		"storybook": "start-storybook -p 6006"
 	},

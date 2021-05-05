@@ -1,9 +1,6 @@
 module.exports = {
 	processors: ['stylelint-processor-styled-components'],
-	extends: [
-		'stylelint-config-recommended',
-		'stylelint-config-styled-components',
-	],
+	extends: ['stylelint-config-recommended', 'stylelint-config-styled-components'],
 	rules: {
 		'block-closing-brace-empty-line-before': 'never',
 		'block-closing-brace-newline-after': [

@@ -5,8 +5,8 @@ export const DummyComponentStyle = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: yellow;
+	background: lightblue;
+	font-family: Helvetica, Arial, sans-serif;
 	color: #000000;
 	margin: 0 auto;
-	max-width: 800px;
 `;
