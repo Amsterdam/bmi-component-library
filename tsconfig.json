@@ -19,18 +19,13 @@
 		"typeRoots": ["node_modules/@types", "/types"],
 		"baseUrl": ".",
 		"paths": {
-			"~/tests/*": ["./tests/*"],
-			"~/*": ["./src/*"]
+			"~/tests/*": ["tests/*"],
+			"~/*": ["src/*"]
 		},
-		"rootDir": "./src",
-		"outDir": "./dist"
+		"rootDir": "/",
+		"outDir": "dist"
 	},
-	"files": ["./src/index.ts"],
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.tsx",
-		"tests/**/*.ts",
-		"tests/**/*.tsx",
-	],
+	"files": ["src/index.ts"],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }
