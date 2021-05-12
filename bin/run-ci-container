@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Run command under current user
+docker-compose -p bmi run --rm ci-runner "$@"

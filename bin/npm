@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Can be used as a shortcut to run npm in the build container
+bin/run-ci-container npm "$@"

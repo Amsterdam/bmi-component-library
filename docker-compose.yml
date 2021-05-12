@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  ci-runner:
+    container_name: 'ci-runner-container'
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: runner
+    volumes:
+      - ./:/var/service:rw
+    working_dir: /var/service

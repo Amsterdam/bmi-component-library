@@ -1,0 +1,17 @@
+tests/
+certificates/
+reports/
+.babelrc.js
+.browserlistrc
+.editorconfig
+.gitignore
+.nvmrc
+.prettierrc
+.stylelintignore
+.stylelintrc.js
+Dockerfile
+Jenkinsfile
+jest.config.js
+postcss.config.js
+README.md
+tsconfig.json
