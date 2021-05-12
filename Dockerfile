@@ -1,4 +1,4 @@
-FROM node:14.16.1-alpine
+FROM node:14.16.1-alpine AS builder
 
 RUN apk --no-cache add ca-certificates git
 
@@ -9,8 +9,7 @@ RUN chmod 644 /usr/local/share/ca-certificates/adp_rootca.crt \
 
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/adp_rootca.pem
 
-WORKDIR /var/service
 
-COPY . .
+FROM builder AS runner
 
 RUN npm install

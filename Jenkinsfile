@@ -1,32 +1,42 @@
 #!groovy
 
-def tryStep(String message, Closure block, Closure tearDown = null) {
+String BRANCH = "${env.BRANCH_NAME}"
+String SLACK_CHANNEL = "#aip_devs";
+
+/**
+ * @param message Step name
+ * @param critical If false, only produces UNSTABLE build on failure but allows build to continue
+ * @param block Code block to execute for this step
+ */
+def tryStep(String message, Closure block, Boolean critical = true) {
     try {
         block()
-    }
-    catch (Throwable t) {
-        slackSend message: "${env.JOB_NAME}: ${message} failure ${env.BUILD_URL}", channel: '#ci-channel', color: 'danger'
-
-        throw t
-    }
-    finally {
-        if (tearDown) {
-            tearDown()
-        }
+    } catch (Throwable t) {
+        slackSend message: "${env.JOB_NAME}: ${message} failure (branch: ${env.BRANCH_NAME}) ${env.BUILD_URL}", channel: SLACK_CHANNEL, color: critical ? 'danger': 'warning'
+		if (!critical && BRANCH != 'master') {
+			// Only mark the build as UNSTABLE in case of non critical failure
+			currentBuild.result = 'UNSTABLE'
+		} else {
+			// Halt and fail the build
+	        throw t
+		}
     }
 }
 
-String BRANCH = "${env.BRANCH_NAME}"
-
 pipeline {
-    agent any
+	agent {
+		dockerfile {
+			args '--privileged'
+			additionalBuildArgs '--target builder'
+		}
+	}
+
 	environment {
-	    PROJECTNAME = "bmi/component-library"
         DOCKERFILE = "Dockerfile"
-        CONTAINERNAME = "bmi/component-library"
-        CONTAINERDIR = "."
-        DOCKER_IMAGE_URL = "${DOCKER_REGISTRY_NO_PROTOCOL}/${CONTAINERNAME}"
         DOCKER_IMAGE_TAG = "component-library:build-${env.BUILD_ID}"
+		GITLAB_USER = credentials('bmi_gitlab_user')
+		// Tell NodeJS where to store its cache files so that we don't require root permissions at /.npm
+		HOME = '.'
 	}
 
     stages {
@@ -35,69 +45,111 @@ pipeline {
                 checkout scm
             }
         }
-
-        stage("Build") {
+        stage("NPM Install") {
             steps {
-                script {
-                    echo "Build Stage"
-                    echo "version: ${env.BUILD_ID}"
-                    container = docker.build("${env.DOCKER_IMAGE_TAG}", "-f ./${DOCKERFILE} .")
-                }
+            	tryStep "NPM Install", {
+					script {
+						echo "Build Stage"
+						echo "version: ${env.BUILD_ID}"
+
+						sh 'git config --local user.name "BMI Jenkins"'
+						sh 'git config --local user.email "bmi@amsterdam.nl"'
+
+						// Check if writable remote (https basic auth) already exists from failed run; if so, we remove it
+						def commandStdout = sh(returnStdout: true, script: "git remote show")
+						if (commandStdout.contains("writable")) {
+							sh 'git remote remove writable'
+						}
+						// Set git remote we can push to after standard-version has done its thing
+						sh 'git remote add writable https://$GITLAB_USER@git.data.amsterdam.nl/bmi/component-library.git'
+
+						sh 'npm install'
+					}
+            	}
             }
         }
 
         stage("Lint & Test") {
             parallel {
                 stage('Stylelint') {
-                    agent any
                     steps {
-                        script {
-                            container.inside {
-                                sh 'cd /var/service && node_modules/.bin/stylelint --help'
-                            }
-                        }
+                    	tryStep "stylelint", {
+							script {
+								sh 'npm run ci:stylelint'
+							}
+                    	}
                     }
                 }
                 stage('ESLint') {
-                    agent any
                     steps {
-                        script {
-                            container.inside {
-                                sh 'cd /var/service && node_modules/.bin/eslint --help'
-                            }
-                        }
+                    	tryStep "eslint", {
+							script {
+								sh 'npm run ci:eslint'
+							}
+                    	}
                     }
-//                     post {
-//                         always {
-//                             junit allowEmptyResults: true, testResults: 'reports/eslint.xml'
-//                         }
-//                     }
                 }
-                stage("Jest") {
-                    agent any
+                stage("Unit Tests") {
                     steps {
-                        script {
-                            container.inside {
-                                sh 'cd /var/service && npm run ci:test'
-                            }
-                        }
-                    }
-                    post {
-                        always {
-                            junit allowEmptyResults: true, testResults: 'reports/tests.xml'
-                        }
+                    	tryStep "unit test", {
+							script {
+								sh 'npm run ci:test'
+							}
+                    	}
                     }
                 }
             }
         }
 
         stage("NPM Publish") {
-			steps {
-				script {
-					echo 'Performing npm build'
-					sh 'cd /var/service && npm run build'
+			when { anyOf { branch 'master'; branch 'develop' } }
+			stages {
+				stage('Approval Notification') {
+					steps {
+						script {
+							slackSend channel: SLACK_CHANNEL, color: 'warning', message: "${env.JOB_NAME} is waiting for \"${BRANCH == 'master' ? 'Production' : 'Alpha'}\" Release; Please confirm @ ${env.BUILD_URL}"
+						}
+					}
+				}
+				stage('On Approval') {
+					options {
+						timeout(time: 6, unit: 'HOURS')
+					}
+					input {
+						message "Publish to private NPM registry?"
+						ok "Yes, publish it!"
+					}
+					steps {
+						tryStep "prepare release", {
+							script {
+								// Generates changelog and bumps version and then commits and adds a tag
+								echo 'Preparing release'
+								if (BRANCH == 'master') {
+									sh 'npm run release'
+								} else {
+									sh 'npm run release -- --prerelease alpha'
+								}
+								sh "git push --follow-tags writable HEAD:${BRANCH}"
+							}
+						}
+						tryStep "npm publish", {
+							script {
+								// npm publish --tag alpha
+								echo 'Publishing to Verdaccio'
+								echo 'TODO: npm publish to Verdaccio'
+								slackSend channel: SLACK_CHANNEL, color: 'good', message: "${env.JOB_NAME}: success (branch: ${env.BRANCH_NAME}) ${env.BUILD_URL}"
+							}
+						}
+					}
 				}
 			}
         }
     }
+
+	post {
+        always {
+			sh 'rm -rf ./reports'
+			sh 'git remote remove writable'
+		}
+	}
 }

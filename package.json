@@ -4,6 +4,7 @@
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
 	"main": "dist/index.js",
 	"scripts": {
+    "prepare": "husky install",
 		"start": "npm run storybook",
 		"build": "echo \"TODO: build\" && exit 0",
 		"build:storybook": "build-storybook",
@@ -16,8 +17,12 @@
 		"fix": "npm-run-all --parallel fix:js fix:css",
 		"fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
 		"fix:css": "prettier --write \"src/**/*.{tsx,ts}\"",
-		"ci:test": "JEST_JUNIT_OUTPUT_DIR=./reports JEST_JUNIT_OUTPUT_NAME=tests.xml jest --ci --reporters=default --reporters=jest-junit",
-		"storybook": "start-storybook -p 6006"
+		"ci:test": "jest --ci --reporters=default",
+		"ci:stylelint": "npm run lint:css",
+		"ci:eslint": "npm run lint:js",
+		"storybook": "start-storybook -p 6006",
+		"commit": "git-cz",
+		"release": "standard-version"
 	},
 	"repository": {
 		"type": "git",
@@ -63,6 +68,8 @@
 		"babel-plugin-styled-components": "^1.12.0",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-webpack-alias": "^2.1.2",
+		"commitizen": "^4.2.4",
+		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^7.23.0",
 		"eslint-plugin-react": "^7.23.2",
 		"husky": "^6.0.0",
@@ -71,9 +78,11 @@
 		"lint-staged": "^10.5.4",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^2.2.1",
+		"standard-version": "^9.3.0",
 		"stylelint": "^13.13.1",
 		"stylelint-config-recommended": "^5.0.0",
 		"stylelint-config-styled-components": "^0.1.1",
+		"stylelint-junit-formatter": "^0.2.2",
 		"stylelint-processor-styled-components": "^1.10.0",
 		"ts-jest": "^26.5.4",
 		"typescript": "^4.2.3"
@@ -95,5 +104,10 @@
 			"prettier --write --parser \"typescript\" --loglevel error",
 			"git add"
 		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }
