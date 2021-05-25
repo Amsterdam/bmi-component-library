@@ -2,28 +2,36 @@
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
+		"types": [
+			"jest",
+			"node",
+			"styled-components"
+		],
+		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"downlevelIteration": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "esnext",
+		"module": "commonjs",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": false,
-		"noEmit": true,
-		"jsx": "preserve",
-		"noImplicitAny": false,
+		"noEmit": false,
+		"jsx": "react-jsx",
+		"noImplicitAny": true,
 		"typeRoots": ["node_modules/@types", "/types"],
 		"baseUrl": ".",
 		"paths": {
 			"~/tests/*": ["tests/*"],
 			"~/*": ["src/*"]
 		},
-		"rootDir": "/",
-		"outDir": "dist"
+		"rootDir": "./",
+		"outDir": "./lib",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true
 	},
 	"files": ["src/index.ts"],
 	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],

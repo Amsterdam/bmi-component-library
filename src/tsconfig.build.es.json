@@ -1,0 +1,14 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"module": "ES2015",
+		"target": "ES2015",
+		"rootDir": "./",
+		"outDir": "../es"
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": [
+		"**/*.test.tsx",
+		"**/*.stories.tsx"
+	]
+}
