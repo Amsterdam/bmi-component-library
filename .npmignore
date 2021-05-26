@@ -1,6 +1,10 @@
+.husky
+.storybook/
+bin/
 tests/
 certificates/
 reports/
+src/
 .babelrc.js
 .browserlistrc
 .editorconfig

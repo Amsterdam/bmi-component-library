@@ -2,11 +2,15 @@
 	"name": "@bmi/component-library",
 	"version": "0.0.1",
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
-	"main": "dist/index.js",
+	"main": "lib/index.js",
+	"module": "es/index.js",
 	"scripts": {
 		"prepare": "husky install",
 		"start": "npm run storybook",
-		"build": "echo \"TODO: build\" && exit 0",
+		"build:ts": "tsc -b src/tsconfig.build.json",
+		"build:ts:watch": "tsc -b src/tsconfig.build.json --watch",
+		"build:ts:es": "tsc -b src/tsconfig.build.es.json",
+		"build:ts:es:watch": "tsc -b src/tsconfig.build.es.json --watch",
 		"build:storybook": "build-storybook",
 		"test": "jest",
 		"test:watch": "jest --watch",
@@ -16,7 +20,6 @@
 		"lint:types": "tsc --noEmit",
 		"fix": "npm-run-all --parallel fix:js fix:css",
 		"fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
-		"fix:css": "prettier --write \"src/**/*.{tsx,ts}\"",
 		"ci:test": "jest --ci --reporters=default",
 		"ci:stylelint": "npm run lint:css",
 		"ci:eslint": "npm run lint:js",
@@ -61,6 +64,7 @@
 		"@testing-library/jest-dom": "^5.11.10",
 		"@testing-library/react": "^11.2.6",
 		"@types/jest": "^26.0.23",
+		"@types/styled-components": "^5.1.9",
 		"@typescript-eslint/eslint-plugin": "^4.22.0",
 		"@typescript-eslint/parser": "^4.22.0",
 		"babel-jest": "^26.6.3",
@@ -99,6 +103,11 @@
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"styled-components": "^5.2.3"
+	},
+	"peerDependencies": {
+		"react": ">=17.0.2",
+		"react-dom": ">=17.0.2",
+		"styled-components": ">=5.2.3"
 	},
 	"lint-staged": {
 		"*.{ts,tsx}": [
