@@ -64,6 +64,9 @@ pipeline {
 						sh 'git remote add writable https://$GITLAB_USER@git.data.amsterdam.nl/bmi/component-library.git'
 
 						sh 'npm install'
+						
+						// Restore package.json after NPM install
+						sh 'git checkout package.json'
 					}
             	}
             }
