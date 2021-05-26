@@ -20,7 +20,6 @@
 		"lint:types": "tsc --noEmit",
 		"fix": "npm-run-all --parallel fix:js fix:css",
 		"fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
-		"fix:css": "prettier --write \"src/**/*.{tsx,ts}\"",
 		"ci:test": "jest --ci --reporters=default",
 		"ci:stylelint": "npm run lint:css",
 		"ci:eslint": "npm run lint:js",
@@ -103,6 +102,11 @@
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"styled-components": "^5.2.3"
+	},
+	"peerDependencies": {
+		"react": ">=17.0.2",
+		"react-dom": ">=17.0.2",
+		"styled-components": ">=5.2.3"
 	},
 	"lint-staged": {
 		"*.{ts,tsx}": [
