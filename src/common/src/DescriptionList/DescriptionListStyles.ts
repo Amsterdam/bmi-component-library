@@ -5,7 +5,7 @@ export const DescriptionStyle = styled.div`
 	display: flex;
 	flex-direction: column;
 	background-color: ${themeColor('tint', 'level2')};
-	padding: 0 1rem;
+	padding: 0 ${themeSpacing(4)};
 	width: 100%;
 `;
 
