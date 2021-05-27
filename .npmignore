@@ -1,3 +1,5 @@
+.idea/
+.vscode/
 .husky
 .storybook/
 bin/
@@ -19,3 +21,5 @@ jest.config.js
 postcss.config.js
 README.md
 tsconfig.json
+docker-compose.yml
+Dockerfile

@@ -5,7 +5,7 @@
 	"main": "lib/index.js",
 	"module": "es/index.js",
 	"scripts": {
-		"prepare": "husky install",
+		"prepare": "npm run build:ts:es && npm run build:ts && husky install",
 		"start": "npm run storybook",
 		"build:ts": "tsc -b src/tsconfig.build.json",
 		"build:ts:watch": "tsc -b src/tsconfig.build.json --watch",
