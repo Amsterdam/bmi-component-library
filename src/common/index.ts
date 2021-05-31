@@ -10,4 +10,5 @@
  * @component-library/common
  */
 
-export { default as DummyComponent } from './src/DummyComponent/DummyComponent';
+export { default as DescriptionList } from './src/DescriptionList/DescriptionList';
+export { default as Modal } from './src/Modal/Modal';

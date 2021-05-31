@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import muiTheme from './material-ui-theme';
 import styled from 'styled-components';
