@@ -1,12 +1,12 @@
 import React from 'react';
-import ContentStyle from './ModalContentStyle';
+import ModalContentStyle from './ModalContentStyle';
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
 }
 
 const ModalContent = ({ children }: Props) => {
-	return <ContentStyle>{children}</ContentStyle>;
+	return <ModalContentStyle>{children}</ModalContentStyle>;
 };
 
 ModalContent.displayName = 'ModalContent';

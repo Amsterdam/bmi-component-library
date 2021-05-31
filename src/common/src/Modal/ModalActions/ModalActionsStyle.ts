@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 
-const ActionsStyle = styled.footer`
+const ModalActionsStyle = styled.footer`
 	position: sticky;
 	bottom: 0;
 	padding: ${themeSpacing(2)} ${themeSpacing(3)};
@@ -10,4 +10,4 @@ const ActionsStyle = styled.footer`
 	background-color: ${themeColor('tint', 'level1')};
 `;
 
-export default ActionsStyle;
+export default ModalActionsStyle;

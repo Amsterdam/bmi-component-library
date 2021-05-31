@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Heading, Icon } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
-import TopBar from './ModalTopBarStyle';
+import ModalTopBarStyle from './ModalTopBarStyle';
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
@@ -35,12 +35,12 @@ const ModalTopBar = ({ hideCloseButton = false, onClose, children }: Props) => {
 	};
 
 	return (
-		<TopBar>
+		<ModalTopBarStyle>
 			<Heading forwardedAs="div" style={{ flexGrow: 1 }}>
 				{children}
 				{renderCloseButton()}
 			</Heading>
-		</TopBar>
+		</ModalTopBarStyle>
 	);
 };
 

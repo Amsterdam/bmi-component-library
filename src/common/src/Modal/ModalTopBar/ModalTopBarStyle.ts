@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { themeColor, TopBar, themeSpacing, breakpoint } from '@amsterdam/asc-ui';
 
-const TopBarStyle = styled(TopBar)`
+const ModalTopBarStyle = styled(TopBar)`
 	border-bottom: 1px solid ${themeColor('tint', 'level7')};
 	padding: 0 ${themeSpacing(2)} 0 ${themeSpacing(3)};
 
@@ -10,4 +10,4 @@ const TopBarStyle = styled(TopBar)`
 	}
 `;
 
-export default TopBarStyle;
+export default ModalTopBarStyle;

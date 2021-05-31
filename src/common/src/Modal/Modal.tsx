@@ -15,20 +15,13 @@ export interface Props {
 	classnames?: string;
 }
 
-interface IModalFunctionComponent extends React.FunctionComponent<Props> {
+interface Modal extends React.FunctionComponent<Props> {
 	TopBar: React.FunctionComponent<IModalTopBarProps>;
 	Content: React.FunctionComponent<IModalContentProps>;
 	Actions: React.FunctionComponent<IModalActionsProps>;
 }
 
-const Modal: IModalFunctionComponent = ({
-	children,
-	classnames,
-	onClose,
-	id,
-	open = false,
-	disablePortal = false,
-}: Props) => {
+const Modal: Modal = ({ id, children, classnames, onClose, open = false, disablePortal = false }: Props) => {
 	const handleClose = () => {
 		if (onClose) {
 			onClose();
@@ -63,6 +56,7 @@ const Modal: IModalFunctionComponent = ({
 			onClose={handleClose}
 			disablePortal={disablePortal}
 			aria-labelledby="modal"
+			data-testid="modal"
 		>
 			{childrenWithProps}
 		</ModalStyle>

@@ -1,14 +1,14 @@
 import React from 'react';
-import ActionsStyle from './ModalActionsStyle';
+import ModalActionsStyle from './ModalActionsStyle';
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
 }
 
-const Actions = ({ children }: Props) => {
-	return <ActionsStyle>{children}</ActionsStyle>;
+const ModalActions = ({ children }: Props) => {
+	return <ModalActionsStyle>{children}</ModalActionsStyle>;
 };
 
-Actions.displayName = 'ModalActions';
+ModalActions.displayName = 'ModalActions';
 
-export default Actions;
+export default ModalActions;

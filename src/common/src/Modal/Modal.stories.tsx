@@ -6,7 +6,7 @@ import { ModalBlockStyle } from './ModalStyles';
 
 export default {
 	title: 'common/Modal',
-	component: Modal as any,
+	component: Modal,
 };
 
 const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {

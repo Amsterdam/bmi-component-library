@@ -4,11 +4,21 @@ import { fireEvent } from '@testing-library/react';
 import { render } from '../../../test-utils/customRender';
 
 describe('<Modal />', () => {
+	it('should render correctly', () => {
+		const { getByTestId } = render(
+			<Modal id="test-modal-id" open>
+				<Modal.TopBar>Heading</Modal.TopBar>
+				<Modal.Content>Content</Modal.Content>
+			</Modal>,
+		);
+		expect(getByTestId('modal')).toBeInTheDocument();
+	});
+
 	it('should call onClose when user clicks on the close button', () => {
 		const onCloseMock = jest.fn();
 
 		const { getByTestId } = render(
-			<Modal id="test-modal" onClose={onCloseMock} open>
+			<Modal id="test-modal-id" onClose={onCloseMock} open>
 				<Modal.TopBar>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
 			</Modal>,
@@ -25,7 +35,7 @@ describe('<Modal />', () => {
 
 	it('should not contain a close button when not given', () => {
 		const { queryByTestId } = render(
-			<Modal id="test-modal" open>
+			<Modal id="test-modal-id" open>
 				<Modal.TopBar hideCloseButton={true}>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
 			</Modal>,
@@ -36,12 +46,13 @@ describe('<Modal />', () => {
 
 	test('should render with TopBar, Content and Actions', () => {
 		const { queryByText } = render(
-			<Modal id="test-modal" open>
+			<Modal id="test-modal-id" open>
 				<Modal.TopBar>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
 				<Modal.Actions>Footer or actions</Modal.Actions>
 			</Modal>,
 		);
+
 		expect(queryByText('Heading')).toBeInTheDocument();
 		expect(queryByText('Content')).toBeInTheDocument();
 		expect(queryByText('Footer or actions')).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-const ContentStyle = styled.div``;
+const ModalContentStyle = styled.div``;
 
-export default ContentStyle;
+export default ModalContentStyle;
