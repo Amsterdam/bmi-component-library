@@ -17,7 +17,7 @@ export const ModalStyle = styled(Modal)`
 	}
 
 	&.modal-xl {
-		max-width: 1920px; /* breakpoint */
+		max-width: 1920px; /* breakpoint desktop */
 		max-height: 2180px;
 	}
 `;
