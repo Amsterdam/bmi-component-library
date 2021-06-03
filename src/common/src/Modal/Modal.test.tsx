@@ -45,7 +45,7 @@ describe('<Modal />', () => {
 	});
 
 	test('should render with TopBar, Content and Actions', () => {
-		const { queryByText } = render(
+		const { queryByText, getByTestId } = render(
 			<Modal id="test-modal-id" open>
 				<Modal.TopBar>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
@@ -53,13 +53,14 @@ describe('<Modal />', () => {
 			</Modal>,
 		);
 
+		expect(getByTestId('modal-actions')).toHaveStyle('justify-content: flex-end;');
 		expect(queryByText('Heading')).toBeInTheDocument();
 		expect(queryByText('Content')).toBeInTheDocument();
 		expect(queryByText('Footer or actions')).toBeInTheDocument();
 	});
 
 	test('should render with Left and Right ModalAction content', () => {
-		const { queryByText } = render(
+		const { queryByText, getByTestId } = render(
 			<Modal id="test-modal-id" open>
 				<Modal.TopBar>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
@@ -70,6 +71,7 @@ describe('<Modal />', () => {
 			</Modal>,
 		);
 
+		expect(getByTestId('modal-actions')).toHaveStyle('justify-content: space-between;');
 		expect(queryByText('LeftContent')).toBeInTheDocument();
 		expect(queryByText('RightContent')).toBeInTheDocument();
 	});

@@ -24,9 +24,9 @@ const ModalActions = ({ children }: Props) => {
 	});
 
 	return hasLeftAndRightContent ? (
-		<ModalActionsSplitStyle>{children}</ModalActionsSplitStyle>
+		<ModalActionsSplitStyle data-testid="modal-actions">{children}</ModalActionsSplitStyle>
 	) : (
-		<ModalActionsStyle>{children}</ModalActionsStyle>
+		<ModalActionsStyle data-testid="modal-actions">{children}</ModalActionsStyle>
 	);
 };
 
