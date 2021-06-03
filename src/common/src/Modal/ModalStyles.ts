@@ -2,15 +2,23 @@ import styled from 'styled-components';
 import { Modal, themeSpacing, breakpoint } from '@amsterdam/asc-ui';
 
 export const ModalStyle = styled(Modal)`
-	div[role='dialog'] {
-		max-width: 90%;
-		max-height: 90%;
-		overflow: scroll;
+	max-width: 90%;
+	max-height: 90%;
+	overflow: scroll;
 
-		@media screen and ${breakpoint('min-width', 'desktopL')} {
-			max-height: 1024px;
-			max-width: 1280px;
-		}
+	&.modal-sm {
+		max-width: 540px; /* breakpoint tabletS */
+		max-height: 800px;
+	}
+
+	&.modal-lg {
+		max-width: 1024px; /* breakpoint laptop */
+		max-height: 1280px;
+	}
+
+	&.modal-xl {
+		max-width: 1920px; /* breakpoint */
+		max-height: 2180px;
 	}
 `;
 

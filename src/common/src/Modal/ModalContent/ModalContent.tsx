@@ -1,6 +1,5 @@
 import React from 'react';
-import ModalContentStyle from './ModalContentStyle';
-
+import ModalContentStyle from './ModalContentStyles';
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
 }

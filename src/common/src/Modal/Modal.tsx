@@ -1,27 +1,26 @@
 import React from 'react';
 import classNames from 'classnames';
-import Actions, { Props as IModalActionsProps } from './ModalActions/ModalActions';
-import Content, { Props as IModalContentProps } from './ModalContent/ModalContent';
-import TopBar, { Props as IModalTopBarProps } from './ModalTopBar/ModalTopBar';
-import { ModalStyle } from './ModalStyles';
+import { Modal as ASCModal } from '@amsterdam/asc-ui';
 
-export interface Props {
+import { ModalStyle } from './ModalStyles';
+import ModalTopBar, { Props as IModalTopBarProps } from './ModalTopBar/ModalTopBar';
+import ModalContent, { Props as IModalContentProps } from './ModalContent/ModalContent';
+import ModalActions, { Props as IModalActionsProps } from './ModalActions/ModalActions';
+
+type Props = {
 	id: string;
-	disablePortal?: boolean;
-	open?: boolean;
-	children?: any;
-	onClose?: () => void;
+	children?: React.ReactNode | React.ReactNode[] | any;
 	closeOnBackdropClick?: boolean;
 	classnames?: string;
-}
-
-interface Modal extends React.FunctionComponent<Props> {
+	size?: 'sm' | 'lg' | 'xl';
+} & React.ComponentProps<typeof ASCModal>;
+export interface IModal extends React.FunctionComponent<Props> {
 	TopBar: React.FunctionComponent<IModalTopBarProps>;
 	Content: React.FunctionComponent<IModalContentProps>;
-	Actions: React.FunctionComponent<IModalActionsProps>;
+	Actions: React.FunctionComponent<IModalActionsProps> | any;
 }
 
-const Modal: Modal = ({ id, children, classnames, onClose, open = false, disablePortal = false }: Props) => {
+const Modal: IModal = ({ id, children, classnames, onClose, size = 'lg', ...rest }: Props) => {
 	const handleClose = () => {
 		if (onClose) {
 			onClose();
@@ -44,28 +43,20 @@ const Modal: Modal = ({ id, children, classnames, onClose, open = false, disable
 		});
 	}
 
-	const classes = classNames('modal', classnames, {
+	const classes = classNames('modal', `modal-${size}`, classnames, {
 		'has-actions': hasActions,
 	});
 
 	return (
-		<ModalStyle
-			id={id}
-			className={classes}
-			open={open}
-			onClose={handleClose}
-			disablePortal={disablePortal}
-			aria-labelledby="modal"
-			data-testid="modal"
-		>
+		<ModalStyle {...rest} id={id} data-testid="modal" aria-labelledby="modal" className={classes} onClose={handleClose}>
 			{childrenWithProps}
 		</ModalStyle>
 	);
 };
 
-Modal.TopBar = TopBar;
-Modal.Content = Content;
-Modal.Actions = Actions;
+Modal.TopBar = ModalTopBar;
+Modal.Content = ModalContent;
+Modal.Actions = ModalActions;
 Modal.displayName = 'Modal';
 
 export default Modal;

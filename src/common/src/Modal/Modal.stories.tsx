@@ -1,12 +1,18 @@
 import React from 'react';
 import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
 import { Story } from '@storybook/react';
-import Modal from './Modal';
+import Modal, { IModal } from './Modal';
 import { ModalBlockStyle } from './ModalStyles';
 
 export default {
 	title: 'common/Modal',
-	component: Modal,
+	component: Modal as IModal,
+	argTypes: {
+		size: {
+			options: ['sm', 'lg', 'xl'],
+			control: { type: 'radio' },
+		},
+	},
 };
 
 const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
@@ -33,10 +39,13 @@ const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
 					</ModalBlockStyle>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button style={{ marginRight: '8px' }} onClick={() => setModalVisibility(false)}>
-						Annuleren
-					</Button>
-					<Button variant="primary">Opslaan</Button>
+					<Modal.Actions.Left>
+						<Button onClick={() => setModalVisibility(false)}>Annuleren</Button>
+					</Modal.Actions.Left>
+					<Modal.Actions.Right>
+						<Button style={{ marginRight: '8px' }}>Vorige</Button>
+						<Button variant="primary">Volgende</Button>
+					</Modal.Actions.Right>
 				</Modal.Actions>
 			</Modal>
 		);
@@ -51,6 +60,4 @@ const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {
-	disablePortal: false,
-};
+Default.args = {};

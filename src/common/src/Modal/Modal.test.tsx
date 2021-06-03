@@ -57,4 +57,20 @@ describe('<Modal />', () => {
 		expect(queryByText('Content')).toBeInTheDocument();
 		expect(queryByText('Footer or actions')).toBeInTheDocument();
 	});
+
+	test('should render with Left and Right ModalAction content', () => {
+		const { queryByText } = render(
+			<Modal id="test-modal-id" open>
+				<Modal.TopBar>Heading</Modal.TopBar>
+				<Modal.Content>Content</Modal.Content>
+				<Modal.Actions>
+					<Modal.Actions.Left>LeftContent</Modal.Actions.Left>
+					<Modal.Actions.Right>RightContent</Modal.Actions.Right>
+				</Modal.Actions>
+			</Modal>,
+		);
+
+		expect(queryByText('LeftContent')).toBeInTheDocument();
+		expect(queryByText('RightContent')).toBeInTheDocument();
+	});
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Heading, Icon } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
-import ModalTopBarStyle from './ModalTopBarStyle';
+import ModalTopBarStyle from './ModalTopBarStyles';
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
