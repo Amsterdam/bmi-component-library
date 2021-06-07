@@ -3,8 +3,7 @@ import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 
 export const ModalActionsCss = css`
 	display: flex;
-	position: sticky;
-	bottom: 0;
+	height: 64px;
 	padding: ${themeSpacing(2)} ${themeSpacing(3)};
 	border-top: 1px solid ${themeColor('tint', 'level7')};
 	background-color: ${themeColor('tint', 'level1')};

@@ -9,7 +9,7 @@ export default {
 	component: Modal as IModal,
 	argTypes: {
 		size: {
-			options: ['sm', 'lg', 'xl'],
+			options: ['sm', 'md', 'lg', 'xl'],
 			control: { type: 'radio' },
 		},
 	},
