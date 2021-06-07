@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React from 'react';
 import { Tag } from '@amsterdam/asc-ui';
 import { Story } from '@storybook/react';
 import DescriptionList from './DescriptionList';
@@ -8,9 +8,9 @@ export default {
 	component: DescriptionList,
 };
 
-const Template: Story<ComponentProps<typeof DescriptionList>> = (args) => <DescriptionList {...args} />;
+const Template: Story<React.ComponentProps<typeof DescriptionList>> = (args) => <DescriptionList {...args} />;
 
-const descriptionList: ComponentProps<typeof DescriptionList>['list'] = [
+const descriptionList: React.ComponentProps<typeof DescriptionList>['list'] = [
 	{
 		label: 'Datum',
 		value: '12-03-2021',
