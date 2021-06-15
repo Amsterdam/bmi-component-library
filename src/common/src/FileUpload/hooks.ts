@@ -3,9 +3,22 @@ import { FileRejection } from 'react-dropzone';
 
 export type CustomFile = {
 	progress?: number;
+	uploadXhrError?: string;
+	response?: string;
 } & File;
 
 export type Files = [CustomFile?, FileRejection?];
+
+// Using Object.assign (from the dropzone docs) because spreading doesn't seem to work properly
+// with File objects
+const formatFiles = (files: File[], statusText: string, error = false): File[] =>
+	files.map((file: File) =>
+		Object.assign(file, {
+			progress: 100,
+			response: statusText,
+			uploadXhrError: error ? true : undefined,
+		}),
+	);
 
 export const useFileUpload = (postUrl: string) => {
 	const [files, setFiles] = React.useState<Files | []>([]);
@@ -31,11 +44,18 @@ export const useFileUpload = (postUrl: string) => {
 			};
 
 			xhr.onreadystatechange = () => {
-				if (xhr.readyState !== 4) {
-					console.log('Something went wrong while uploading');
-				}
-				if (xhr.status !== 200) {
-					console.log('Something went wrong while uploading');
+				if (xhr.readyState === XMLHttpRequest.DONE) {
+					const status = xhr.status;
+
+					if (status === 0 || (status >= 200 && status < 400)) {
+						// The request has been completed successfully
+						const filesWithSuccessResponse = formatFiles(acceptedFiles, xhr.statusText);
+						setFiles([...filesWithSuccessResponse, ...fileRejections] as Files);
+					} else {
+						// Something went wrong with the request
+						const filesWithErrorResponse = formatFiles(acceptedFiles, xhr.statusText, true);
+						setFiles([...filesWithErrorResponse, ...fileRejections] as Files);
+					}
 				}
 			};
 

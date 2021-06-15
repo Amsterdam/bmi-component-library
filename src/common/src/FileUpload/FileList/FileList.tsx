@@ -79,12 +79,12 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	return (
 		<FileListItemStyle className={classes} data-testid="file-list-item">
 			<>
-				<FileIconStyle size={16} color={file?.errors ? '#EC0000' : '#000000'}>
+				<FileIconStyle size={16} color={file?.errors || file?.uploadXhrError ? '#EC0000' : '#000000'}>
 					<Document />
 				</FileIconStyle>
-				{file?.errors ? (
+				{file?.errors || file?.uploadXhrError ? (
 					<FileNameErrorStyle>
-						{file?.file?.name} {fileUploadErrorLabel}
+						{file?.file?.name || file.name} {fileUploadErrorLabel}
 					</FileNameErrorStyle>
 				) : (
 					<FileNameStyle>
