@@ -1,7 +1,21 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import FileUpload from './FileUpload';
 
-<Meta title="Common/FileUpload" component={FileUpload} />
+<Meta
+	title="Common/FileUpload"
+	component={FileUpload}
+	decorators={[
+		(storyFn) => (
+			<div
+				style={{
+					maxWidth: '620px',
+				}}
+			>
+				{storyFn()}
+			</div>
+		),
+	]}
+/>
 
 # FileUpload
 
