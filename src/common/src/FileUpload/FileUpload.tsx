@@ -38,7 +38,7 @@ const FileUpload: React.FC<Props> = ({
 	options,
 }: Props) => {
 	const { breakpoint } = useBreakpoint(BREAKPOINTS); // @ts-ignore
-	const isMobileOrTablet = BREAKPOINTS[breakpoint] <= BREAKPOINTS.tabletM;
+	const isMobileOrTablet = BREAKPOINTS[breakpoint] < BREAKPOINTS.laptop;
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(postUrl);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
 		...options,
