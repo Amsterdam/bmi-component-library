@@ -56,9 +56,20 @@ describe('<FileList />', () => {
 		expect(getByText('Faalrapport.pdf dit bestand kan niet worden geüpload')).toBeInTheDocument();
 	});
 
-	it('should render cancel button and handle event', () => {
+	it('should render cancel button and handle event when file uploading is in progress', () => {
 		const onCancelMock = jest.fn();
-		const { getAllByText } = render(<FileList {...defaultProps} onCancel={onCancelMock} isUploading />);
+		const filesWithProgress = [
+			{
+				lastModified: 1623407907404,
+				name: 'Stakeholderanalyse.pdf',
+				path: 'Stakeholderanalyse.pdf',
+				size: 119660,
+				type: 'image/png',
+				webkitRelativePath: '',
+				progress: 50,
+			},
+		];
+		const { getAllByText } = render(<FileList {...defaultProps} files={filesWithProgress} onCancel={onCancelMock} />);
 		const cancelButton = getAllByText('Annuleren')[0];
 
 		expect(cancelButton).toBeInTheDocument();
