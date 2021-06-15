@@ -1,8 +1,14 @@
 import React from 'react';
 import { FileRejection } from 'react-dropzone';
 
+export type CustomFile = {
+	progress?: number;
+} & File;
+
+export type Files = [CustomFile?, FileRejection?];
+
 export const useFileUpload = (postUrl: string) => {
-	const [files, setFiles] = React.useState<File[]>([]);
+	const [files, setFiles] = React.useState<Files | []>([]);
 	const [stateXhr, setStateXhr] = React.useState<XMLHttpRequest | null>(null);
 
 	const handleOnDrop = React.useCallback(
@@ -21,20 +27,16 @@ export const useFileUpload = (postUrl: string) => {
 					}),
 				);
 
-				setFiles((previousFiles: any[]) => [...previousFiles, ...filesWithPercentage, ...fileRejections]);
+				setFiles((previousFiles) => [...previousFiles, ...filesWithPercentage, ...fileRejections] as Files);
 			};
 
 			xhr.onreadystatechange = () => {
 				if (xhr.readyState !== 4) {
-					console.log('Something went wrong - 4'); // Handle error here
-					return;
+					console.log('Something went wrong while uploading');
 				}
 				if (xhr.status !== 200) {
-					console.log('Something went wrong - 200'); // Handle error here
-					return;
+					console.log('Something went wrong while uploading');
 				}
-
-				console.log('success'); // Handle success here
 			};
 
 			xhr.open('POST', postUrl, true);
@@ -46,7 +48,7 @@ export const useFileUpload = (postUrl: string) => {
 	);
 
 	const handleOnCancel = React.useCallback(
-		(file: File) => {
+		(file: CustomFile) => {
 			// Cancel network uploading activity
 			stateXhr?.abort();
 
@@ -57,8 +59,8 @@ export const useFileUpload = (postUrl: string) => {
 	);
 
 	const handleOnFileRemove = React.useCallback(
-		(file: File) => {
-			const newFiles = [...files];
+		(file: CustomFile) => {
+			const newFiles: Files = [...(files as Files)];
 			newFiles.splice(newFiles.indexOf(file), 1);
 			setFiles(newFiles);
 		},

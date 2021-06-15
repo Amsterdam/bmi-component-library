@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import FileList from './FileList';
+import { CustomFile } from '../hooks';
 
 const defaultProps: React.ComponentProps<typeof FileList> = {
 	// Combined list of accepted and rejected file records
@@ -34,13 +35,13 @@ const defaultProps: React.ComponentProps<typeof FileList> = {
 				webkitRelativePath: '',
 			},
 		},
-	],
+	] as any,
 	removeLabel: 'Wissen',
 	cancelLabel: 'Annuleren',
 	fileUploadErrorLabel: 'dit bestand kan niet worden geüpload',
 	fileUploadInProgressLabel: 'wordt geupload',
-	onFileRemove: (file: any) => console.log(file),
-	onCancel: () => console.log('Cancelled'),
+	onFileRemove: (file: CustomFile) => console.log(file),
+	onCancel: (file: CustomFile) => console.log(file),
 };
 
 describe('<FileList />', () => {
@@ -69,7 +70,9 @@ describe('<FileList />', () => {
 				progress: 50,
 			},
 		];
-		const { getAllByText } = render(<FileList {...defaultProps} files={filesWithProgress} onCancel={onCancelMock} />);
+		const { getAllByText } = render(
+			<FileList {...defaultProps} files={filesWithProgress as any} onCancel={onCancelMock} />,
+		);
 		const cancelButton = getAllByText('Annuleren')[0];
 
 		expect(cancelButton).toBeInTheDocument();

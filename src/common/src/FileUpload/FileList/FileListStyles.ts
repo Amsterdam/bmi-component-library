@@ -14,9 +14,13 @@ export const FileListItemStyle = styled.li`
 	position: relative;
 	align-items: center;
 	color: ${themeColor('tint', 'level7')};
-	border-bottom: 1px solid ${themeColor('tint', 'level5')};
 	padding: ${themeSpacing(4)} 0;
 	width: 100%;
+	border-bottom: 1px solid ${themeColor('tint', 'level5')};
+
+	&.file-list-item--is-uploading {
+		border-bottom: none;
+	}
 `;
 
 export const FileIconStyle = styled(Icon)`

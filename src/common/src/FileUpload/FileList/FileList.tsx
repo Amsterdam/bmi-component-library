@@ -1,5 +1,7 @@
+// @ts-nocheck
 import React from 'react';
 import { ChevronLeft, Close, Document } from '@amsterdam/asc-assets';
+import classNames from 'classnames';
 
 import {
 	FileRemoveStyle,
@@ -10,13 +12,15 @@ import {
 	FileNameErrorStyle,
 	FileProgressBarStyle,
 } from './FileListStyles';
+import { CustomFile, Files } from '../hooks';
+import { FileRejection } from 'react-dropzone';
 
 export type Props = {
-	files: any;
+	files: Files;
 	removeLabel: string;
 	cancelLabel: string;
-	onFileRemove: (file: any) => void;
-	onCancel: (file: any) => void;
+	onFileRemove: (file: CustomFile) => void;
+	onCancel: (file: CustomFile) => void;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel: string;
 	isUploading?: boolean;
@@ -24,11 +28,11 @@ export type Props = {
 };
 
 type FileListItemProps = {
-	file: any;
+	file: CustomFile | FileRejection;
 	removeLabel: string;
 	cancelLabel: string;
-	onFileRemove: (file: any) => void;
-	onCancel: (file: any) => void;
+	onFileRemove: (file: CustomFile) => void;
+	onCancel: (file: CustomFile) => void;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel: string;
 };
@@ -43,7 +47,7 @@ const FileList: React.FC<Props> = ({
 	fileUploadInProgressLabel,
 }: Props) => (
 	<FileListStyle data-testid="file-list">
-		{files.map((file: any, index: number) => (
+		{files.map((file, index) => (
 			<FileListItem
 				key={`file-number-${index}`}
 				onCancel={() => onCancel(file)}
@@ -68,16 +72,19 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	fileUploadInProgressLabel,
 }: FileListItemProps) => {
 	const isUploading = file.progress > 0 && file.progress < 100;
+	const classes = classNames({
+		'file-list-item--is-uploading': isUploading,
+	});
 
 	return (
-		<FileListItemStyle data-testid="file-list-item">
+		<FileListItemStyle className={classes} data-testid="file-list-item">
 			<>
-				<FileIconStyle size={16} color={file.errors ? '#EC0000' : '#000000'}>
+				<FileIconStyle size={16} color={file?.errors ? '#EC0000' : '#000000'}>
 					<Document />
 				</FileIconStyle>
-				{file.errors ? (
+				{file?.errors ? (
 					<FileNameErrorStyle>
-						{file.file.name} {fileUploadErrorLabel}
+						{file?.file?.name} {fileUploadErrorLabel}
 					</FileNameErrorStyle>
 				) : (
 					<FileNameStyle>
