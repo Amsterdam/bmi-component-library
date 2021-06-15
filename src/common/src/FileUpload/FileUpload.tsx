@@ -1,5 +1,7 @@
 import React from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
+import useBreakpoint from 'use-breakpoint';
+import { Download } from '@amsterdam/asc-assets';
 import {
 	FileUploadStyle,
 	FileUploadContentStyle,
@@ -7,9 +9,10 @@ import {
 	FileUploadSelectFilesButtonStyle,
 } from './FileUploadStyles';
 import { Icon } from '@amsterdam/asc-ui/lib/components/Quote/QuoteStyle';
-import { Download } from '@amsterdam/asc-assets';
 import { useFileUpload } from './hooks';
+
 import FileList from './FileList/FileList';
+import { BREAKPOINTS } from '../../../utils/breakpoints';
 
 type Props = {
 	postUrl: string;
@@ -20,7 +23,7 @@ type Props = {
 	selectFilesLabel: string;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel: string;
-	options: DropzoneOptions;
+	options?: DropzoneOptions;
 };
 
 const FileUpload: React.FC<Props> = ({
@@ -34,10 +37,13 @@ const FileUpload: React.FC<Props> = ({
 	fileUploadInProgressLabel,
 	options,
 }: Props) => {
+	const { breakpoint } = useBreakpoint(BREAKPOINTS); // @ts-ignore
+	const isMobileOrTablet = BREAKPOINTS[breakpoint] <= BREAKPOINTS.tabletM;
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(postUrl);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
 		...options,
 		onDrop: handleOnDrop,
+		noDrag: isMobileOrTablet,
 	});
 
 	return (
