@@ -49,7 +49,7 @@ const FileUpload: React.FC<Props> = ({
 	return (
 		<React.Fragment>
 			<FileUploadStyle data-testid="file-upload" {...getRootProps({ isDragActive })}>
-				<input {...getInputProps()} />
+				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
 					{isDragActive ? (
 						<FileUploadPlaceholderStyle>
