@@ -1,7 +1,7 @@
 import React from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
-import useBreakpoint from 'use-breakpoint';
 import { Download } from '@amsterdam/asc-assets';
+import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
 	FileUploadStyle,
 	FileUploadContentStyle,
@@ -12,7 +12,6 @@ import { Icon } from '@amsterdam/asc-ui/lib/components/Quote/QuoteStyle';
 import { useFileUpload } from './hooks';
 
 import FileList from './FileList/FileList';
-import { BREAKPOINTS } from '../../../utils/breakpoints';
 
 type Props = {
 	postUrl: string;
@@ -37,13 +36,12 @@ const FileUpload: React.FC<Props> = ({
 	fileUploadInProgressLabel,
 	options,
 }: Props) => {
-	const { breakpoint } = useBreakpoint(BREAKPOINTS); // @ts-ignore
-	const isMobileOrTablet = BREAKPOINTS[breakpoint] < BREAKPOINTS.laptop;
+	const isTouchScreen = useDetectTouchscreen();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(postUrl);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
 		...options,
 		onDrop: handleOnDrop,
-		noDrag: isMobileOrTablet,
+		noDrag: isTouchScreen,
 	});
 
 	return (
