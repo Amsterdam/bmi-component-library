@@ -62,5 +62,10 @@ export const FileProgressBarStyle = styled.progress`
 		::-webkit-progress-value {
 			background-color: ${themeColor('tint', 'level4')};
 		}
+	
+		::-moz-progress-bar {
+			height: ${themeSpacing(0.5)};
+			background-color: ${themeColor('tint', 'level4')};
+		}
 	}
 `;

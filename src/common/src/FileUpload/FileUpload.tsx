@@ -68,7 +68,7 @@ const FileUpload: React.FC<Props> = ({
 					)}
 				</FileUploadContentStyle>
 			</FileUploadStyle>
-			{files && files.length > 0 && (
+			{files?.length > 0 && (
 				<FileList
 					files={files}
 					removeLabel={removeLabel}
