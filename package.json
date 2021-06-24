@@ -97,8 +97,7 @@
 		"stylelint-junit-formatter": "^0.2.2",
 		"stylelint-processor-styled-components": "^1.10.0",
 		"ts-jest": "^26.5.4",
-		"typescript": "^4.2.3",
-		"use-breakpoint": "^2.0.1"
+		"typescript": "^4.2.3"
 	},
 	"dependencies": {
 		"@amsterdam/asc-assets": "^0.29.3",

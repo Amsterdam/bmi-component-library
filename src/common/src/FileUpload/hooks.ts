@@ -32,8 +32,7 @@ export const useFileUpload = (postUrl: string) => {
 			const xhr = new XMLHttpRequest();
 
 			xhr.upload.onprogress = (event) => {
-				// @ts-ignore
-				const percentage = parseInt((event.loaded / event.total) * 100, 10);
+				const percentage = (event.loaded / event.total) * 100;
 				const filesWithPercentage = acceptedFiles.map((file: File) =>
 					Object.assign(file, {
 						progress: percentage,
