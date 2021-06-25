@@ -20,12 +20,15 @@ const formatFiles = (files: File[], statusText: string, error = false): File[] =
 		}),
 	);
 
-export const useFileUpload = (postUrl: string) => {
+export const useFileUpload = (getPostUrl: () => string) => {
+
 	const [files, setFiles] = React.useState<Files | []>([]);
 	const [stateXhr, setStateXhr] = React.useState<XMLHttpRequest | null>(null);
 
 	const handleOnDrop = React.useCallback(
 		(acceptedFiles: File[], fileRejections: FileRejection[]) => {
+
+			const postUrl = getPostUrl()
 			const formData = new FormData();
 			for (const file of acceptedFiles) formData.append('file', file);
 
@@ -63,7 +66,7 @@ export const useFileUpload = (postUrl: string) => {
 
 			setStateXhr(xhr);
 		},
-		[postUrl],
+		[getPostUrl],
 	);
 
 	const handleOnCancel = React.useCallback(

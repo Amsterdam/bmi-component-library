@@ -32,7 +32,7 @@ _The component below uses these options:_
 <Canvas>
 	<Story name="Default">
 		<FileUpload
-			postUrl="api/endpoint"
+			getPostUrl={() => 'api/endpoint'}
 			placeholder="Sleep de png bestanden in dit vlak of"
 			droppingLabel="bestanden geselecteerd"
 			selectFilesLabel="selecteer bestanden"

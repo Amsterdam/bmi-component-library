@@ -4,7 +4,7 @@ import FileUpload from './FileUpload';
 import userEvent from '@testing-library/user-event';
 
 const defaultProps: React.ComponentProps<typeof FileUpload> = {
-	postUrl: 'api/endpoint',
+	getPostUrl: () => 'api/endpoint',
 	placeholder: 'Sleep de bestanden in dit vlak of',
 	droppingLabel: 'bestanden geselecteerd',
 	selectFilesLabel: 'selecteer bestanden',

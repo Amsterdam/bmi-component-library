@@ -14,7 +14,7 @@ import { useFileUpload } from './hooks';
 import FileList from './FileList/FileList';
 
 type Props = {
-	postUrl: string;
+	getPostUrl: () => string;
 	placeholder: string;
 	droppingLabel: string;
 	removeLabel: string;
@@ -26,7 +26,7 @@ type Props = {
 };
 
 const FileUpload: React.FC<Props> = ({
-	postUrl,
+	getPostUrl,
 	droppingLabel,
 	placeholder,
 	removeLabel,
@@ -37,7 +37,7 @@ const FileUpload: React.FC<Props> = ({
 	options,
 }: Props) => {
 	const isTouchScreen = useDetectTouchscreen();
-	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(postUrl);
+	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(getPostUrl);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
 		...options,
 		onDrop: handleOnDrop,
