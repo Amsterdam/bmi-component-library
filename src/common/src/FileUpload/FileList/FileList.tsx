@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import { ChevronLeft, Close, Document } from '@amsterdam/asc-assets';
 import classNames from 'classnames';
@@ -19,8 +18,8 @@ export type Props = {
 	files: Files;
 	removeLabel: string;
 	cancelLabel: string;
-	onFileRemove: (file: CustomFile) => void;
-	onCancel: (file: CustomFile) => void;
+	onFileRemove: (file: CustomFile & FileRejection) => void;
+	onCancel: (file: CustomFile & FileRejection) => void;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel: string;
 	isUploading?: boolean;
@@ -28,7 +27,7 @@ export type Props = {
 };
 
 type FileListItemProps = {
-	file: CustomFile | FileRejection;
+	file: CustomFile & FileRejection;
 	removeLabel: string;
 	cancelLabel: string;
 	onFileRemove: (file: CustomFile) => void;
@@ -71,7 +70,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
 }: FileListItemProps) => {
-	const isUploading = file.progress > 0 && file.progress < 100;
+	const isUploading = file && file.progress && file.progress > 0 && file.progress < 100;
 	const classes = classNames({
 		'file-list-item--is-uploading': isUploading,
 	});

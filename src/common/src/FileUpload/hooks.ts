@@ -1,13 +1,13 @@
 import React from 'react';
 import { FileRejection } from 'react-dropzone';
 
-export type CustomFile = {
+export interface CustomFile extends File{
 	progress?: number;
-	uploadXhrError?: string;
+	uploadXhrError?: string; 
 	response?: string;
-} & File;
+}
 
-export type Files = [CustomFile?, FileRejection?];
+export type Files = (CustomFile & FileRejection)[];
 
 // Using Object.assign (from the dropzone docs) because spreading doesn't seem to work properly
 // with File objects
@@ -70,7 +70,7 @@ export const useFileUpload = (getPostUrl: () => string) => {
 	);
 
 	const handleOnCancel = React.useCallback(
-		(file: CustomFile) => {
+		(file: CustomFile & FileRejection) => {
 			// Cancel network uploading activity
 			stateXhr?.abort();
 
@@ -81,7 +81,7 @@ export const useFileUpload = (getPostUrl: () => string) => {
 	);
 
 	const handleOnFileRemove = React.useCallback(
-		(file: CustomFile) => {
+		(file: CustomFile & FileRejection) => {
 			const newFiles: Files = [...(files as Files)];
 			newFiles.splice(newFiles.indexOf(file), 1);
 			setFiles(newFiles);
