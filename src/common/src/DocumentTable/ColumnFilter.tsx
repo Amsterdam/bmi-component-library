@@ -3,14 +3,14 @@ import { GridCellParams } from '@material-ui/data-grid';
 import ColumnFilterStyle, { InputStyle, CancelIconStyle } from './ColumnFilterStyle';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
-	params: GridCellParams;
+	params: Pick<GridCellParams, 'field'>;
 	onKeyUp: (evt: React.KeyboardEvent<HTMLInputElement>) => void;
 	onClear: () => void;
 };
 
 const ColumnFilter: React.FC<Props> = ({ params, onKeyUp, onClear, ...props }: Props) => {
 	const { field } = params;
-	const [value, setValue] = React.useState<string>('');
+	const [value, setValue] = React.useState<string | number | readonly string[]>(props?.value ?? '');
 
 	const handleOnKeyUp = (evt: React.KeyboardEvent<HTMLInputElement>) => {
 		const input = evt.target as HTMLInputElement;
