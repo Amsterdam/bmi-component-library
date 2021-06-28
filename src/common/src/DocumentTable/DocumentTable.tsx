@@ -59,7 +59,7 @@ const DocumentTable: React.FC<Props> = ({
 					{
 						field: 'filename',
 						headerName: 'Bestandsnaam',
-						renderCell: (params: GridCellParams) => {
+						renderCell: function renderCell(params: GridCellParams) {
 							return onDownload ? (
 								<a href="#" onClick={() => onDownload(params.row)}>
 									<span className="sr-only">Download</span>
@@ -90,6 +90,7 @@ const DocumentTable: React.FC<Props> = ({
 						width: 200,
 						sortable: false,
 					},
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
 			  ],
 	);
 	const [tableRows, setTableRows] = React.useState<GridRowData[]>(rows);
@@ -122,7 +123,7 @@ const DocumentTable: React.FC<Props> = ({
 			setTableColumns(
 				tableColumns.map((col: GridColDef) => ({
 					...col,
-					renderCell: (params: GridCellParams) => {
+					renderCell: function renderCell(params: GridCellParams) {
 						if (params.id === 0 && params.field === 'id') return <></>;
 						if (params.id === 0)
 							return (
@@ -149,7 +150,7 @@ const DocumentTable: React.FC<Props> = ({
 				headerName: ' ',
 				sortable: false,
 				cellClassName: 'remove',
-				renderCell: (params: GridCellParams) => {
+				renderCell: function renderCell(params: GridCellParams) {
 					return (
 						<Button variant="textButton" iconSize={14} iconLeft={<Close />} onClick={() => handleRemoval(params.value)}>
 							Wissen

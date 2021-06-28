@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import { GridCellParams } from '@material-ui/data-grid';
 import ColumnFilterStyle, { InputStyle, CancelIconStyle } from './ColumnFilterStyle';
 
@@ -24,7 +24,7 @@ const ColumnFilter: React.FC<Props> = ({ params, onKeyUp, onClear, ...props }: P
 				name={field}
 				value={value}
 				onKeyUp={handleOnKeyUp}
-				onChange={(evt) => setValue(evt.target.value)}
+				onChange={(evt: ChangeEvent<HTMLInputElement>) => setValue(evt.target.value)}
 				{...props}
 				data-testid={`column-filter-${field}`}
 			/>
