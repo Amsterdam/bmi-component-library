@@ -30,4 +30,5 @@ Default.args = {
 		},
 	],
 	disableFilterRow: false,
+	disableRemoval: false,
 };

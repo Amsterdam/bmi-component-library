@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import { GridCellParams } from '@material-ui/data-grid';
-import ColumnFilterStyle, { InputStyle } from './ColumnFilterStyle';
-import CancelIcon from '@material-ui/icons/Cancel';
+import ColumnFilterStyle, { InputStyle, CancelIconStyle } from './ColumnFilterStyle';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	params: GridCellParams;
@@ -25,11 +24,12 @@ const ColumnFilter: React.FC<Props> = ({ params, onKeyUp, onClear, ...props }: P
 				name={field}
 				value={value}
 				onKeyUp={handleOnKeyUp}
+				onChange={(evt) => setValue(evt.target.value)}
 				{...props}
 				data-testid={`column-filter-${field}`}
 			/>
 			{value && (
-				<CancelIcon
+				<CancelIconStyle
 					onClick={() => {
 						setValue('');
 						onClear();
