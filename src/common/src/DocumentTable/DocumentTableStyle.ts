@@ -30,6 +30,7 @@ export default styled(DataGrid)`
 			&.Mui-odd:hover {
 				background-color: ${themeColor('tint', 'level2')};
 			}
+
 			&.Mui-even,
 			&.Mui-even:hover {
 				background-color: ${themeColor('tint', 'level1')};
