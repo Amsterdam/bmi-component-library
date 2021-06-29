@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { GridCellParams, GridCellValue, GridColDef, GridRowData } from '@material-ui/data-grid';
-import DocumentTableStyle from './DocumentTableStyle';
-import { Button, Pagination } from '@amsterdam/asc-ui';
+import DocumentTableStyle, { PaginationStyle } from './DocumentTableStyle';
+import { Button } from '@amsterdam/asc-ui';
 import ColumnFilter from './ColumnFilter';
 import { Close } from '@amsterdam/asc-assets';
 
@@ -51,7 +51,7 @@ const DocumentTable: React.FC<Props> = ({
 	disableFilterRow = false,
 	disableRemoval = false,
 	page = 1,
-	pageSize = 10,
+	pageSize = 3,
 	onRemove,
 	onDownload,
 }: Props) => {
@@ -63,8 +63,18 @@ const DocumentTable: React.FC<Props> = ({
 						field: 'filename',
 						headerName: 'Bestandsnaam',
 						renderCell: function renderCell(params: GridCellParams) {
+							// The onDragStart hack prevents being able to reorder the columns by dragging (BUG)
 							return onDownload ? (
-								<a href="#" onClick={() => onDownload(params.row)} data-testid={`document-table-download-${params.id}`}>
+								<a
+									href="#"
+									onClick={(evt) => {
+										evt.stopPropagation();
+										evt.preventDefault();
+										onDownload(params.row);
+									}}
+									onDragStart={(evt) => evt.preventDefault()}
+									data-testid={`document-table-download-${params.id}`}
+								>
 									<span className="sr-only">Download</span>
 									{params.value}
 								</a>
@@ -72,26 +82,30 @@ const DocumentTable: React.FC<Props> = ({
 								<>{params.value}</>
 							);
 						},
-						flex: 2,
+						flex: 1.5,
 						sortable: false,
+						resizable: false,
 					},
 					{
 						field: 'documentDescription',
 						headerName: 'Documentomschrijving',
 						flex: 1.5,
 						sortable: false,
+						resizable: false,
 					},
 					{
 						field: 'documentType',
 						headerName: 'Documenttype',
-						flex: 1,
+						flex: 1.5,
 						sortable: false,
+						resizable: false,
 					},
 					{
 						field: 'year',
 						headerName: 'Jaar',
-						flex: 1,
+						flex: 0.5,
 						sortable: false,
+						resizable: false,
 					},
 					// eslint-disable-next-line no-mixed-spaces-and-tabs
 			  ],
@@ -178,15 +192,22 @@ const DocumentTable: React.FC<Props> = ({
 				rows={tableRows}
 				disableColumnFilter
 				disableColumnMenu
+				disableColumnReorder
+				disableMultipleColumnsSorting
 				autoHeight
+				hideFooter
 				hideFooterPagination
 				disableSelectionOnClick
-				disableColumnReorder
 				rowHeight={42}
 				headerHeight={42}
 				columnBuffer={tableColumns.length}
 			/>
-			<Pagination collectionSize={rows.length} pageSize={pageSize} page={currentPage} onPageChange={setCurrentPage} />
+			<PaginationStyle
+				collectionSize={tableRows.length}
+				pageSize={pageSize}
+				page={currentPage}
+				onPageChange={setCurrentPage}
+			/>
 		</>
 	);
 };
