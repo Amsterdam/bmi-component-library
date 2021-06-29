@@ -12,6 +12,8 @@ type Props = {
 	rows: GridRowData[];
 	// Current state of pagination
 	page?: number;
+	// Page size; defaults to 10
+	pageSize?: number;
 	// If true, no filter row is rendered
 	disableFilterRow?: boolean;
 	// If true, no removal links are rendered
@@ -46,9 +48,10 @@ function applyFilters(rows: GridRowData[], filters: { [key: string]: string }): 
 const DocumentTable: React.FC<Props> = ({
 	columns,
 	rows,
-	disableFilterRow,
+	disableFilterRow = false,
 	disableRemoval = false,
 	page = 1,
+	pageSize = 10,
 	onRemove,
 	onDownload,
 }: Props) => {
@@ -61,7 +64,7 @@ const DocumentTable: React.FC<Props> = ({
 						headerName: 'Bestandsnaam',
 						renderCell: function renderCell(params: GridCellParams) {
 							return onDownload ? (
-								<a href="#" onClick={() => onDownload(params.row)}>
+								<a href="#" onClick={() => onDownload(params.row)} data-testid={`document-table-download-${params.id}`}>
 									<span className="sr-only">Download</span>
 									{params.value}
 								</a>
@@ -69,25 +72,25 @@ const DocumentTable: React.FC<Props> = ({
 								<>{params.value}</>
 							);
 						},
-						width: 180,
+						flex: 2,
 						sortable: false,
 					},
 					{
 						field: 'documentDescription',
 						headerName: 'Documentomschrijving',
-						width: 240,
+						flex: 1.5,
 						sortable: false,
 					},
 					{
 						field: 'documentType',
 						headerName: 'Documenttype',
-						width: 200,
+						flex: 1,
 						sortable: false,
 					},
 					{
 						field: 'year',
 						headerName: 'Jaar',
-						width: 200,
+						flex: 1,
 						sortable: false,
 					},
 					// eslint-disable-next-line no-mixed-spaces-and-tabs
@@ -119,7 +122,7 @@ const DocumentTable: React.FC<Props> = ({
 			const filter: GridRowData = {
 				id: 0,
 			};
-			const rowsWithFilter = [filter, ...paginate(filteredRows, 2, currentPage)];
+			const rowsWithFilter = [filter, ...paginate(filteredRows, pageSize, currentPage)];
 			setTableColumns(
 				tableColumns.map((col: GridColDef) => ({
 					...col,
@@ -152,7 +155,13 @@ const DocumentTable: React.FC<Props> = ({
 				cellClassName: 'remove',
 				renderCell: function renderCell(params: GridCellParams) {
 					return (
-						<Button variant="textButton" iconSize={14} iconLeft={<Close />} onClick={() => handleRemoval(params.value)}>
+						<Button
+							variant="textButton"
+							iconSize={14}
+							iconLeft={<Close />}
+							onClick={() => handleRemoval(params.value)}
+							data-testid={`document-table-remove-${params.id}`}
+						>
 							Wissen
 						</Button>
 					);
@@ -175,8 +184,9 @@ const DocumentTable: React.FC<Props> = ({
 				disableColumnReorder
 				rowHeight={42}
 				headerHeight={42}
+				columnBuffer={tableColumns.length}
 			/>
-			<Pagination collectionSize={rows.length} pageSize={2} page={currentPage} onPageChange={setCurrentPage} />
+			<Pagination collectionSize={rows.length} pageSize={pageSize} page={currentPage} onPageChange={setCurrentPage} />
 		</>
 	);
 };

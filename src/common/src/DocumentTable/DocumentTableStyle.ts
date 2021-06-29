@@ -18,6 +18,10 @@ export default styled(DataGrid)`
 			display: none;
 		}
 
+		.MuiDataGrid-cell {
+			border-bottom: none;
+		}
+
 		.MuiDataGrid-columnHeader:focus-within,
 		.MuiDataGrid-cell:focus-within,
 		.MuiDataGrid-columnHeader:focus,
