@@ -1,0 +1,46 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import FileUpload from './FileUpload';
+
+<Meta
+	title="Common/FileUpload"
+	component={FileUpload}
+	decorators={[
+		(storyFn) => (
+			<div
+				style={{
+					maxWidth: '620px',
+				}}
+			>
+				{storyFn()}
+			</div>
+		),
+	]}
+/>
+
+# FileUpload
+
+This file upload component is using [react-dropzone](https://react-dropzone.js.org/) and has the possibility to use the options from this library.
+
+Check out this [example](https://react-dropzone.js.org/#!/Basic%20example) based on hooks.
+
+_The component below uses these options:_
+
+- **noClick**: true,
+- **noKeyboard**: true,
+- **accept**: 'image/png'
+
+<Canvas>
+	<Story name="Default">
+		<FileUpload
+			getPostUrl={() => 'api/endpoint'}
+			placeholder="Sleep de png bestanden in dit vlak of"
+			droppingLabel="bestanden geselecteerd"
+			selectFilesLabel="selecteer bestanden"
+			removeLabel="Wissen"
+			cancelLabel="Annyleren"
+			fileUploadErrorLabel="dit bestand kan niet worden geüpload"
+			fileUploadInProgressLabel="wordt geupload"
+			options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
+		/>
+	</Story>
+</Canvas>
