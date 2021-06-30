@@ -1,8 +1,7 @@
 //@ts-nocheck
 
 import React, { useState } from 'react';
-
-//import styles
+import { CancelIconStyle, InputContainerStyle, ReplayIconStyle } from './EditableInputStyles';
 
 // types
 
@@ -13,9 +12,21 @@ const EditableInput = ({ name, data }) => {
 	return (
 		<div>
 			{editing ? (
-				<input type="input" name={name} placeholder={value} value={value} onChange={(e) => setValue(e.target.value)} />
+				<div>
+					<InputContainerStyle>
+						<input
+							type="input"
+							name={name}
+							placeholder={value}
+							value={value}
+							onChange={(e) => setValue(e.target.value)}
+						/>
+						{value && <CancelIconStyle onClick={() => setValue('')} />}
+					</InputContainerStyle>
+					<ReplayIconStyle onClick={() => setValue(data)} />
+				</div>
 			) : (
-				<span onClick={() =>setEditing(true)}>{data}</span>
+				<span onDoubleClick={() => setEditing(true)}>{data}</span>
 			)}
 		</div>
 	);
