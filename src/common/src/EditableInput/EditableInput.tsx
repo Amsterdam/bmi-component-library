@@ -1,34 +1,73 @@
 //@ts-nocheck
-
-import React, { useState } from 'react';
-import { CancelIconStyle, InputContainerStyle, ReplayIconStyle } from './EditableInputStyles';
+import React, { useRef, useState, useEffect } from 'react';
+import {
+	EditableInputContainerStyle,
+	EditableInputStyle,
+	CancelIconStyle,
+	InputContainerStyle,
+	InputStyles,
+	ReplayIconStyle,
+	LabelStyle,
+} from './EditableInputStyles';
 
 // types
 
 const EditableInput = ({ name, data }) => {
+	const ref = useRef();
 	const [value, setValue] = useState(data);
 	const [editing, setEditing] = useState(false);
 
+	useEffect(() => {
+		const checkIfClickedOutside = (e) => {
+			if (editing && ref.current && !ref.current.contains(e.target)) {
+				setEditing(false);
+			}
+		};
+		document.addEventListener('mousedown', checkIfClickedOutside);
+		return () => {
+			document.removeEventListener('mousedown', checkIfClickedOutside);
+		};
+	});
+
+	function handleOnKeyUp(event) {
+		if (event.key === 'Enter') {
+			setEditing(false);
+		}
+	}
+
 	return (
-		<div>
+		<EditableInputContainerStyle onKeyUp={(e) => handleOnKeyUp(e)}>
 			{editing ? (
-				<div>
+				<EditableInputStyle ref={ref}>
 					<InputContainerStyle>
-						<input
+						<InputStyles
 							type="input"
 							name={name}
 							placeholder={value}
 							value={value}
 							onChange={(e) => setValue(e.target.value)}
 						/>
-						{value && <CancelIconStyle onClick={() => setValue('')} />}
+						{value && (
+							<CancelIconStyle
+								onClick={() => {
+									setValue('');
+									// setBlurOnEscape(false);
+								}}
+							/>
+						)}
 					</InputContainerStyle>
 					<ReplayIconStyle onClick={() => setValue(data)} />
-				</div>
+				</EditableInputStyle>
 			) : (
-				<span onDoubleClick={() => setEditing(true)}>{data}</span>
+				<LabelStyle
+					onDoubleClick={() => {
+						setEditing(true);
+					}}
+				>
+					{value || "Vul hier iets in"}
+				</LabelStyle>
 			)}
-		</div>
+		</EditableInputContainerStyle>
 	);
 };
 
