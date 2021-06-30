@@ -8,7 +8,7 @@ export default {
 };
 
 const Template: Story<React.ComponentProps<typeof DocumentTable>> = (args) => {
-	return <DocumentTable {...args} />;
+	return <DocumentTable {...args} pageSize={3} />;
 };
 
 export const Default = Template.bind({});
