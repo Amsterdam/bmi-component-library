@@ -5,18 +5,12 @@ import { Input } from '@amsterdam/asc-ui';
 import CancelIcon from "@material-ui/icons/Cancel";
 import ReplayIcon from "@material-ui/icons/Replay";
 
-export const EditableInputContainerStyle = styled.div`
+export const EditableInputStyle = styled.div`
     color:${themeColor('tint', 'level4')};
     font-weight: 500;
     width: 100%;
 
 `
-
-export const EditableInputStyle = styled.div`
-
-`
-
-
 export const InputContainerStyle = styled.div`
     position: relative;
     display: inline;

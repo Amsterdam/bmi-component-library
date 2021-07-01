@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { useRef, useState, useEffect } from 'react';
 import {
-	EditableInputContainerStyle,
 	EditableInputStyle,
 	CancelIconStyle,
 	InputContainerStyle,
@@ -17,6 +16,12 @@ const EditableInput = ({ name, data }) => {
 	const [value, setValue] = useState(data);
 	const [editing, setEditing] = useState(false);
 
+	function handleOnKeyUp(event) {
+		if (event.key === 'Enter') {
+			setEditing(false);
+		}
+	}
+
 	useEffect(() => {
 		const checkIfClickedOutside = (e) => {
 			if (editing && ref.current && !ref.current.contains(e.target)) {
@@ -29,19 +34,21 @@ const EditableInput = ({ name, data }) => {
 		};
 	});
 
-	function handleOnKeyUp(event) {
-		if (event.key === 'Enter') {
-			setEditing(false);
+	useEffect(() => {
+		const input = document.getElementById('input');
+		if (!editing) {
+			return;
 		}
-	}
+		(editing) && input.select();
+	}, [editing]);
 
 	return (
-		<EditableInputContainerStyle onKeyUp={(e) => handleOnKeyUp(e)}>
+		<EditableInputStyle onKeyUp={(e) => handleOnKeyUp(e)}>
 			{editing ? (
-				<EditableInputStyle ref={ref}>
+				<div ref={ref}>
 					<InputContainerStyle>
 						<InputStyles
-							type="input"
+							id="input"
 							name={name}
 							placeholder={value}
 							value={value}
@@ -51,23 +58,23 @@ const EditableInput = ({ name, data }) => {
 							<CancelIconStyle
 								onClick={() => {
 									setValue('');
-									// setBlurOnEscape(false);
 								}}
 							/>
 						)}
 					</InputContainerStyle>
 					<ReplayIconStyle onClick={() => setValue(data)} />
-				</EditableInputStyle>
+				</div>
 			) : (
 				<LabelStyle
 					onDoubleClick={() => {
 						setEditing(true);
 					}}
 				>
-					{value || "Vul hier iets in"}
+					{/* met Inge bespreken of er iets moet staan als veld leeg is */}
+					{value || 'Vul hier iets in'}
 				</LabelStyle>
 			)}
-		</EditableInputContainerStyle>
+		</EditableInputStyle>
 	);
 };
 
