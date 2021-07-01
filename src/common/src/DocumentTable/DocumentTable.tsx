@@ -203,7 +203,7 @@ const DocumentTable: React.FC<Props> = ({
 				columnBuffer={tableColumns.length}
 			/>
 			<PaginationStyle
-				collectionSize={rows.length}
+				collectionSize={filteredRows.length}
 				pageSize={pageSize}
 				page={currentPage}
 				onPageChange={setCurrentPage}
