@@ -9,8 +9,8 @@ export const EditableInputStyle = styled.div`
     color:${themeColor('tint', 'level4')};
     font-weight: 500;
     width: 100%;
+`;
 
-`
 export const InputContainerStyle = styled.div`
     position: relative;
     display: inline;
@@ -18,32 +18,30 @@ export const InputContainerStyle = styled.div`
 `;
 
 export const InputStyles = styled(Input)`
-    && {
-        min-width: 70px;
-        max-width: 620px;
-        line-height:22px;
-        padding-left: 10px;
-        color:${themeColor('tint', 'level4')};
+    min-width: 70px;
+    max-width: 620px;
+    line-height:22px;
+    padding-left: 10px;
+    color:${themeColor('tint', 'level4')};
+
+    &:focus {
+        outline:none;
     }
-`
+`;
 
 export const CancelIconStyle = styled(CancelIcon)`
-    && {
-        position: absolute;
-        top: 0;
-        right: 4px;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-    }
+    position: absolute;
+    top: -3px;
+    right: 4px;
+    cursor: pointer;
 `
 
 export const ReplayIconStyle = styled(ReplayIcon)`
     position: absolute;
-    top: 27px;
+    top: 25px;
     transform: rotate(310deg);
     margin-left: 5px;
-  `;
+`;
 
 export const LabelStyle = styled.div`
     width: 240px;
@@ -51,4 +49,4 @@ export const LabelStyle = styled.div`
     max-width: 620px;
     line-height:22px;
     padding: 12px 9px 9px 11px;
-`
+`;

@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { useRef, useState, useEffect } from 'react';
+import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
 	EditableInputStyle,
 	CancelIconStyle,
@@ -11,9 +12,10 @@ import {
 
 // types
 
-const EditableInput = ({ name, data }) => {
+const EditableInput = ({ name, data, ...props }) => {
 	const ref = useRef();
-	const [value, setValue] = useState(data);
+	const isTouchScreen = useDetectTouchscreen();
+	const [value, setValue] = useState(data || 'Vul hier iets in');
 	const [editing, setEditing] = useState(false);
 
 	function handleOnKeyUp(event) {
@@ -39,7 +41,7 @@ const EditableInput = ({ name, data }) => {
 		if (!editing) {
 			return;
 		}
-		(editing) && input.select();
+		editing && input.select();
 	}, [editing]);
 
 	return (
@@ -53,6 +55,7 @@ const EditableInput = ({ name, data }) => {
 							placeholder={value}
 							value={value}
 							onChange={(e) => setValue(e.target.value)}
+							{...props}
 						/>
 						{value && (
 							<CancelIconStyle
@@ -66,12 +69,14 @@ const EditableInput = ({ name, data }) => {
 				</div>
 			) : (
 				<LabelStyle
-					onDoubleClick={() => {
-						setEditing(true);
-					}}
+					onClick={isTouchScreen ? () => {
+						setEditing(true)} : undefined
+					}
+					onDoubleClick={!isTouchScreen ? () => {
+						setEditing(true)} : undefined
+					}
 				>
-					{/* met Inge bespreken of er iets moet staan als veld leeg is */}
-					{value || 'Vul hier iets in'}
+					{value|| "Vul hier iets in"} 
 				</LabelStyle>
 			)}
 		</EditableInputStyle>
