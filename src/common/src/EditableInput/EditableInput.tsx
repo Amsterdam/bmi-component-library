@@ -1,16 +1,16 @@
-import React, { useRef, useState, useEffect, HtmlHTMLAttributes, ChangeEvent } from 'react';
+import React, { useRef, useState, useEffect, ChangeEvent } from 'react';
 import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
 	EditableInputStyle,
-	CancelIconStyle,
+	ClearIconStyle,
 	InputContainerStyle,
 	InputStyles,
-	ReplayIconStyle,
+	RestoreIconStyle,
 	LabelStyle,
 } from './EditableInputStyles';
 
 type Props = {
-	data: string;
+	data?: string;
 	id: string;
 };
 
@@ -52,36 +52,40 @@ const EditableInput: React.FC<Props> = ({ data, id, ...props }) => {
 					<InputContainerStyle>
 						<InputStyles
 							id={id}
+							data-testid="editable-input"
 							placeholder={value}
 							value={value}
 							onChange={(e) => setValue(e.target.value)}
 							{...props}
 						/>
 						{value && (
-							<CancelIconStyle
+							<ClearIconStyle
+								data-testid="input-clear-button"
 								onClick={() => {
 									setValue('');
 								}}
 							/>
 						)}
 					</InputContainerStyle>
-					<ReplayIconStyle onClick={() => setValue(data)} />
+					<RestoreIconStyle onClick={() => setValue(data)} />
 				</div>
 			) : (
 				<LabelStyle
+					data-testid="editable-label"
 					onClick={
 						isTouchScreen
 							? () => {
-									setEditing(true);
-							  }
+								setEditing(true);
+							}
 							: undefined
 					}
 					onDoubleClick={
 						!isTouchScreen
-							? () => {
-									setEditing(true);
-							  }
-							: undefined
+						?
+						() => {
+							setEditing(true);
+						}
+						: undefined
 					}
 				>
 					{value || 'Vul hier iets in'}

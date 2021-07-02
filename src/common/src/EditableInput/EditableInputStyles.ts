@@ -29,14 +29,14 @@ export const InputStyles = styled(Input)`
     }
 `;
 
-export const CancelIconStyle = styled(CancelIcon)`
+export const ClearIconStyle = styled(CancelIcon)`
     position: absolute;
     top: -3px;
     right: 4px;
     cursor: pointer;
 `
 
-export const ReplayIconStyle = styled(ReplayIcon)`
+export const RestoreIconStyle = styled(ReplayIcon)`
     position: absolute;
     top: 25px;
     transform: rotate(310deg);
