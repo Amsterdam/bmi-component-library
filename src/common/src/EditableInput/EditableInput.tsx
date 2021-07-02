@@ -1,5 +1,4 @@
-//@ts-nocheck
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, HtmlHTMLAttributes, ChangeEvent } from 'react';
 import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
 	EditableInputStyle,
@@ -10,23 +9,25 @@ import {
 	LabelStyle,
 } from './EditableInputStyles';
 
-// types
+type Props = {
+	data: string;
+	id: string;
+};
 
-const EditableInput = ({ name, data, ...props }) => {
-	const ref = useRef();
+const EditableInput: React.FC<Props> = ({ data, id, ...props }) => {
+	const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 	const isTouchScreen = useDetectTouchscreen();
-	const [value, setValue] = useState(data || 'Vul hier iets in');
+	const [value, setValue] = useState(data);
 	const [editing, setEditing] = useState(false);
-
-	function handleOnKeyUp(event) {
+	function handleOnKeyUp(event: React.KeyboardEvent) {
 		if (event.key === 'Enter') {
 			setEditing(false);
 		}
 	}
 
 	useEffect(() => {
-		const checkIfClickedOutside = (e) => {
-			if (editing && ref.current && !ref.current.contains(e.target)) {
+		const checkIfClickedOutside: any = (e: React.MouseEvent<ChangeEvent>) => {
+			if (editing && ref.current && !ref.current.contains(e.target as Node)) {
 				setEditing(false);
 			}
 		};
@@ -37,11 +38,11 @@ const EditableInput = ({ name, data, ...props }) => {
 	});
 
 	useEffect(() => {
-		const input = document.getElementById('input');
+		const input = document.getElementById(id) as HTMLInputElement;
 		if (!editing) {
 			return;
 		}
-		editing && input.select();
+		input && input.select();
 	}, [editing]);
 
 	return (
@@ -50,8 +51,7 @@ const EditableInput = ({ name, data, ...props }) => {
 				<div ref={ref}>
 					<InputContainerStyle>
 						<InputStyles
-							id="input"
-							name={name}
+							id={id}
 							placeholder={value}
 							value={value}
 							onChange={(e) => setValue(e.target.value)}
@@ -69,14 +69,22 @@ const EditableInput = ({ name, data, ...props }) => {
 				</div>
 			) : (
 				<LabelStyle
-					onClick={isTouchScreen ? () => {
-						setEditing(true)} : undefined
+					onClick={
+						isTouchScreen
+							? () => {
+									setEditing(true);
+							  }
+							: undefined
 					}
-					onDoubleClick={!isTouchScreen ? () => {
-						setEditing(true)} : undefined
+					onDoubleClick={
+						!isTouchScreen
+							? () => {
+									setEditing(true);
+							  }
+							: undefined
 					}
 				>
-					{value|| "Vul hier iets in"} 
+					{value || 'Vul hier iets in'}
 				</LabelStyle>
 			)}
 		</EditableInputStyle>

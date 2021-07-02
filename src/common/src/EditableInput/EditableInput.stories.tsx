@@ -13,6 +13,6 @@ const Template: Story<React.ComponentProps<typeof EditableInput>> = (args) => <E
 
 export const Default = Template.bind({});
 Default.args = {
-	name: 'Document omschrijving',
+	id: 'Document omschrijving',
 	data: 'Brug Centrum',
 };
