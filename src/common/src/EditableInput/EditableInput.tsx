@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { useRef, useState, useEffect, ChangeEvent } from 'react';
 import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
@@ -72,20 +73,19 @@ const EditableInput: React.FC<Props> = ({ data, id, ...props }) => {
 			) : (
 				<LabelStyle
 					data-testid="editable-label"
-					onClick={
+						onClick={
 						isTouchScreen
 							? () => {
-								setEditing(true);
+									setEditing(true);
 							}
 							: undefined
 					}
 					onDoubleClick={
 						!isTouchScreen
-						?
-						() => {
-							setEditing(true);
-						}
-						: undefined
+							? () => {
+									setEditing(true);
+							}
+							: undefined
 					}
 				>
 					{value || 'Vul hier iets in'}

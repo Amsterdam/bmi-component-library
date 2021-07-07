@@ -2,42 +2,44 @@
 
 import React from 'react';
 import { cleanup, render } from '../../../test-utils/customRender';
+import * as isTouchModule from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import EditableInput from './EditableInput';
 import userEvent from '@testing-library/user-event';
 
-describe('<EditableInput />', () => {
-	let getByTestId: Function;
-	let queryByTestId: Function;
+jest.mock('@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen');
 
-	jest.mock('@amsterdam/asc-ui/lib/utils/hooks/');
-	const isTouchScreenMock = jest.fn();
+describe('<EditableInput />', () => {
+	let queryByTestId: Function;
+	let label: any;
+	isTouchModule.default.mockReturnValue(true);
 
 	beforeEach(() => {
 		cleanup();
-		({ getByTestId, queryByTestId } = render(<EditableInput id="test-editable-input" />));
+		({ queryByTestId } = render(<EditableInput id="test-editable-input" data="blbl" />));
+		label = queryByTestId('editable-label');
 	});
 
 	it('should render correctly', () => {
-		expect(getByTestId('editable-label')).toBeInTheDocument();
+		expect(queryByTestId('editable-label')).toBeInTheDocument();
 	});
 
 	it('on touchscreen it should render input with one click on label', () => {
 		expect(queryByTestId('editable-input')).toBeFalsy();
-		isTouchScreenMock.mockReturnValue(false);
-		const label = getByTestId('editable-label');
 		userEvent.click(label);
 		expect(queryByTestId('editable-input')).toBeTruthy();
 	});
 
 	it('on desktop it should render input with a double click on label', () => {
 		expect(queryByTestId('editable-input')).toBeFalsy();
-		isTouchScreenMock.mockReturnValue(false);
-		const label = getByTestId('editable-label');
-		console.log(label);
+		isTouchModule.default.mockReturnValue(false);
 		userEvent.dblClick(label);
+
 		expect(queryByTestId('editable-input')).toBeTruthy();
 	});
-});
 
-//if clear button clicked input should be empty
+	// it('should clear the input after clicking the clearbutton', () => {
+	// 	userEvent.click(label);
+	// 	expect(getByTestId('editable-input').DOCUMENT_FRAGMENT_NODE.valueOf('dfsdf'));
+	// });
+});
 //if restore button clicked the input should be restores
