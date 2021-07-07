@@ -68,7 +68,10 @@ const EditableInput: React.FC<Props> = ({ data, id, ...props }) => {
 							/>
 						)}
 					</InputContainerStyle>
-					<RestoreIconStyle onClick={() => setValue(data)} />
+					<RestoreIconStyle 
+													data-testid="input-restore-button"
+
+					onClick={() => setValue(data)} />
 				</div>
 			) : (
 				<LabelStyle

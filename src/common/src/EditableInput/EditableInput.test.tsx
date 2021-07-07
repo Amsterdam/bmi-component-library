@@ -1,7 +1,7 @@
 //@ts-nocheck
 
 import React from 'react';
-import { cleanup, render, prettyDOM } from '../../../test-utils/customRender';
+import { cleanup, render, fireEvent } from '../../../test-utils/customRender';
 import * as isTouchModule from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import EditableInput from './EditableInput';
 import userEvent from '@testing-library/user-event';
@@ -9,14 +9,13 @@ import userEvent from '@testing-library/user-event';
 jest.mock('@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen');
 
 describe('<EditableInput />', () => {
-	let container: any;
 	let queryByTestId: Function;
 	let label: any;
 	isTouchModule.default.mockReturnValue(true);
 
 	beforeEach(() => {
 		cleanup();
-		({ queryByTestId, container } = render(<EditableInput id="test-editable-input" data="blbl" />));
+		({ queryByTestId } = render(<EditableInput id="test-editable-input" data="test" />));
 		label = queryByTestId('editable-label');
 	});
 
@@ -40,12 +39,22 @@ describe('<EditableInput />', () => {
 
 	it('should clear the input after clicking the clearbutton', () => {
 		userEvent.dblClick(label);
-		expect(queryByTestId('editable-input').value).toBe('blbl');
+		expect(queryByTestId('editable-input').value).toBe('test');
 
 		const clearButton = queryByTestId('input-clear-button');
-		console.log(prettyDOM(container));
 		userEvent.click(clearButton);
 		expect(queryByTestId('editable-input').value).toBe('');
-		console.log(prettyDOM(container));
+	});
+
+	it('should restore the input to the original value', () => {
+		userEvent.dblClick(label);
+
+		const input = queryByTestId('editable-input');
+		fireEvent.change(input, { target: { value: 'a' } });
+		expect(queryByTestId('editable-input').value).toBe('a');
+
+		const restoreIcon = queryByTestId('input-restore-button');
+		userEvent.click(restoreIcon);
+		expect(queryByTestId('editable-input').value).toBe('test');
 	});
 });
