@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import React from 'react';
 import { cleanup, render, fireEvent } from '../../../test-utils/customRender';
 import * as isTouchModule from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
@@ -10,7 +8,8 @@ jest.mock('@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen');
 
 describe('<EditableInput />', () => {
 	let queryByTestId: Function;
-	let label: any;
+	let label: HTMLElement;
+	// @ts-ignore
 	isTouchModule.default.mockReturnValue(true);
 
 	beforeEach(() => {
@@ -31,6 +30,7 @@ describe('<EditableInput />', () => {
 
 	it('on desktop it should render input with a double click on label', () => {
 		expect(queryByTestId('editable-input')).toBeFalsy();
+		// @ts-ignore
 		isTouchModule.default.mockReturnValue(false);
 		userEvent.dblClick(label);
 
