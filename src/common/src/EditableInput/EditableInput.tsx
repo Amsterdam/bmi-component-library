@@ -1,12 +1,10 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from 'react';
-import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
 	EditableInputStyle,
 	ClearIconStyle,
 	InputContainerStyle,
 	InputStyles,
 	RestoreIconStyle,
-	LabelStyle,
 } from './EditableInputStyles';
 
 type Props = {
@@ -16,14 +14,12 @@ type Props = {
 
 const EditableInput: React.FC<Props> = ({ data, id, ...props }: Props) => {
 	const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
-	const isTouchScreen = useDetectTouchscreen();
-	const [value, setValue] = useState<string | undefined>(data);
-	const [editing, setEditing] = useState<boolean>(false);
+	const [value, setValue] = useState<string | undefined>(data || 'Vul hier iets in');
 
 	useEffect(() => {
 		const checkIfClickedOutside: any = (e: React.MouseEvent<ChangeEvent>) => {
-			if (editing && ref.current && !ref.current.contains(e.target as Node)) {
-				setEditing(false);
+			if (ref.current && !ref.current.contains(e.target as Node)) {
+				document.getElementById(id)?.blur();
 			}
 		};
 		document.addEventListener('mousedown', checkIfClickedOutside);
@@ -32,51 +28,34 @@ const EditableInput: React.FC<Props> = ({ data, id, ...props }: Props) => {
 		};
 	});
 
-	useEffect(() => {
-		if (!editing) return;
-		const input = document.getElementById(id) as HTMLInputElement;
-		input && input.select();
-	}, [editing]);
-
 	return (
 		<EditableInputStyle
+			ref={ref}
 			onKeyUp={(e: React.KeyboardEvent) => {
 				if (e.key === 'Enter') {
-					setEditing(false);
+					document.getElementById(id)?.blur();
 				}
 			}}
 		>
-			{editing ? (
-				<div ref={ref}>
-					<InputContainerStyle>
-						<InputStyles
-							id={id}
-							data-testid="editable-input"
-							placeholder={value}
-							value={value}
-							onChange={(e) => setValue(e.target.value)}
-							{...props}
-						/>
-						{value && (
-							<ClearIconStyle
-								data-testid="input-clear-button"
-								onClick={() => {
-									setValue('');
-								}}
-							/>
-						)}
-					</InputContainerStyle>
-					<RestoreIconStyle data-testid="input-restore-button" onClick={() => setValue(data)} />
-				</div>
-			) : (
-				<LabelStyle
-					data-testid="editable-label"
-					onClick={isTouchScreen ? () => setEditing(true) : undefined}
-					onDoubleClick={!isTouchScreen ? () => setEditing(true) : undefined}
-				>
-					{value || 'Vul hier iets in'}
-				</LabelStyle>
-			)}
+			<InputContainerStyle>
+				<InputStyles
+					id={id}
+					data-testid="editable-input"
+					placeholder={value}
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					{...props}
+				/>
+				{value && (
+					<ClearIconStyle
+						data-testid="input-clear-button"
+						onClick={() => {
+							setValue('');
+						}}
+					/>
+				)}
+			</InputContainerStyle>
+			<RestoreIconStyle data-testid="input-restore-button" onClick={() => setValue(data)} />
 		</EditableInputStyle>
 	);
 };

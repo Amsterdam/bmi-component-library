@@ -42,11 +42,3 @@ export const RestoreIconStyle = styled(ReplayIcon)`
 	transform: rotate(310deg);
 	margin-left: 5px;
 `;
-
-export const LabelStyle = styled.div`
-	width: 240px;
-	min-width: 70px;
-	max-width: 620px;
-	line-height: 22px;
-	padding: 12px 9px 9px 11px;
-`;
