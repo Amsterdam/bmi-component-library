@@ -6,12 +6,12 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import ReplayIcon from "@material-ui/icons/Replay";
 
 export const EditableInputStyle = styled.div`
-    color:${themeColor('tint', 'level4')};
+            color:${themeColor('tint', 'level4')};
     font-weight: 500;
     width: 100%;
 `;
 
-export const InputContainerStyle = styled.div`
+export const InputContainerStyle = styled.div`          
     position: relative;
     display: inline;
     width: 100%;
@@ -22,7 +22,7 @@ export const InputStyles = styled(Input)`
     max-width: 620px;
     line-height:22px;
     padding-left: 10px;
-    color:${themeColor('tint', 'level4')};
+    color:${themeColor('tint',      'level4')};
 
     &:focus {
         outline:none;
