@@ -26,7 +26,7 @@ const EditableInput: React.FC<Props> = ({ data, id, ...props }: Props) => {
 		return () => {
 			document.removeEventListener('mousedown', checkIfClickedOutside);
 		};
-	});
+	},[]);
 
 	return (
 		<EditableInputStyle
