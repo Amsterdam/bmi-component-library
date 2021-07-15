@@ -1,12 +1,10 @@
 import styled from 'styled-components';
-import { themeColor } from '@amsterdam/asc-ui';
 import { Input } from '@amsterdam/asc-ui';
 
 import CancelIcon from '@material-ui/icons/Cancel';
 import ReplayIcon from '@material-ui/icons/Replay';
 
 export const EditableInputStyle = styled.div`
-	color: ${themeColor('tint', 'level4')};
 	font-weight: 500;
 	width: 100%;
 `;
@@ -22,7 +20,6 @@ export const InputStyles = styled(Input)`
 	max-width: 620px;
 	line-height: 22px;
 	padding-left: 10px;
-	color: ${themeColor('tint', 'level4')};
 
 	&:focus {
 		outline: none;
