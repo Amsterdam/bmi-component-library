@@ -44,7 +44,7 @@ jobs:
                     git config --local user.name "github-actions[bot]"
 
             -   name: Prepare canary release
-                if: github.ref !== 'refs/heads/master'
+                if: github.ref != 'refs/heads/master'
                 run: npm run release -- --prerelease canary --no-verify
 
             -   name: Prepare production release
@@ -65,7 +65,7 @@ jobs:
 #                    branch: ${{ github.ref }}
 
             -   name: Publish Canary release to NPM
-                if: github.ref !== 'refs/heads/master'
+                if: github.ref != 'refs/heads/master'
                 run: |
                     echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
                     npm publish --tag canary
