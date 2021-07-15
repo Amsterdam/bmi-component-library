@@ -1,4 +1,4 @@
-import { Button } from '@amsterdam/asc-ui';
+import { Button, Heading } from '@amsterdam/asc-ui';
 import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
 import { ModalBlockStyle } from '../Modal/ModalStyles';
@@ -6,7 +6,7 @@ import { ModalBlockStyle } from '../Modal/ModalStyles';
 type ConfirmDialog = {};
 
 export type Props = {
-	header: string;
+	title: string;
 	message: string;
 	textCancelButton: string;
 	textConfirmButton: string;
@@ -15,7 +15,7 @@ export type Props = {
 };
 
 const ConfirmDialog: React.FC<Props> = ({
-	header,
+	title,
 	message,
 	textCancelButton,
 	textConfirmButton,
@@ -26,13 +26,17 @@ const ConfirmDialog: React.FC<Props> = ({
 
 	return (
 		<Modal id="test" open={isModalVisible} onClose={() => setModalVisibility(false)}>
-			<Modal.TopBar>{header}</Modal.TopBar>
+			<Modal.TopBar>
+				<Heading forwardedAs="h4">{title}</Heading>
+			</Modal.TopBar>
 			<Modal.Content>
 				<ModalBlockStyle>{message}</ModalBlockStyle>
 			</Modal.Content>
 			<Modal.Actions>
 				<Modal.Actions.Right>
 					<Button
+						style={{ marginRight: '8px' }}
+						variant="primaryInverted"
 						onClick={() => {
 							setModalVisibility(false);
 							if (typeof onCancel !== 'undefined') {
@@ -43,6 +47,7 @@ const ConfirmDialog: React.FC<Props> = ({
 						{textCancelButton}
 					</Button>
 					<Button
+						variant="primary"
 						onClick={() => {
 							setModalVisibility(false);
 							onConfirm();

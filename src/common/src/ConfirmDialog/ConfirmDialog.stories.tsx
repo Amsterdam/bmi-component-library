@@ -11,8 +11,8 @@ const Template = (args) => <ConfirmDialog {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-	header: 'Waarschuwing',
+	title: 'Waarschuwing',
 	message: 'Weet u het zeker?',
-	textCancelButton: 'Ja',
-	textConfirmButton: 'Nee',
+	textCancelButton: 'Nee',
+	textConfirmButton: 'Ja',
 };
