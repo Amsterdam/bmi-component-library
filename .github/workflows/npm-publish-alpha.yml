@@ -1,18 +1,13 @@
-name: Publish to NPM
+name: Publish alpha release to NPM
 
 on:
-    push:
-#        branches: [main]
-        # TMP
-        branches:
-            - '**'
-
-    pull_request:
-        branches:
-            - '**'
-
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
+        inputs:
+            tag:
+                description: 'Tag to use for npm publish (alpha/canary)'
+                default: 'alpha'
+                required: true
 
 jobs:
     publish:
@@ -44,19 +39,8 @@ jobs:
                     git config --local user.email "github-actions[bot]@noreply.amsterdam.nl"
                     git config --local user.name "github-actions[bot]"
 
-            -   name: Prepare canary release
-                if: github.ref != 'refs/heads/master'
-                run: npm run release -- --prerelease canary --no-verify
-
-            -   name: Prepare production release
-                if: github.ref == 'refs/heads/master'
-                run: npm run release -- --no-verify
-
-            -   name: Status
-                run: |
-                    git remote -v
-                    git status
-                    git show --summary
+            -   name: Prepare alpha release
+                run: npm run release -- --prerelease ${{ github.event.inputs.tag }} --no-verify
 
             -   name: Push release commit + tag
                 uses: ad-m/github-push-action@master
@@ -65,19 +49,9 @@ jobs:
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     branch: ${{ github.ref }}
 
-            -   name: Publish Canary release to NPM
+            -   name: Publish alpha release to NPM
                 uses: JS-DevTools/npm-publish@v1
-                if: github.ref != 'refs/heads/master'
                 with:
                     token: ${{ secrets.NPM_TOKEN }}
-                    tag: canary
+                    tag: ${{ github.event.inputs.tag }}
                     access: public
-
-            -   name: Publish production release to NPM
-                if: github.ref == 'refs/heads/master'
-                run: |
-                    echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
-                    npm publish --access public
-                env:
-                    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
