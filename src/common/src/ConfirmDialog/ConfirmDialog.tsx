@@ -1,5 +1,5 @@
 import { Heading } from '@amsterdam/asc-ui';
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from '../Modal/Modal';
 import { ModalBlockStyle } from '../Modal/ModalStyles';
 import { ButtonStyles } from './ConfirmDialogStyles';
@@ -14,7 +14,7 @@ export type Props = {
 	onCancel: () => void;
 	onConfirm: () => void;
 	isModalVisible: boolean;
-	setModalVisibility: (arg:boolean) => void;
+	setModalVisibility: (arg: boolean) => void;
 };
 
 const ConfirmDialog: React.FC<Props> = ({
