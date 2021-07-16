@@ -59,7 +59,7 @@ jobs:
                     git show --summary
                     echo "TOKEN: $NPM_TOKEN"
                 env:
-                    SSH_KEY: ${{secrets.NPM_TOKEN}}
+                    NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
             -   name: Push release commit + tag
                 uses: ad-m/github-push-action@master
