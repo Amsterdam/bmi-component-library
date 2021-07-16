@@ -57,9 +57,6 @@ jobs:
                     git remote -v
                     git status
                     git show --summary
-                    echo "TOKEN: $NPM_TOKEN"
-                env:
-                    NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
             -   name: Push release commit + tag
                 uses: ad-m/github-push-action@master
