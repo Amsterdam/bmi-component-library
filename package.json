@@ -1,5 +1,5 @@
 {
-	"name": "@bmi/component-library",
+	"name": "@amsterdam/bmi-component-library",
 	"version": "0.0.1",
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
 	"main": "lib/index.js",
@@ -30,7 +30,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@git.data.amsterdam.nl:bmi/component-library.git"
+		"url": "git@github.com:Amsterdam/bmi-component-library.git"
 	},
 	"keywords": [
 		"react",
