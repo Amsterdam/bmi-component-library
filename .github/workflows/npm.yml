@@ -66,10 +66,12 @@ jobs:
                     branch: ${{ github.ref }}
 
             -   name: Publish Canary release to NPM
+                uses: JS-DevTools/npm-publish@v1
                 if: github.ref != 'refs/heads/master'
-                run: npm publish --tag canary --access public
                 env:
-                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                    token: ${{ secrets.NPM_TOKEN }}
+                    tag: canary
+                    access: public
 
             -   name: Publish production release to NPM
                 if: github.ref == 'refs/heads/master'
