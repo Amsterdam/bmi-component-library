@@ -13,6 +13,8 @@ export type Props = {
 	textConfirmButton: string;
 	onCancel: () => void;
 	onConfirm: () => void;
+	isModalVisible: boolean;
+	setModalVisibility: (arg:boolean) => void;
 };
 
 const ConfirmDialog: React.FC<Props> = ({
@@ -22,9 +24,9 @@ const ConfirmDialog: React.FC<Props> = ({
 	textConfirmButton,
 	onCancel,
 	onConfirm,
+	isModalVisible,
+	setModalVisibility,
 }: Props) => {
-	const [isModalVisible, setModalVisibility] = useState<boolean>(true);
-
 	return (
 		<Modal id="confirm-dialog" open={isModalVisible} onClose={() => setModalVisibility(false)}>
 			<Modal.TopBar>

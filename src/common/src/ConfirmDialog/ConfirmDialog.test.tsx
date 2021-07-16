@@ -8,7 +8,7 @@ describe('<ConfirmDialog/>', () => {
 	let getByText: any;
 	const onCancelMock = jest.fn();
 	const onConfirmMock = jest.fn();
-
+	const setModalVisibilityMock = jest.fn();
 	function mount() {
 		({ getByTestId, getByText } = render(
 			<ConfirmDialog
@@ -18,6 +18,8 @@ describe('<ConfirmDialog/>', () => {
 				textConfirmButton="Confirm"
 				onCancel={onCancelMock}
 				onConfirm={onConfirmMock}
+				isModalVisible={true}
+				setModalVisibility={setModalVisibilityMock}
 			/>,
 		));
 	}
@@ -32,19 +34,15 @@ describe('<ConfirmDialog/>', () => {
 
 	it('should call the onCancel function when clicking the cancelButton', () => {
 		mount();
-		const modal = getByTestId('modal');
 		const cancelButton = getByTestId('cancel-button');
 		userEvent.click(cancelButton);
 		expect(onCancelMock).toBeCalled();
-		expect(modal).not.toBeInTheDocument();
 	});
 
 	it('should call the onConfirm function when clicking the confirmButton', () => {
 		mount();
-		const modal = getByTestId('modal');
 		const confirmButton = getByTestId('confirm-button');
 		userEvent.click(confirmButton);
 		expect(onConfirmMock).toBeCalled();
-		expect(modal).not.toBeInTheDocument();
 	});
 });
