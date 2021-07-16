@@ -69,7 +69,7 @@ jobs:
                 if: github.ref != 'refs/heads/master'
                 run: npm publish --tag canary --access public
                 env:
-                    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             -   name: Publish production release to NPM
                 if: github.ref == 'refs/heads/master'
