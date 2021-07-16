@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2-canary.2](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.2-canary.1...v0.0.2-canary.2) (2021-07-16)
+
 ### 0.0.2-canary.1 (2021-07-16)
 
 
