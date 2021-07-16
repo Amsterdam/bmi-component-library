@@ -40,7 +40,7 @@
 		"material-ui"
 	],
 	"author": "",
-	"license": "ISC",
+  "license": "MPL-2.0",
 	"devDependencies": {
 		"@babel/cli": "^7.13.14",
 		"@babel/core": "^7.13.14",
