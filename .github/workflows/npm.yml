@@ -68,7 +68,7 @@ jobs:
             -   name: Publish Canary release to NPM
                 uses: JS-DevTools/npm-publish@v1
                 if: github.ref != 'refs/heads/master'
-                env:
+                with:
                     token: ${{ secrets.NPM_TOKEN }}
                     tag: canary
                     access: public
