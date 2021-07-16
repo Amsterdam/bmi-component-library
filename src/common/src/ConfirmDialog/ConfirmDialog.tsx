@@ -26,7 +26,7 @@ const ConfirmDialog: React.FC<Props> = ({
 	const [isModalVisible, setModalVisibility] = useState<boolean>(true);
 
 	return (
-		<Modal data-testid="confirm-dialog" id="test" open={isModalVisible} onClose={() => setModalVisibility(false)}>
+		<Modal id="confirm-dialog" open={isModalVisible} onClose={() => setModalVisibility(false)}>
 			<Modal.TopBar>
 				<Heading forwardedAs="h4">{title}</Heading>
 			</Modal.TopBar>
@@ -36,6 +36,7 @@ const ConfirmDialog: React.FC<Props> = ({
 			<Modal.Actions>
 				<Modal.Actions.Left>
 					<ButtonStyles
+						data-testid="cancel-button"
 						style={{ marginRight: '8px' }}
 						variant="primaryInverted"
 						onClick={() => {
@@ -48,6 +49,7 @@ const ConfirmDialog: React.FC<Props> = ({
 						{textCancelButton}
 					</ButtonStyles>
 					<ButtonStyles
+						data-testid="confirm-button"
 						variant="primary"
 						onClick={() => {
 							setModalVisibility(false);
