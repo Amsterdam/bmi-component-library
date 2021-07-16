@@ -1,6 +1,6 @@
 {
-	"name": "@bmi/component-library",
-	"version": "0.0.2-canary.0",
+	"name": "@amsterdam/bmi-component-library",
+	"version": "0.0.0",
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
 	"main": "lib/index.js",
 	"module": "es/index.js",
@@ -30,7 +30,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@git.data.amsterdam.nl:bmi/component-library.git"
+		"url": "git@github.com:Amsterdam/bmi-component-library.git"
 	},
 	"keywords": [
 		"react",
@@ -40,7 +40,7 @@
 		"material-ui"
 	],
 	"author": "",
-	"license": "ISC",
+	"license": "MPL-2.0",
 	"devDependencies": {
 		"@babel/cli": "^7.13.14",
 		"@babel/core": "^7.13.14",

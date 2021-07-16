@@ -1,0 +1,57 @@
+name: Publish alpha release to NPM
+
+on:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: 'Tag to use for npm publish (alpha/canary)'
+                default: 'alpha'
+                required: true
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 14.x ]
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+                with:
+                    persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+                    fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
+            -   name: Use Node.js ${{ matrix.node-version }}
+                uses: actions/setup-node@v2
+                with:
+                    node-version: ${{ matrix.node-version }}
+                    registry-url: 'https://registry.npmjs.org'
+
+            -   name: NPM Install
+                run: npm ci
+
+            -   name: Build
+                run: npm run build
+
+            -   name: Setup git credentials
+                run: |
+                    git config --local user.email "github-actions[bot]@noreply.amsterdam.nl"
+                    git config --local user.name "github-actions[bot]"
+
+            -   name: Prepare alpha release
+                run: npm run release -- --prerelease ${{ github.event.inputs.tag }} --no-verify
+
+            -   name: Push release commit + tag
+                uses: ad-m/github-push-action@master
+                with:
+                    tags: true
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    branch: ${{ github.ref }}
+
+            -   name: Publish alpha release to NPM
+                uses: JS-DevTools/npm-publish@v1
+                with:
+                    token: ${{ secrets.NPM_TOKEN }}
+                    tag: ${{ github.event.inputs.tag }}
+                    access: public
