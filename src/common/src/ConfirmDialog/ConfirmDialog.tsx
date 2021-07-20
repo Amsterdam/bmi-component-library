@@ -3,37 +3,49 @@ import React from 'react';
 import Modal from '../Modal/Modal';
 import { ModalBlockStyle } from '../Modal/ModalStyles';
 import { ButtonStyles } from './ConfirmDialogStyles';
+import { BehaviorSubject } from 'rxjs';
 
-type ConfirmDialog = {};
-
-export type Props = {
+export interface IState {
 	title: string;
 	message: string;
 	textCancelButton: string;
 	textConfirmButton: string;
 	onCancel: () => void;
 	onConfirm: () => void;
-	isModalVisible: boolean;
-	setModalVisibility: (arg: boolean) => void;
+}
+const initialState: IState = {
+	title: '',
+	message: '',
+	textCancelButton: '',
+	textConfirmButton: '',
+	onCancel: () => {},
+	onConfirm: () => {},
 };
 
-const ConfirmDialog: React.FC<Props> = ({
-	title,
-	message,
-	textCancelButton,
-	textConfirmButton,
-	onCancel,
-	onConfirm,
-	isModalVisible,
-	setModalVisibility,
-}: Props) => {
+const store = new BehaviorSubject(initialState);
+
+export const confirm = ({ ...props }: IState) => {
+	store.next({ ...props });
+};
+const ConfirmDialog: React.FC<{}> = () => {
+	const [state, setState] = React.useState<IState>(initialState);
+	const [isVisible, setIsVisible] = React.useState<boolean>(false);
+
+	React.useEffect(() => {
+		store.subscribe(({ ...props }) => {
+			setState({ ...props });
+			if (props.message) {
+				setIsVisible(true);
+			}
+		});
+	}, []);
 	return (
-		<Modal id="confirm-dialog" open={isModalVisible} onClose={() => setModalVisibility(false)}>
-			<Modal.TopBar>
-				<Heading forwardedAs="h4">{title}</Heading>
+		<Modal id="confirm-dialog" open={isVisible}>
+			<Modal.TopBar hideCloseButton>
+				<Heading forwardedAs="h4">{state.title}</Heading>
 			</Modal.TopBar>
 			<Modal.Content>
-				<ModalBlockStyle>{message}</ModalBlockStyle>
+				<ModalBlockStyle>{state.message}</ModalBlockStyle>
 			</Modal.Content>
 			<Modal.Actions>
 				<Modal.Actions.Left>
@@ -42,23 +54,23 @@ const ConfirmDialog: React.FC<Props> = ({
 						style={{ marginRight: '8px' }}
 						variant="primaryInverted"
 						onClick={() => {
-							setModalVisibility(false);
-							if (typeof onCancel !== 'undefined') {
-								onCancel();
+							setIsVisible(false);
+							if (typeof state.onCancel !== 'undefined') {
+								state.onCancel();
 							}
 						}}
 					>
-						{textCancelButton}
+						{state.textCancelButton}
 					</ButtonStyles>
 					<ButtonStyles
 						data-testid="confirm-button"
 						variant="primary"
 						onClick={() => {
-							setModalVisibility(false);
-							onConfirm();
+							setIsVisible(false);
+							state.onConfirm();
 						}}
 					>
-						{textConfirmButton}
+						{state.textConfirmButton}
 					</ButtonStyles>
 				</Modal.Actions.Left>
 			</Modal.Actions>

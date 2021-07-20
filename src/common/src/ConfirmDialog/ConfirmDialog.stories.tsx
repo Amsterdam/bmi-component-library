@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import ConfirmDialog from './ConfirmDialog';
+import React from 'react';
+import ConfirmDialog, { confirm } from './ConfirmDialog';
 import { Story } from '@storybook/react';
 
 export default {
@@ -7,24 +7,9 @@ export default {
 	component: ConfirmDialog,
 };
 
-const Template: Story<React.ComponentProps<typeof ConfirmDialog>> = (args) => {
-	const [isModalVisible, setModalVisibility] = useState(false);
-
-	function renderConFirmDialog() {
-		return <ConfirmDialog {...args} isModalVisible={isModalVisible} setModalVisibility={setModalVisibility} />;
-	}
-	return (
-		<>
-			<button onClick={() => setModalVisibility(true)}>Verwijder</button>
-			{isModalVisible && renderConFirmDialog()}
-		</>
-	);
-};
-
-export const Default = Template.bind({});
-Default.args = {
+const props = {
 	title: 'Waarschuwing',
-	message: 'Weet u het zeker?',
+	message: 'Weet u zeker dat u dit document definitief wilt verwijderen?',
 	textCancelButton: 'Nee',
 	textConfirmButton: 'Ja',
 	onCancel: () => {
@@ -34,3 +19,15 @@ Default.args = {
 		console.log('Ja');
 	},
 };
+
+const Template: Story<React.ComponentProps<typeof ConfirmDialog>> = () => {
+	return (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog />
+		</>
+	);
+};
+
+export const Default = Template.bind({});
+Default.args = {};
