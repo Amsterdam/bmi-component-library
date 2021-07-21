@@ -38,6 +38,7 @@ const ConfirmDialog: React.FC<{}> = () => {
 				setIsVisible(true);
 			}
 		});
+		return () => setState(initialState);
 	}, []);
 	return (
 		<Modal id="confirm-dialog" open={isVisible}>
