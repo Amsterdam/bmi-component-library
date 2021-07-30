@@ -25,9 +25,14 @@ export const DescriptionListItemStyle = styled.div`
 
 export const DescriptionListTitleStyle = styled.dt`
 	margin-bottom: ${themeSpacing(2)};
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 18px;
 `;
 
 export const DescriptionListValueStyle = styled.dd`
 	margin: 0;
 	font-weight: 700;
+	font-size: 16px;
+	line-height: 18px;
 `;
