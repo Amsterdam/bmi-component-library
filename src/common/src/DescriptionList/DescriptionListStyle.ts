@@ -38,3 +38,7 @@ export const DescriptionListValueStyle = styled.dd`
 	line-height: 18px;
 	color: ${themeColor('tint', 'level7')};
 `;
+
+export const DescriptionFooterStyle = styled.div`
+	margin: 0 0 ${themeSpacing(4)} 0;
+`;

@@ -6,7 +6,8 @@ import {
 	DescriptionListTitleStyle,
 	DescriptionListValueStyle,
 	DescriptionHeadingStyle,
-} from './DescriptionListStyles';
+	DescriptionFooterStyle
+} from './DescriptionListStyle';
 
 type DescriptionListItem = {
 	label: string;
@@ -18,23 +19,21 @@ type DescriptionList = DescriptionListItem[];
 type Props = {
 	list: DescriptionList;
 	heading?: string;
+	footer?: React.ReactNode
 };
 
-const DescriptionList: React.FC<Props> = ({ heading, list }: Props) => (
+const DescriptionList: React.FC<Props> = ({ heading, list, footer }: Props) => (
 	<DescriptionStyle data-testid="description">
 		{heading && <DescriptionHeadingStyle>{heading}</DescriptionHeadingStyle>}
 		<DescriptionListStyle data-testid="description-list">
 			{list.map((item) => (
 				<DescriptionListItemStyle key={item.label}>
 					<DescriptionListTitleStyle>{item.label}</DescriptionListTitleStyle>
-					{typeof item.value !== 'string' ? (
-						item.value
-					) : (
-						<DescriptionListValueStyle>{item.value}</DescriptionListValueStyle>
-					)}
+					<DescriptionListValueStyle>{item.value}</DescriptionListValueStyle>
 				</DescriptionListItemStyle>
 			))}
 		</DescriptionListStyle>
+		{footer && <DescriptionFooterStyle data-testid="description-footer">{footer}</DescriptionFooterStyle>}
 	</DescriptionStyle>
 );
 

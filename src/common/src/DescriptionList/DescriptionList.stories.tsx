@@ -55,9 +55,6 @@ WithLinks.args = {
 			label: 'Bouwjaar',
 			value: '1879',
 		},
-		{
-			label: '',
-			value: <Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>Toon paspoortgegevens</Link>,
-		},
 	],
+	footer: <Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>Toon paspoortgegevens</Link>
 };
