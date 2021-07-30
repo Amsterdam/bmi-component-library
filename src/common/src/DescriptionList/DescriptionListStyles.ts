@@ -28,6 +28,7 @@ export const DescriptionListTitleStyle = styled.dt`
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 18px;
+	color: ${themeColor('tint', 'level7')};
 `;
 
 export const DescriptionListValueStyle = styled.dd`
@@ -35,4 +36,5 @@ export const DescriptionListValueStyle = styled.dd`
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 18px;
+	color: ${themeColor('tint', 'level7')};
 `;
