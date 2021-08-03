@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import DescriptionList from './DescriptionList';
 
 const list: React.ComponentProps<typeof DescriptionList>['list'] = [
@@ -40,5 +40,10 @@ describe('<DescriptionList />', () => {
 	it('should render the correct list items with a React node', () => {
 		const { getByText } = render(<DescriptionList list={[...list, { label: '', value: <DummyReactComponent /> }]} />);
 		expect(getByText('__REACT_COMPONENT__')).toBeInTheDocument();
+	});
+
+	it('optionally renders a footer with a React node', () => {
+		render(<DescriptionList list={[...list, { label: '', value: <DummyReactComponent /> }]} footer={<>[FOOTER]</>} />);
+		expect(screen.getByTestId('description-footer').textContent).toEqual('[FOOTER]')
 	});
 });

@@ -6,6 +6,7 @@ export const DescriptionStyle = styled.div`
 	flex-direction: column;
 	background-color: ${themeColor('tint', 'level2')};
 	padding: 0 ${themeSpacing(4)};
+	margin: ${themeSpacing(2)} 0;
 	width: 100%;
 `;
 
@@ -25,9 +26,20 @@ export const DescriptionListItemStyle = styled.div`
 
 export const DescriptionListTitleStyle = styled.dt`
 	margin-bottom: ${themeSpacing(2)};
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 18px;
+	color: ${themeColor('tint', 'level7')};
 `;
 
 export const DescriptionListValueStyle = styled.dd`
 	margin: 0;
 	font-weight: 700;
+	font-size: 16px;
+	line-height: 18px;
+	color: ${themeColor('tint', 'level7')};
+`;
+
+export const DescriptionFooterStyle = styled.div`
+	margin: 0 0 ${themeSpacing(4)} 0;
 `;

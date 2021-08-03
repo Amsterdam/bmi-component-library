@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag } from '@amsterdam/asc-ui';
+import { Link, Tag } from '@amsterdam/asc-ui';
 import { Story } from '@storybook/react';
 import DescriptionList from './DescriptionList';
 
@@ -34,4 +34,27 @@ Default.args = {
 export const WithoutHeader = Template.bind({});
 WithoutHeader.args = {
 	list: descriptionList,
+};
+
+export const WithLinks = Template.bind({});
+WithLinks.args = {
+	list: [
+		{
+			label: 'Naam',
+			value: <Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>BRU0315 Galgenbrug</Link>,
+		},
+		{
+			label: 'Locatie',
+			value: 'Dijksgracht (centrum)',
+		},
+		{
+			label: 'Type',
+			value: 'Brug (vast)',
+		},
+		{
+			label: 'Bouwjaar',
+			value: '1879',
+		},
+	],
+	footer: <Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>Toon paspoortgegevens</Link>
 };
