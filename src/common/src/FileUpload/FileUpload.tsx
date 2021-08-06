@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropzoneOptions, useDropzone } from 'react-dropzone';
+import { DropzoneOptions, FileRejection, useDropzone } from 'react-dropzone';
 import { Download } from '@amsterdam/asc-assets';
 import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
@@ -9,12 +9,13 @@ import {
 	FileUploadSelectFilesButtonStyle,
 } from './FileUploadStyles';
 import { Icon } from '@amsterdam/asc-ui/lib/components/Quote/QuoteStyle';
-import { useFileUpload } from './hooks';
+import { CustomFile, useFileUpload } from './hooks';
 
 import FileList from './FileList/FileList';
 
 type Props = {
-	getPostUrl: () => string;
+	getPostUrl: () => Promise<string>;
+	getHeaders: () => Promise<{ [key: string]: string }>;
 	placeholder: string;
 	droppingLabel: string;
 	removeLabel: string;
@@ -22,11 +23,15 @@ type Props = {
 	selectFilesLabel: string;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel: string;
+	removeCompletedFromList?: boolean;
+	onFileRemove?: (file: CustomFile & FileRejection) => void;
+	onFileSuccess?: (file: CustomFile) => void;
 	options?: DropzoneOptions;
 };
 
 const FileUpload: React.FC<Props> = ({
 	getPostUrl,
+	getHeaders,
 	droppingLabel,
 	placeholder,
 	removeLabel,
@@ -34,10 +39,17 @@ const FileUpload: React.FC<Props> = ({
 	selectFilesLabel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
+	onFileRemove,
+	onFileSuccess,
+	removeCompletedFromList,
 	options,
 }: Props) => {
 	const isTouchScreen = useDetectTouchscreen();
-	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(getPostUrl);
+	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
+		getPostUrl,
+		getHeaders,
+		onFileSuccess,
+	);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
 		...options,
 		onDrop: handleOnDrop,
@@ -68,11 +80,15 @@ const FileUpload: React.FC<Props> = ({
 			</FileUploadStyle>
 			{files?.length > 0 && (
 				<FileList
-					files={files}
+					files={removeCompletedFromList ? files.filter((file) => file.progress !== 100) : files}
 					removeLabel={removeLabel}
 					cancelLabel={cancelLabel}
 					onCancel={handleOnCancel}
-					onFileRemove={handleOnFileRemove}
+					onFileRemove={(file: CustomFile & FileRejection) => {
+						handleOnFileRemove(file);
+						// Let application track file removal
+						onFileRemove && onFileRemove(file);
+					}}
 					fileUploadErrorLabel={fileUploadErrorLabel}
 					fileUploadInProgressLabel={fileUploadInProgressLabel}
 				/>

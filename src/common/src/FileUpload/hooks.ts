@@ -1,70 +1,78 @@
 import React from 'react';
 import { FileRejection } from 'react-dropzone';
 
-export interface CustomFile extends File{
+export interface CustomFile extends File {
+	tmpId: number;
 	progress?: number;
-	uploadXhrError?: string; 
+	uploadXhrError?: boolean;
 	response?: string;
 }
 
-export type Files = (CustomFile & FileRejection)[];
+export type CustomFileOrRejection = CustomFile & FileRejection;
+export type Files = CustomFileOrRejection[];
 
-// Using Object.assign (from the dropzone docs) because spreading doesn't seem to work properly
-// with File objects
-const formatFiles = (files: File[], statusText: string, error = false): File[] =>
-	files.map((file: File) =>
-		Object.assign(file, {
-			progress: 100,
-			response: statusText,
-			uploadXhrError: error ? true : undefined,
-		}),
-	);
-
-export const useFileUpload = (getPostUrl: () => string) => {
-
-	const [files, setFiles] = React.useState<Files | []>([]);
-	const [stateXhr, setStateXhr] = React.useState<XMLHttpRequest | null>(null);
+export const useFileUpload = (
+	getPostUrl: () => Promise<string>,
+	getHeaders: () => Promise<{ [key: string]: string }>,
+	onFileSuccess?: (file: CustomFile) => void,
+) => {
+	const [files, setFiles] = React.useState<CustomFileOrRejection[]>([]);
+	const [stateXhr, setStateXhr] = React.useState<{ [key: string]: XMLHttpRequest }>({});
+	const [nextTmpId, setNextTmpId] = React.useState<number>(1);
 
 	const handleOnDrop = React.useCallback(
 		(acceptedFiles: File[], fileRejections: FileRejection[]) => {
+			if (fileRejections.length) {
+				setFiles((previousFiles) => [...previousFiles, ...fileRejections] as Files);
+			}
 
-			const postUrl = getPostUrl()
-			const formData = new FormData();
-			for (const file of acceptedFiles) formData.append('file', file);
+			const makeRequest = async (rawFile: File) => {
+				const postUrl = await getPostUrl();
+				const headers = await getHeaders();
+				const customFile: CustomFile = Object.assign(rawFile, { tmpId: nextTmpId });
+				const fileList = [...files, customFile] as Files;
+				setFiles(fileList);
 
-			const xhr = new XMLHttpRequest();
+				const formData = new FormData();
+				formData.append('file', rawFile);
+				const xhr = new XMLHttpRequest();
 
-			xhr.upload.onprogress = (event) => {
-				const percentage = (event.loaded / event.total) * 100;
-				const filesWithPercentage = acceptedFiles.map((file: File) =>
-					Object.assign(file, {
-						progress: percentage,
-					}),
-				);
+				xhr.upload.onprogress = (event) => {
+					customFile.progress = (event.loaded / event.total) * 100;
+				};
 
-				setFiles((previousFiles) => [...previousFiles, ...filesWithPercentage, ...fileRejections] as Files);
-			};
-
-			xhr.onreadystatechange = () => {
-				if (xhr.readyState === XMLHttpRequest.DONE) {
+				xhr.onreadystatechange = () => {
+					if (xhr.readyState !== XMLHttpRequest.DONE) return;
 					const status = xhr.status;
 
 					if (status === 0 || (status >= 200 && status < 400)) {
 						// The request has been completed successfully
-						const filesWithSuccessResponse = formatFiles(acceptedFiles, xhr.statusText);
-						setFiles([...filesWithSuccessResponse, ...fileRejections] as Files);
+						customFile.progress = 100;
+						customFile.response = xhr.responseText;
+						customFile.uploadXhrError = undefined;
+						// Let application track uploaded files
+						onFileSuccess && onFileSuccess(customFile);
 					} else {
 						// Something went wrong with the request
-						const filesWithErrorResponse = formatFiles(acceptedFiles, xhr.statusText, true);
-						setFiles([...filesWithErrorResponse, ...fileRejections] as Files);
+						customFile.progress = 100;
+						customFile.response = xhr.responseText;
+						customFile.uploadXhrError = true;
 					}
-				}
+					setFiles([...files]); // Trigger re-render of file list
+				};
+
+				xhr.open('POST', postUrl, true);
+				Object.keys(headers).forEach((name) => xhr.setRequestHeader(name, headers[name]));
+				xhr.send(formData);
+
+				setStateXhr({
+					...stateXhr,
+					[`xhr_${customFile.tmpId}`]: xhr,
+				});
+				setNextTmpId(nextTmpId + 1);
 			};
 
-			xhr.open('POST', postUrl, true);
-			xhr.send(formData);
-
-			setStateXhr(xhr);
+			for (const file of acceptedFiles) makeRequest(file);
 		},
 		[getPostUrl],
 	);
@@ -72,24 +80,24 @@ export const useFileUpload = (getPostUrl: () => string) => {
 	const handleOnCancel = React.useCallback(
 		(file: CustomFile & FileRejection) => {
 			// Cancel network uploading activity
-			stateXhr?.abort();
-
+			stateXhr?.[`xhr_${file.tmpId}`]?.abort();
 			// Remove file from file list
-			handleOnFileRemove(file);
+			setFiles(files.filter((f) => f.tmpId !== file.tmpId));
 		},
 		[files],
 	);
 
 	const handleOnFileRemove = React.useCallback(
 		(file: CustomFile & FileRejection) => {
-			const newFiles: Files = [...(files as Files)];
-			newFiles.splice(newFiles.indexOf(file), 1);
-			setFiles(newFiles);
+			// Remove file from file list
+			setFiles(files.filter((f) => f.tmpId !== file.tmpId));
 		},
 		[files],
 	);
 
-	const handleOnRemoveAllFiles = () => setFiles([]);
+	const handleOnRemoveAllFiles = () => {
+		setFiles([]);
+	};
 
 	return {
 		handleOnDrop,
