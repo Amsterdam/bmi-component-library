@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import FileUpload from './FileUpload';
 import userEvent from '@testing-library/user-event';
 
@@ -19,6 +19,25 @@ const defaultProps: React.ComponentProps<typeof FileUpload> = {
 		accept: 'image/png',
 	},
 };
+
+function mockXHR(responseText: string = '[]', status: number = 200) {
+	const xhrMock = {
+		open: jest.fn(),
+		setRequestHeader: jest.fn(),
+		onreadystatechange: jest.fn(),
+		send: jest.fn(),
+		readyState: 4,
+		upload: jest.fn(),
+		responseText,
+		status,
+	};
+	// @ts-ignore
+	window.XMLHttpRequest = jest.fn(() => {
+		return xhrMock;
+	});
+
+	return xhrMock;
+}
 
 describe('<FileUpload />', () => {
 	beforeAll(() => {
@@ -56,19 +75,24 @@ describe('<FileUpload />', () => {
 		expect(queryByText('Annuleren')).not.toBeInTheDocument();
 	});
 
-	it('should be able to upload a single file', () => {
+	it('should be able to upload a single file', async () => {
+		const xhrMock = mockXHR('[]');
 		const { getByTestId } = render(<FileUpload {...defaultProps} />);
 		const input: any = getByTestId('file-upload__input');
 		const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
-		userEvent.upload(input, file);
+		await act(async () => {
+			userEvent.upload(input, file);
+		});
 
+		expect(xhrMock.open).toBeCalledWith('POST', 'api/endpoint', true);
 		expect(input.files[0]).toStrictEqual(file);
 		expect(input.files.item(0)).toStrictEqual(file);
 		expect(input.files).toHaveLength(1);
 	});
 
-	it('should be able to upload multiple files', () => {
+	it('should be able to upload multiple files', async () => {
+		const xhrMock = mockXHR('[]');
 		const { getByTestId } = render(<FileUpload {...defaultProps} />);
 		const input: any = getByTestId('file-upload__input');
 		const files = [
@@ -76,8 +100,11 @@ describe('<FileUpload />', () => {
 			new File(['there'], 'there.png', { type: 'image/png' }),
 		];
 
-		userEvent.upload(input, files);
+		await act(async () => {
+			userEvent.upload(input, files);
+		});
 
+		expect(xhrMock.open).toBeCalledWith('POST', 'api/endpoint', true);
 		expect(input.files).toHaveLength(2);
 		expect(input.files[0]).toStrictEqual(files[0]);
 		expect(input.files[1]).toStrictEqual(files[1]);
