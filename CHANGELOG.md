@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.3-alpha.0...v0.0.3-alpha.1) (2021-08-09)
+
+
+### Bug Fixes
+
+* **fileupload:** fileUpload outer element should be a styled component ([2aea672](https://github.com/Amsterdam/bmi-component-library/commit/2aea672c31c7e38f43c97f5ad509b86959191c0b))
+
 ### 0.0.3-alpha.0 (2021-08-09)
 
 
