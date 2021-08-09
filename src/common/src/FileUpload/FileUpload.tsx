@@ -7,6 +7,7 @@ import {
 	FileUploadContentStyle,
 	FileUploadPlaceholderStyle,
 	FileUploadSelectFilesButtonStyle,
+	FileUploadContainerStyle,
 } from './FileUploadStyles';
 import { Icon } from '@amsterdam/asc-ui/lib/components/Quote/QuoteStyle';
 import { CustomFile, useFileUpload } from './hooks';
@@ -57,7 +58,7 @@ const FileUpload: React.FC<Props> = ({
 	});
 
 	return (
-		<React.Fragment>
+		<FileUploadContainerStyle>
 			<FileUploadStyle data-testid="file-upload" {...getRootProps({ isDragActive })}>
 				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
@@ -93,7 +94,7 @@ const FileUpload: React.FC<Props> = ({
 					fileUploadInProgressLabel={fileUploadInProgressLabel}
 				/>
 			)}
-		</React.Fragment>
+		</FileUploadContainerStyle>
 	);
 };
 

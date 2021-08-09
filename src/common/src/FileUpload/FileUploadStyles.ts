@@ -14,6 +14,8 @@ const getColor = ({ isDragActive }: DragStyleProps) => {
 	return themeColor('tint', 'level2');
 };
 
+export const FileUploadContainerStyle = styled.div``;
+
 export const FileUploadStyle = styled.div`
 	flex: 1;
 	display: flex;
