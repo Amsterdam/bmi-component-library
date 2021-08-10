@@ -69,7 +69,7 @@ const FileUpload: React.FC<Props> = ({
 					) : (
 						<>
 							<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
-							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open}>
+							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
 								{selectFilesLabel}
 							</FileUploadSelectFilesButtonStyle>
 							<Icon size={16} color="#004799">
