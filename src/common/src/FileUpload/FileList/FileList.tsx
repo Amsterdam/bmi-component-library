@@ -36,6 +36,10 @@ type FileListItemProps = {
 	fileUploadInProgressLabel: string;
 };
 
+function isFileUploading(file: CustomFile & FileRejection) {
+	return file && file.progress && file.progress > 0 && file.progress < 100;
+}
+
 const FileList: React.FC<Props> = ({
 	files,
 	cancelLabel,
@@ -44,22 +48,24 @@ const FileList: React.FC<Props> = ({
 	onCancel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
-}: Props) => (
-	<FileListStyle data-testid="file-list">
-		{files.map((file, index) => (
-			<FileListItem
-				key={`file-number-${index}`}
-				onCancel={() => onCancel(file)}
-				onFileRemove={() => onFileRemove(file)}
-				cancelLabel={cancelLabel}
-				removeLabel={removeLabel}
-				file={file}
-				fileUploadErrorLabel={fileUploadErrorLabel}
-				fileUploadInProgressLabel={fileUploadInProgressLabel}
-			/>
-		))}
-	</FileListStyle>
-);
+}: Props) => {
+	return (
+		<FileListStyle data-testid="file-list">
+			{files.map((file, index) => (
+				<FileListItem
+					key={`file-number-${index}`}
+					onCancel={() => onCancel(file)}
+					onFileRemove={() => onFileRemove(file)}
+					cancelLabel={cancelLabel}
+					removeLabel={removeLabel}
+					file={file}
+					fileUploadErrorLabel={fileUploadErrorLabel}
+					fileUploadInProgressLabel={fileUploadInProgressLabel}
+				/>
+			))}
+		</FileListStyle>
+	);
+};
 
 const FileListItem: React.FC<FileListItemProps> = ({
 	file,
@@ -70,7 +76,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
 }: FileListItemProps) => {
-	const isUploading = file && file.progress && file.progress > 0 && file.progress < 100;
+	const isUploading = isFileUploading(file);
 	const classes = classNames({
 		'file-list-item--is-uploading': isUploading,
 	});
@@ -93,13 +99,23 @@ const FileListItem: React.FC<FileListItemProps> = ({
 			</>
 			{isUploading ? (
 				<>
-					<FileRemoveStyle onClick={() => onCancel(file)} variant="textButton" iconSize={14} iconLeft={<ChevronLeft />}>
+					<FileRemoveStyle
+						onClick={() => onCancel(file)}
+						variant="textButton"
+						iconSize={14}
+						iconLeft={<ChevronLeft />}
+					>
 						{cancelLabel}
 					</FileRemoveStyle>
 					<FileProgressBarStyle max="100" value={file.progress} />
 				</>
 			) : (
-				<FileRemoveStyle onClick={() => onFileRemove(file)} variant="textButton" iconSize={14} iconLeft={<Close />}>
+				<FileRemoveStyle
+					onClick={() => onFileRemove(file)}
+					variant="textButton"
+					iconSize={14}
+					iconLeft={<Close />}
+				>
 					{removeLabel}
 				</FileRemoveStyle>
 			)}

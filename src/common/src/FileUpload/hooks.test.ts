@@ -2,10 +2,16 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useFileUpload } from './hooks';
 
 const getPostUrl = '__ENDPOINT_URL__';
+const headers = {};
 
 describe('useFileUpload', () => {
 	it('should return the correct entries', () => {
-		const { result } = renderHook(() => useFileUpload(() => getPostUrl));
+		const { result } = renderHook(() =>
+			useFileUpload(
+				() => Promise.resolve(getPostUrl),
+				() => Promise.resolve(headers),
+			),
+		);
 
 		const expectedResult = {
 			handleOnDrop: () => console.log('handleOnDrop'),
