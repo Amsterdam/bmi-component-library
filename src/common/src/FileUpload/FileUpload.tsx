@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { DropzoneOptions, FileRejection, useDropzone } from 'react-dropzone';
 import { Download } from '@amsterdam/asc-assets';
 import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
@@ -28,7 +28,7 @@ type Props = {
 	onFileRemove?: (file: CustomFile & FileRejection) => void;
 	onFileSuccess?: (file: CustomFile) => void;
 	options?: DropzoneOptions;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 const FileUpload: React.FC<Props> = ({
 	getPostUrl,
@@ -44,6 +44,7 @@ const FileUpload: React.FC<Props> = ({
 	onFileSuccess,
 	removeCompletedFromList,
 	options,
+	...otherProps
 }: Props) => {
 	const isTouchScreen = useDetectTouchscreen();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
@@ -58,7 +59,7 @@ const FileUpload: React.FC<Props> = ({
 	});
 
 	return (
-		<FileUploadContainerStyle>
+		<FileUploadContainerStyle {...otherProps}>
 			<FileUploadStyle data-testid="file-upload" {...getRootProps({ isDragActive })}>
 				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
