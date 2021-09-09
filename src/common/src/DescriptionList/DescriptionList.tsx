@@ -1,5 +1,4 @@
 import React, { HTMLAttributes } from 'react';
-// import { StyledComponent } from 'styled-components';
 import {
 	DescriptionStyle,
 	DescriptionListStyle,
