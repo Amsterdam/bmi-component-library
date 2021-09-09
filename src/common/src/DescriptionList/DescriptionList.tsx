@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyledComponent } from 'styled-components';
+import React, { HTMLAttributes } from 'react';
+// import { StyledComponent } from 'styled-components';
 import {
 	DescriptionStyle,
 	DescriptionListStyle,
@@ -17,23 +17,14 @@ type DescriptionListItem = {
 
 type DescriptionList = DescriptionListItem[];
 
-type Props = {
+export type Props = {
 	list: DescriptionList;
 	heading?: string;
 	footer?: React.ReactNode;
-};
-interface IStyledDescription extends React.FunctionComponent<Props> {
-	base: StyledComponent<'div', any, {}, never>;
-	list: StyledComponent<'dl', any, {}, never>;
-	heading: StyledComponent<'h2', any, {}, never>;
-	item: StyledComponent<'div', any, {}, never>;
-	title: StyledComponent<'dt', any, {}, never>;
-	value: StyledComponent<'dd', any, {}, never>;
-	footer: StyledComponent<'div', any, {}, never>;
-}
+} & HTMLAttributes<HTMLDivElement>;
 
-const DescriptionList: IStyledDescription = ({ heading, list, footer }: Props) => (
-	<DescriptionStyle data-testid="description">
+const DescriptionList: React.FC<Props> = ({ heading, list, footer, ...otherProps }: Props) => (
+	<DescriptionStyle data-testid="description" {...otherProps}>
 		{heading && <DescriptionHeadingStyle>{heading}</DescriptionHeadingStyle>}
 		<DescriptionListStyle data-testid="description-list">
 			{list.map((item) => (
@@ -46,13 +37,5 @@ const DescriptionList: IStyledDescription = ({ heading, list, footer }: Props) =
 		{footer && <DescriptionFooterStyle data-testid="description-footer">{footer}</DescriptionFooterStyle>}
 	</DescriptionStyle>
 );
-
-DescriptionList.base = DescriptionStyle;
-DescriptionList.heading = DescriptionHeadingStyle;
-DescriptionList.list = DescriptionListStyle;
-DescriptionList.item = DescriptionListItemStyle;
-DescriptionList.title = DescriptionListTitleStyle;
-DescriptionList.value = DescriptionListValueStyle;
-DescriptionList.footer = DescriptionFooterStyle;
 
 export default DescriptionList;

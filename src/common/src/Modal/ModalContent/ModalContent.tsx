@@ -1,15 +1,11 @@
 import React from 'react';
-import ModalContentStyle, { ListStyle } from './ModalContentStyles';
+import ModalContentStyle from './ModalContentStyles';
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
 }
 
 const ModalContent = ({ children }: Props) => {
-	return (
-		<>
-			<ModalContentStyle>{children}</ModalContentStyle> <ListStyle list={[{ label: 'hii', value: 'fdf' }]} />
-		</>
-	);
+	return <ModalContentStyle>{children}</ModalContentStyle>;
 };
 
 ModalContent.displayName = 'ModalContent';
