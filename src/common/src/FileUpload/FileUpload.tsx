@@ -14,7 +14,7 @@ import { CustomFile, useFileUpload } from './hooks';
 
 import FileList from './FileList/FileList';
 
-type Props = {
+export type Props = {
 	getPostUrl: () => Promise<string>;
 	getHeaders: () => Promise<{ [key: string]: string }>;
 	placeholder: string;
