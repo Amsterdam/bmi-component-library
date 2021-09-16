@@ -20,21 +20,24 @@ const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
 
 	const renderModal = () => {
 		return (
-			<Modal {...args} id="asset-view" open={isModalVisible} onClose={() => setModalVisibility(false)}>
-				<Modal.TopBar hideCloseButton={false}>Afgerond - Assetnaam</Modal.TopBar>
+			<Modal {...args} id="asset-view" open={isModalVisible}>
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setModalVisibility(false)}>
+					Afgerond - Assetnaam
+				</Modal.TopBar>
 				<Modal.Content>
 					<ModalBlockStyle>
 						<Heading forwardedAs="h4">Onjuiste of ontbrekende gegevens?</Heading>
 						<Paragraph>
-							Geef aan welke gegevens onjuist zijn of ontbreken. Ook als je weet wat het wel moet zijn. We horen het
-							graag.
+							Geef aan welke gegevens onjuist zijn of ontbreken. Ook als je weet wat het wel moet zijn. We
+							horen het graag.
 						</Paragraph>
 					</ModalBlockStyle>
 					<Divider gutter />
 					<ModalBlockStyle>
 						<Heading forwardedAs="h4">Vraag of een klacht?</Heading>
 						<Paragraph>
-							Als iets op deze pagina niet goed werkt, onduidelijk is of vragen oproept, geef het aan ons door.
+							Als iets op deze pagina niet goed werkt, onduidelijk is of vragen oproept, geef het aan ons
+							door.
 						</Paragraph>
 					</ModalBlockStyle>
 				</Modal.Content>

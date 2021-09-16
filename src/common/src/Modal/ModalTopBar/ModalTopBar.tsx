@@ -6,10 +6,10 @@ import ModalTopBarStyle from './ModalTopBarStyles';
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
 	hideCloseButton?: boolean;
-	onClose?: (evt: React.SyntheticEvent) => void;
+	onCloseButton?: (evt: React.SyntheticEvent) => void;
 }
 
-const ModalTopBar = ({ hideCloseButton = false, onClose, children }: Props) => {
+const ModalTopBar = ({ hideCloseButton = false, onCloseButton, children }: Props) => {
 	const renderCloseButton = () => {
 		if (hideCloseButton) {
 			return null;
@@ -21,8 +21,8 @@ const ModalTopBar = ({ hideCloseButton = false, onClose, children }: Props) => {
 				data-testid="modal-close-button"
 				size={30}
 				onClick={(evt: React.SyntheticEvent) => {
-					if (typeof onClose !== 'undefined') {
-						onClose(evt);
+					if (typeof onCloseButton !== 'undefined') {
+						onCloseButton(evt);
 					}
 				}}
 				variant="blank"
