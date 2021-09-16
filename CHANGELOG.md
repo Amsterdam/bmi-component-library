@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.0...v0.0.5-alpha.1) (2021-09-16)
+
+### [0.0.5-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.3-alpha.0...v0.0.5-alpha.0) (2021-09-13)
+
+
+### Features
+
+* **fileupload:** exposing Props interface of <FileUpload /> ([#7](https://github.com/Amsterdam/bmi-component-library/issues/7)) ([6d8b86f](https://github.com/Amsterdam/bmi-component-library/commit/6d8b86fd4b5c7f60a6511859677df31c17129fd5))
+* **fileupload:** upload single file per request + refined component … ([#5](https://github.com/Amsterdam/bmi-component-library/issues/5)) ([5158f41](https://github.com/Amsterdam/bmi-component-library/commit/5158f414fb8879e8a818f46c9a1795e876dbe8fb))
+
+
+### Bug Fixes
+
+* **fileupload:** fileUpload outer element should be a styled component ([2aea672](https://github.com/Amsterdam/bmi-component-library/commit/2aea672c31c7e38f43c97f5ad509b86959191c0b))
+* **fileupload:** setting button type so forms are not submitted on click ([636d7fe](https://github.com/Amsterdam/bmi-component-library/commit/636d7fe9a7b794c574f1810537f39f70caea3250))
+
 ### [0.0.3-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.3-alpha.0...v0.0.3-alpha.1) (2021-08-09)
 
 

@@ -18,8 +18,8 @@ describe('<Modal />', () => {
 		const onCloseMock = jest.fn();
 
 		const { getByTestId } = render(
-			<Modal id="test-modal-id" onClose={onCloseMock} open>
-				<Modal.TopBar>Heading</Modal.TopBar>
+			<Modal id="test-modal-id"  open>
+				<Modal.TopBar onCloseButton={onCloseMock}>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
 			</Modal>,
 		);

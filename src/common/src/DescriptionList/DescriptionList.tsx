@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import {
 	DescriptionStyle,
 	DescriptionListStyle,
@@ -6,7 +6,7 @@ import {
 	DescriptionListTitleStyle,
 	DescriptionListValueStyle,
 	DescriptionHeadingStyle,
-	DescriptionFooterStyle
+	DescriptionFooterStyle,
 } from './DescriptionListStyle';
 
 type DescriptionListItem = {
@@ -16,14 +16,14 @@ type DescriptionListItem = {
 
 type DescriptionList = DescriptionListItem[];
 
-type Props = {
+export type Props = {
 	list: DescriptionList;
 	heading?: string;
-	footer?: React.ReactNode
-};
+	footer?: React.ReactNode;
+} & HTMLAttributes<HTMLDivElement>;
 
-const DescriptionList: React.FC<Props> = ({ heading, list, footer }: Props) => (
-	<DescriptionStyle data-testid="description">
+const DescriptionList: React.FC<Props> = ({ heading, list, footer, ...otherProps }: Props) => (
+	<DescriptionStyle data-testid="description" {...otherProps}>
 		{heading && <DescriptionHeadingStyle>{heading}</DescriptionHeadingStyle>}
 		<DescriptionListStyle data-testid="description-list">
 			{list.map((item) => (
