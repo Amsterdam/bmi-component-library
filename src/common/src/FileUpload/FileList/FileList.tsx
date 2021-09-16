@@ -48,9 +48,10 @@ const FileList: React.FC<Props> = ({
 	onCancel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
+	...otherProps
 }: Props) => {
 	return (
-		<FileListStyle data-testid="file-list">
+		<FileListStyle data-testid="file-list" {...otherProps}>
 			{files.map((file, index) => (
 				<FileListItem
 					key={`file-number-${index}`}
