@@ -25,14 +25,14 @@ Check out this [example](https://react-dropzone.js.org/#!/Basic%20example) based
 
 _The component below uses these options:_
 
-- **noClick**: true,
-- **noKeyboard**: true,
-- **accept**: 'image/png'
+-   **noClick**: true,
+-   **noKeyboard**: true,
+-   **accept**: 'image/png'
 
 <Canvas>
 	<Story name="Default">
 		<FileUpload
-			getPostUrl={() => 'api/endpoint'}
+			getPostUrl={() => Promise.resolve('https://v2.convertapi.com/upload')} //fakeapi
 			placeholder="Sleep de png bestanden in dit vlak of"
 			droppingLabel="bestanden geselecteerd"
 			selectFilesLabel="selecteer bestanden"
@@ -41,6 +41,12 @@ _The component below uses these options:_
 			fileUploadErrorLabel="dit bestand kan niet worden geüpload"
 			fileUploadInProgressLabel="wordt geupload"
 			options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
+			getHeaders={async () => {
+				return Promise.resolve({});
+			}}
+			onFileSuccess={(file) => {
+				console.log(file);
+			}}
 		/>
 	</Story>
 </Canvas>
