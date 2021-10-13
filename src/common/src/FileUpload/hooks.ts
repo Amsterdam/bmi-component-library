@@ -58,7 +58,7 @@ export const useFileUpload = (
 						customFile.response = xhr.responseText;
 						customFile.uploadXhrError = true;
 					}
-					setFiles([...files]); // Trigger re-render of file list
+					setFiles([...files, customFile] as Files); // Trigger re-render of file list
 				};
 
 				xhr.open('POST', postUrl, true);
