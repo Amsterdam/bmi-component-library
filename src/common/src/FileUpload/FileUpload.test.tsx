@@ -2,6 +2,7 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 import FileUpload from './FileUpload';
 import userEvent from '@testing-library/user-event';
+import { CustomFileOrRejection } from './hooks';
 
 const defaultProps: React.ComponentProps<typeof FileUpload> = {
 	getPostUrl: () => Promise.resolve('api/endpoint'),
@@ -108,5 +109,18 @@ describe('<FileUpload />', () => {
 		expect(input.files).toHaveLength(2);
 		expect(input.files[0]).toStrictEqual(files[0]);
 		expect(input.files[1]).toStrictEqual(files[1]);
+	});
+
+	it('should be able to pass stored files as a prop to fileList', async () => {
+		const storedFiles = [
+			new File(['hello'], 'hello.png', { type: 'image/png' }),
+			new File(['there'], 'there.png', { type: 'image/png' }),
+		] as CustomFileOrRejection[];
+
+		const { getByTestId } = render(<FileUpload storedFiles={storedFiles} {...defaultProps} />);
+		const fileList: any = getByTestId('file-list');
+
+		expect(fileList).toHaveTextContent('hello');
+		expect(fileList).toHaveTextContent('there');
 	});
 });
