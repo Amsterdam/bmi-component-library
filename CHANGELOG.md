@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5-alpha.4](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.3...v0.0.5-alpha.4) (2021-10-21)
+
+
+### Features
+
+* **filelist:** added defaultValue prop for storedfiles to the fileList ([c2471af](https://github.com/Amsterdam/bmi-component-library/commit/c2471af8c17cd4ec76bfbb07d2598f23c303c5aa))
+* **filelist:** forgot to commit this file with devaultValues prop added to Filelist ([4a8e6cc](https://github.com/Amsterdam/bmi-component-library/commit/4a8e6cc86fbc6e20882a8e2c29de110991678f02))
+* **fileupload:** added Stored files prop to fileUpload component ([4563b74](https://github.com/Amsterdam/bmi-component-library/commit/4563b74cc486c0a94c396650bff9dcabfd79e912))
+
 ### [0.0.5-alpha.3](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.2...v0.0.5-alpha.3) (2021-10-13)
 
 
