@@ -82,15 +82,10 @@ const FileUpload: React.FC<Props> = ({
 					)}
 				</FileUploadContentStyle>
 			</FileUploadStyle>
-			{(files?.length > 0 || (storedFiles && storedFiles.length > 0)) && (
+			{(files?.length > 0 || (storedFiles && storedFiles?.length > 0)) && (
 				<FileList
-					files={
-						storedFiles
-							? storedFiles
-							: removeCompletedFromList
-							? files.filter((file) => file.progress !== 100)
-							: files
-					}
+					files={removeCompletedFromList ? files.filter((file) => file.progress !== 100) : files}
+					defaultValues={storedFiles}
 					removeLabel={removeLabel}
 					cancelLabel={cancelLabel}
 					onCancel={handleOnCancel}
