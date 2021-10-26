@@ -14,6 +14,7 @@ export type Files = CustomFileOrRejection[];
 export const useFileUpload = (
 	getPostUrl: () => Promise<string>,
 	getHeaders: () => Promise<{ [key: string]: string }>,
+	httpMethod: 'POST' | 'PUT' = 'POST',
 	onFileSuccess?: (file: CustomFile) => void,
 ) => {
 	const [files, setFiles] = React.useState<CustomFileOrRejection[]>([]);
@@ -45,7 +46,7 @@ export const useFileUpload = (
 					if (xhr.readyState !== XMLHttpRequest.DONE) return;
 					const status = xhr.status;
 
-					if (status === 0 || (status >= 200 && status < 400)) {
+					if (status >= 200 && status < 400) {
 						// The request has been completed successfully
 						customFile.progress = 100;
 						customFile.response = xhr.responseText;
@@ -61,7 +62,7 @@ export const useFileUpload = (
 					setFiles([...files, customFile] as Files); // Trigger re-render of file list
 				};
 
-				xhr.open('POST', postUrl, true);
+				xhr.open(httpMethod, postUrl, true);
 				Object.keys(headers).forEach((name) => xhr.setRequestHeader(name, headers[name]));
 				xhr.send(formData);
 
