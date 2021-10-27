@@ -76,21 +76,24 @@ describe('<FileUpload />', () => {
 		expect(queryByText('Annuleren')).not.toBeInTheDocument();
 	});
 
-	it('should be able to upload a single file', async () => {
-		const xhrMock = mockXHR('[]');
-		const { getByTestId } = render(<FileUpload {...defaultProps} />);
-		const input: any = getByTestId('file-upload__input');
-		const file = new File(['hello'], 'hello.png', { type: 'image/png' });
+	test.each([['POST'], ['PUT']])(
+		'should be able to upload a single file using the "%s" http method',
+		async (httpMethod) => {
+			const xhrMock = mockXHR('[]');
+			const { getByTestId } = render(<FileUpload {...defaultProps} httpMethod={httpMethod as 'PUT' | 'POST'} />);
+			const input: any = getByTestId('file-upload__input');
+			const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
-		await act(async () => {
-			userEvent.upload(input, file);
-		});
+			await act(async () => {
+				userEvent.upload(input, file);
+			});
 
-		expect(xhrMock.open).toBeCalledWith('POST', 'api/endpoint', true);
-		expect(input.files[0]).toStrictEqual(file);
-		expect(input.files.item(0)).toStrictEqual(file);
-		expect(input.files).toHaveLength(1);
-	});
+			expect(xhrMock.open).toBeCalledWith(httpMethod, 'api/endpoint', true);
+			expect(input.files[0]).toStrictEqual(file);
+			expect(input.files.item(0)).toStrictEqual(file);
+			expect(input.files).toHaveLength(1);
+		},
+	);
 
 	it('should be able to upload multiple files', async () => {
 		const xhrMock = mockXHR('[]');

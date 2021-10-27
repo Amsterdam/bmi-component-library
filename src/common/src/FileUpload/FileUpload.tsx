@@ -29,6 +29,7 @@ export type Props = {
 	onFileSuccess?: (file: CustomFile) => void;
 	options?: DropzoneOptions;
 	storedFiles?: CustomFileOrRejection[];
+	httpMethod?: 'POST' | 'PUT';
 } & HTMLAttributes<HTMLDivElement>;
 
 const FileUpload: React.FC<Props> = ({
@@ -46,12 +47,14 @@ const FileUpload: React.FC<Props> = ({
 	removeCompletedFromList,
 	options,
 	storedFiles,
+	httpMethod = 'POST',
 	...otherProps
 }: Props) => {
 	const isTouchScreen = useDetectTouchscreen();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
 		getPostUrl,
 		getHeaders,
+		httpMethod,
 		onFileSuccess,
 	);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
