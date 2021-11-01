@@ -144,7 +144,11 @@ const DocumentTable: React.FC<Props> = ({
 						if (params.id === 0 && params.field === 'id') return <></>;
 						if (params.id === 0)
 							return (
-								<ColumnFilter params={params} onKeyUp={handleOnKeyUp} onClear={() => handleClearFilter(params.field)} />
+								<ColumnFilter
+									params={params}
+									onKeyUp={handleOnKeyUp}
+									onClear={() => handleClearFilter(params.field)}
+								/>
 							);
 						if (col.renderCell !== undefined) return col.renderCell(params);
 						return <>{params.formattedValue}</>;
