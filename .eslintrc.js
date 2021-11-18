@@ -25,6 +25,7 @@ module.exports = {
 		],
 		'react/prop-types': 0,
 		'react/jsx-boolean-value': 2,
+		'react/no-array-index-key': 2,
 	},
 	settings: {
 		react: {
