@@ -48,7 +48,7 @@ const FileUpload: React.FC<Props> = ({
 	storedFiles = [],
 	httpMethod = 'POST',
 	...otherProps
-}: Props) => {
+}) => {
 	const isTouchScreen = useDetectTouchscreen();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
 		getPostUrl,
