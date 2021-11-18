@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ChevronLeft, Close, Document } from '@amsterdam/asc-assets';
 import classNames from 'classnames';
 
@@ -16,7 +16,7 @@ import { FileRejection } from 'react-dropzone';
 
 export type Props = {
 	files: Files;
-	defaultValues?: Files;
+	// defaultValues?: Files;
 	removeLabel: string;
 	cancelLabel: string;
 	onFileRemove: (file: CustomFile & FileRejection) => void;
@@ -49,31 +49,18 @@ const FileList: React.FC<Props> = ({
 	onCancel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
-	defaultValues,
+	// defaultValues,
 	...otherProps
 }: Props) => {
-	const [listedFiles, setListedFiles] = useState(defaultValues || []);
-
-	useEffect(() => {
-		if (files.length > 0) {
-			setListedFiles([...files]);
-		}
-	}, [files]);
+	// const [listedFiles, setListedFiles] = useState(defaultValues || []);
 
 	return (
 		<FileListStyle data-testid="file-list" {...otherProps}>
-			{listedFiles.map((file, index) => (
+			{files.map((file, index) => (
 				<FileListItem
 					key={`file-number-${index}`}
 					onCancel={() => onCancel(file)}
-					onFileRemove={() => {
-						setListedFiles(
-							listedFiles.filter((listedFile) => {
-								return listedFile.tmpId !== file.tmpId;
-							}),
-						);
-						onFileRemove(file);
-					}}
+					onFileRemove={() => onFileRemove(file)}
 					cancelLabel={cancelLabel}
 					removeLabel={removeLabel}
 					file={file}

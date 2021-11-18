@@ -23,6 +23,8 @@ This file upload component is using [react-dropzone](https://react-dropzone.js.o
 
 Check out this [example](https://react-dropzone.js.org/#!/Basic%20example) based on hooks.
 
+## Default
+
 _The component below uses these options:_
 
 -   **noClick**: true,
@@ -31,6 +33,31 @@ _The component below uses these options:_
 
 <Canvas>
 	<Story name="Default">
+		<FileUpload
+			getPostUrl={() => Promise.resolve('https://v2.convertapi.com/upload')} //fakeapi
+			placeholder="Sleep de png bestanden in dit vlak of"
+			droppingLabel="bestanden geselecteerd"
+			selectFilesLabel="selecteer bestanden"
+			removeLabel="Wissen"
+			cancelLabel="Annuleren"
+			fileUploadErrorLabel="dit bestand kan niet worden geüpload"
+			fileUploadInProgressLabel="wordt geupload"
+			options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
+			getHeaders={async () => {
+				return Promise.resolve({});
+			}}
+			onFileSuccess={(file) => {
+				console.log(file);
+			}}
+			onFileRemove={(file) => console.log('remove file from redux store of database', file)}
+		/>
+	</Story>
+</Canvas>
+
+## Pre-populated FileList
+
+<Canvas>
+	<Story name="Pre-populated FileList">
 		<FileUpload
 			getPostUrl={() => Promise.resolve('https://v2.convertapi.com/upload')} //fakeapi
 			storedFiles={[
@@ -43,10 +70,36 @@ _The component below uses these options:_
 						'{"FileId":"n8913ueen4jzn35am0wnk6kgs19k3r0q","FileName":"Test.pdf","FileExt":"pdf","Url":"https://v2.convertapi.com/d/n8913ueen4jzn35am0wnk6kgs19k3r0q"}',
 				},
 			]}
-			placeholder="Sleep de png bestanden in dit vlak of"
+			placeholder="Sleep een of meerdere bestanden in dit vlak of"
 			droppingLabel="bestanden geselecteerd"
 			selectFilesLabel="selecteer bestanden"
 			removeLabel="Wissen"
+			cancelLabel="Annuleren"
+			fileUploadErrorLabel="dit bestand kan niet worden geüpload"
+			fileUploadInProgressLabel="wordt geupload"
+			options={{ noClick: true, noKeyboard: true }}
+			getHeaders={async () => {
+				return Promise.resolve({});
+			}}
+			onFileSuccess={(file) => {
+				console.log(file);
+			}}
+			onFileRemove={(file) => console.log('remove file from redux store of database', file)}
+		/>
+	</Story>
+</Canvas>
+
+## Remove completed from list
+
+<Canvas>
+	<Story name="Remove completed from FileList">
+		<FileUpload
+			getPostUrl={() => Promise.resolve('https://v2.convertapi.com/upload')} //fakeapi
+			placeholder="Sleep een of meerdere bestanden in dit vlak of"
+			droppingLabel="bestanden geselecteerd"
+			selectFilesLabel="selecteer bestanden"
+			removeLabel="Wissen"
+			removeCompletedFromList={true}
 			cancelLabel="Annuleren"
 			fileUploadErrorLabel="dit bestand kan niet worden geüpload"
 			fileUploadInProgressLabel="wordt geupload"

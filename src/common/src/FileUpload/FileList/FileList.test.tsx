@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import FileList from './FileList';
+import FileList, { Props } from './FileList';
 import { CustomFile } from '../hooks';
 
-const defaultProps: React.ComponentProps<typeof FileList> = {
+const defaultProps: Props = {
 	// Combined list of accepted and rejected file records
 	files: [
 		// Accepted files (only these will be uploaded)
