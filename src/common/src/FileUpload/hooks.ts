@@ -11,15 +11,19 @@ export interface CustomFile extends File {
 export type CustomFileOrRejection = CustomFile & FileRejection;
 export type Files = CustomFileOrRejection[];
 
+let tmpId = 0;
+
 export const useFileUpload = (
 	getPostUrl: () => Promise<string>,
 	getHeaders: () => Promise<{ [key: string]: string }>,
 	httpMethod: 'POST' | 'PUT' = 'POST',
+	storedFiles: CustomFileOrRejection[] = [],
+	lastTmpId = 0,
 	onFileSuccess?: (file: CustomFile) => void,
 ) => {
-	const [files, setFiles] = React.useState<CustomFileOrRejection[]>([]);
+	const [files, setFiles] = React.useState<CustomFileOrRejection[]>(storedFiles);
 	const [stateXhr, setStateXhr] = React.useState<{ [key: string]: XMLHttpRequest }>({});
-	const [nextTmpId, setNextTmpId] = React.useState<number>(1);
+	tmpId = lastTmpId;
 
 	const handleOnDrop = React.useCallback(
 		(acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -27,26 +31,41 @@ export const useFileUpload = (
 				setFiles((previousFiles) => [...previousFiles, ...fileRejections] as Files);
 			}
 
-			const makeRequest = async (rawFile: File) => {
+			const makeRequest = async (rawFile: File, nextTmpId: number) => {
 				const postUrl = await getPostUrl();
 				const headers = await getHeaders();
-				const customFile: CustomFile = Object.assign(rawFile, { tmpId: nextTmpId });
-				const fileList = [...files, customFile] as Files;
-				setFiles(fileList);
+				const customFile: CustomFile = Object.assign(rawFile, { tmpId: nextTmpId, progress: 0 });
+				setFiles((previousFiles) => [...previousFiles, customFile] as Files);
 
 				const formData = new FormData();
 				formData.append('file', rawFile);
 				const xhr = new XMLHttpRequest();
 
 				xhr.upload.onprogress = (event) => {
-					customFile.progress = (event.loaded / event.total) * 100;
+					const percentage = parseInt(String((event.loaded / event.total) * 100), 10);
+					// Avoid file being re-rendered as removed from list prior to onreadystatechange having
+					// done its thing
+					if (percentage === 100) return;
+					setFiles(
+						(previousFiles) =>
+							[
+								...previousFiles.map((file) => {
+									if (file.tmpId === customFile.tmpId) {
+										return Object.assign(file, {
+											progress: percentage,
+										});
+									}
+									return file;
+								}),
+							] as Files,
+					);
 				};
 
 				xhr.onreadystatechange = () => {
 					if (xhr.readyState !== XMLHttpRequest.DONE) return;
 					const status = xhr.status;
 
-					if (status >= 200 && status < 400) {
+					if (status === 0 || (status >= 200 && status < 400)) {
 						// The request has been completed successfully
 						customFile.progress = 100;
 						customFile.response = xhr.responseText;
@@ -59,7 +78,11 @@ export const useFileUpload = (
 						customFile.response = xhr.responseText;
 						customFile.uploadXhrError = true;
 					}
-					setFiles([...files, customFile] as Files); // Trigger re-render of file list
+
+					setFiles(
+						(previousFiles) =>
+							previousFiles.map((file) => (file.tmpId === customFile.tmpId ? customFile : file)) as Files,
+					);
 				};
 
 				xhr.open(httpMethod, postUrl, true);
@@ -70,10 +93,12 @@ export const useFileUpload = (
 					...stateXhr,
 					[`xhr_${customFile.tmpId}`]: xhr,
 				});
-				setNextTmpId(nextTmpId + 1);
 			};
 
-			for (const file of acceptedFiles) makeRequest(file);
+			for (const file of acceptedFiles) {
+				tmpId += 1;
+				makeRequest(file, tmpId);
+			}
 		},
 		[getPostUrl],
 	);

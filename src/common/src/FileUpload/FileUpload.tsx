@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import { DropzoneOptions, FileRejection, useDropzone } from 'react-dropzone';
+import { Icon } from '@amsterdam/asc-ui';
 import { Download } from '@amsterdam/asc-assets';
 import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import {
@@ -9,9 +10,7 @@ import {
 	FileUploadSelectFilesButtonStyle,
 	FileUploadContainerStyle,
 } from './FileUploadStyles';
-import { Icon } from '@amsterdam/asc-ui/lib/components/Quote/QuoteStyle';
 import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
-
 import FileList from './FileList/FileList';
 
 export type Props = {
@@ -46,15 +45,17 @@ const FileUpload: React.FC<Props> = ({
 	onFileSuccess,
 	removeCompletedFromList,
 	options,
-	storedFiles,
+	storedFiles = [],
 	httpMethod = 'POST',
 	...otherProps
-}: Props) => {
+}) => {
 	const isTouchScreen = useDetectTouchscreen();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
 		getPostUrl,
 		getHeaders,
 		httpMethod,
+		storedFiles,
+		Math.max(...[...(storedFiles.length ? storedFiles.map((file) => file.tmpId) : [0])]),
 		onFileSuccess,
 	);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
@@ -85,10 +86,13 @@ const FileUpload: React.FC<Props> = ({
 					)}
 				</FileUploadContentStyle>
 			</FileUploadStyle>
-			{(files?.length > 0 || (storedFiles && storedFiles.length > 0)) && (
+			{files?.length > 0 && (
 				<FileList
-					files={removeCompletedFromList ? files.filter((file) => file.progress !== 100) : files}
-					defaultValues={storedFiles}
+					files={
+						removeCompletedFromList
+							? files.filter((file) => file.progress !== 100 || file?.uploadXhrError === true)
+							: files
+					}
 					removeLabel={removeLabel}
 					cancelLabel={cancelLabel}
 					onCancel={handleOnCancel}
