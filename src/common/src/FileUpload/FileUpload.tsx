@@ -55,7 +55,7 @@ const FileUpload: React.FC<Props> = ({
 		getHeaders,
 		httpMethod,
 		storedFiles,
-		Math.max(...[...(storedFiles?.map((file) => file.tmpId) ?? [0])]),
+		Math.max(...[...(storedFiles.length ? storedFiles.map((file) => file.tmpId) : [0])]),
 		onFileSuccess,
 	);
 	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({

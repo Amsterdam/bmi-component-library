@@ -34,22 +34,17 @@ const Template: Story<Props> = (args) => {
 export const Default = Template.bind({});
 Default.args = defaultProps;
 
+const storedFiles = [
+	new File(['hello'], 'hello.png', { type: 'image/png' }),
+	new File(['there'], 'there.png', { type: 'image/png' }),
+].map((file, idx) => Object.assign(file, { tmpId: idx })) as CustomFileOrRejection[];
+
 export const Prepopulated: Story = () => (
 	<FileUpload
 		{...defaultProps}
 		options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
 		placeholder="Sleep de PNG bestanden in dit vlak of"
-		storedFiles={
-			[
-				{
-					name: 'Test.png',
-					tmpId: 3,
-					progress: 100,
-					// response:
-					// 	'{"FileId":"n8913ueen4jzn35am0wnk6kgs19k3r0q","FileName":"Test.pdf","FileExt":"pdf","Url":"https://v2.convertapi.com/d/n8913ueen4jzn35am0wnk6kgs19k3r0q"}',
-				},
-			] as CustomFileOrRejection[]
-		}
+		storedFiles={storedFiles}
 	/>
 );
 Prepopulated.storyName = 'Pre-populated FileList';
