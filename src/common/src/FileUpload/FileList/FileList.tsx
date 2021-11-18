@@ -16,7 +16,6 @@ import { FileRejection } from 'react-dropzone';
 
 export type Props = {
 	files: Files;
-	// defaultValues?: Files;
 	removeLabel: string;
 	cancelLabel: string;
 	onFileRemove: (file: CustomFile & FileRejection) => void;
@@ -49,16 +48,13 @@ const FileList: React.FC<Props> = ({
 	onCancel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
-	// defaultValues,
 	...otherProps
 }: Props) => {
-	// const [listedFiles, setListedFiles] = useState(defaultValues || []);
-
 	return (
 		<FileListStyle data-testid="file-list" {...otherProps}>
-			{files.map((file, index) => (
+			{files.map((file) => (
 				<FileListItem
-					key={`file-number-${index}`}
+					key={file.tmpId}
 					onCancel={() => onCancel(file)}
 					onFileRemove={() => onFileRemove(file)}
 					cancelLabel={cancelLabel}
