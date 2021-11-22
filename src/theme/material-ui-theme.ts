@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core';
 import { lighten, darken } from 'polished';
 import theme from './theme';
 
@@ -6,7 +6,7 @@ import theme from './theme';
  * This is where we define the color palette for Material UI components
  * We map the colors defined in @amsterdam/asc-ui as much as we can
  */
-const muiTheme = createMuiTheme({
+const muiTheme = createTheme({
 	typography: {
 		fontFamily: theme.typography.fontFamily,
 	},

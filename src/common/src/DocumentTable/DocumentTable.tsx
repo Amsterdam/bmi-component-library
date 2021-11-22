@@ -196,8 +196,6 @@ const DocumentTable: React.FC<Props> = ({
 				rows={tableRows}
 				disableColumnFilter
 				disableColumnMenu
-				disableColumnReorder
-				disableMultipleColumnsSorting
 				autoHeight
 				hideFooter
 				hideFooterPagination
