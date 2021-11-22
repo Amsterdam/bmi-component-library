@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.0...v0.0.7-alpha.1) (2021-11-22)
+
+
+### Bug Fixes
+
+* **confirmdialog:** added missing export and make props optional ([8b7ee4f](https://github.com/Amsterdam/bmi-component-library/commit/8b7ee4f30a34256ffc7e81c34195c7f4f50a6e81))
+* **material-ui:** replaced deprecated method with createTheme ([5174329](https://github.com/Amsterdam/bmi-component-library/commit/5174329fb1c45513d2dab5f51ff42650d661680c))
+
 ### [0.0.7-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.5...v0.0.7-alpha.0) (2021-11-18)
 
 
