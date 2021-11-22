@@ -1,10 +1,10 @@
 import React from 'react';
 import { act, render } from '@testing-library/react';
-import FileUpload from './FileUpload';
+import FileUpload, { Props } from './FileUpload';
 import userEvent from '@testing-library/user-event';
 import { CustomFileOrRejection } from './hooks';
 
-const defaultProps: React.ComponentProps<typeof FileUpload> = {
+const defaultProps: Props = {
 	getPostUrl: () => Promise.resolve('api/endpoint'),
 	getHeaders: () => Promise.resolve({}),
 	placeholder: 'Sleep de bestanden in dit vlak of',
@@ -83,6 +83,7 @@ describe('<FileUpload />', () => {
 			const { getByTestId } = render(<FileUpload {...defaultProps} httpMethod={httpMethod as 'PUT' | 'POST'} />);
 			const input: any = getByTestId('file-upload__input');
 			const file = new File(['hello'], 'hello.png', { type: 'image/png' });
+			// file.tmpId = 1;
 
 			await act(async () => {
 				userEvent.upload(input, file);
@@ -118,7 +119,7 @@ describe('<FileUpload />', () => {
 		const storedFiles = [
 			new File(['hello'], 'hello.png', { type: 'image/png' }),
 			new File(['there'], 'there.png', { type: 'image/png' }),
-		] as CustomFileOrRejection[];
+		].map((file, idx) => Object.assign(file, { tmpId: idx })) as CustomFileOrRejection[];
 
 		const { getByTestId } = render(<FileUpload storedFiles={storedFiles} {...defaultProps} />);
 		const fileList: any = getByTestId('file-list');

@@ -18,7 +18,7 @@ describe('<Modal />', () => {
 		const onCloseMock = jest.fn();
 
 		const { getByTestId } = render(
-			<Modal id="test-modal-id"  open>
+			<Modal id="test-modal-id" open>
 				<Modal.TopBar onCloseButton={onCloseMock}>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
 			</Modal>,
@@ -36,7 +36,7 @@ describe('<Modal />', () => {
 	it('should not contain a close button when not given', () => {
 		const { queryByTestId } = render(
 			<Modal id="test-modal-id" open>
-				<Modal.TopBar hideCloseButton={true}>Heading</Modal.TopBar>
+				<Modal.TopBar hideCloseButton>Heading</Modal.TopBar>
 				<Modal.Content>Content</Modal.Content>
 			</Modal>,
 		);

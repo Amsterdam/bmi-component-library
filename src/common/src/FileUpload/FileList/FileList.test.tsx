@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import FileList from './FileList';
+import FileList, { Props } from './FileList';
 import { CustomFile } from '../hooks';
 
-const defaultProps: React.ComponentProps<typeof FileList> = {
+const defaultProps: Props = {
 	// Combined list of accepted and rejected file records
 	files: [
 		// Accepted files (only these will be uploaded)
@@ -14,6 +14,7 @@ const defaultProps: React.ComponentProps<typeof FileList> = {
 			size: 119660,
 			type: 'image/png',
 			webkitRelativePath: '',
+			tmpId: 1,
 		},
 		{
 			lastModified: 1623407907304,
@@ -22,6 +23,7 @@ const defaultProps: React.ComponentProps<typeof FileList> = {
 			size: 129654,
 			type: 'image/png',
 			webkitRelativePath: '',
+			tmpId: 2,
 		},
 		// Rejected files
 		{
@@ -34,6 +36,7 @@ const defaultProps: React.ComponentProps<typeof FileList> = {
 				type: 'image/png',
 				webkitRelativePath: '',
 			},
+			tmpId: 3,
 		},
 	] as any,
 	removeLabel: 'Wissen',
@@ -68,6 +71,7 @@ describe('<FileList />', () => {
 				type: 'image/png',
 				webkitRelativePath: '',
 				progress: 50,
+				tmpId: 4,
 			},
 		];
 		const { getAllByText } = render(
@@ -98,6 +102,7 @@ describe('<FileList />', () => {
 			size: 119660,
 			type: 'image/png',
 			webkitRelativePath: '',
+			tmpId: 1,
 		});
 		expect(onFileRemoveMock).toHaveBeenCalledTimes(1);
 	});

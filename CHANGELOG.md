@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.5...v0.0.7-alpha.0) (2021-11-18)
+
+
+### Bug Fixes
+
+* **documenttable:** adding export for <DocumentTable /> ([#14](https://github.com/Amsterdam/bmi-component-library/issues/14)) ([0684dc4](https://github.com/Amsterdam/bmi-component-library/commit/0684dc48558f7804a5a6a4393843269b4c61346e))
+
 ### [0.0.5-alpha.5](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.4...v0.0.5-alpha.5) (2021-10-27)
 
 ### [0.0.5-alpha.4](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.5-alpha.3...v0.0.5-alpha.4) (2021-10-21)
