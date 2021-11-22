@@ -1,6 +1,6 @@
 import React from 'react';
-import ConfirmDialog, { confirm } from './ConfirmDialog';
 import { Story } from '@storybook/react';
+import ConfirmDialog, { confirm } from './ConfirmDialog';
 
 export default {
 	title: 'common/ConfirmDialog',
@@ -10,8 +10,6 @@ export default {
 const props = {
 	title: 'Waarschuwing',
 	message: 'Weet u zeker dat u dit document definitief wilt verwijderen?',
-	textCancelButton: 'Nee',
-	textConfirmButton: 'Ja',
 	onCancel: () => {
 		console.log('Nee');
 	},

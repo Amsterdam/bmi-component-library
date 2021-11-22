@@ -13,20 +13,22 @@ export interface IState {
 	onCancel: () => void;
 	onConfirm: () => void;
 }
+
 const initialState: IState = {
-	title: '',
-	message: '',
-	textCancelButton: '',
-	textConfirmButton: '',
+	title: 'Waarschuwing',
+	message: 'Weet u zeker dat u dit item definitief wilt verwijderen?',
+	textCancelButton: 'Nee',
+	textConfirmButton: 'Ja',
 	onCancel: () => {},
 	onConfirm: () => {},
 };
 
 const store = new BehaviorSubject(initialState);
 
-export const confirm = ({ ...props }: IState) => {
-	store.next({ ...props });
+export const confirm = ({ ...props }: Partial<IState>) => {
+	store.next({ ...initialState, ...props });
 };
+
 const ConfirmDialog: React.FC<{}> = () => {
 	const [state, setState] = React.useState<IState>(initialState);
 	const [isVisible, setIsVisible] = React.useState<boolean>(false);
