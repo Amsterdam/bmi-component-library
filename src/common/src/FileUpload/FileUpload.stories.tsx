@@ -39,6 +39,15 @@ const storedFiles = [
 	new File(['there'], 'there.png', { type: 'image/png' }),
 ].map((file, idx) => Object.assign(file, { tmpId: idx })) as CustomFileOrRejection[];
 
+export const SingleFile: Story = () => (
+	<FileUpload
+		{...defaultProps}
+		options={{ noClick: true, noKeyboard: true, maxFiles: 1 }}
+		placeholder="Sleep een bestand in dit vlak of"
+	/>
+);
+SingleFile.storyName = 'Single file';
+
 export const Prepopulated: Story = () => (
 	<FileUpload
 		{...defaultProps}

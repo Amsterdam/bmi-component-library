@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FileRejection } from 'react-dropzone';
 
 export interface CustomFile extends File {
@@ -23,7 +23,10 @@ export const useFileUpload = (
 ) => {
 	const [files, setFiles] = React.useState<CustomFileOrRejection[]>(storedFiles);
 	const [stateXhr, setStateXhr] = React.useState<{ [key: string]: XMLHttpRequest }>({});
-	tmpId = lastTmpId;
+
+	useEffect(() => {
+		tmpId = lastTmpId;
+	}, []);
 
 	const handleOnDrop = React.useCallback(
 		(acceptedFiles: File[], fileRejections: FileRejection[]) => {

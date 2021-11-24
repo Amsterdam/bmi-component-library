@@ -49,24 +49,22 @@ const FileList: React.FC<Props> = ({
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
 	...otherProps
-}: Props) => {
-	return (
-		<FileListStyle data-testid="file-list" {...otherProps}>
-			{files.map((file) => (
-				<FileListItem
-					key={file.tmpId}
-					onCancel={() => onCancel(file)}
-					onFileRemove={() => onFileRemove(file)}
-					cancelLabel={cancelLabel}
-					removeLabel={removeLabel}
-					file={file}
-					fileUploadErrorLabel={fileUploadErrorLabel}
-					fileUploadInProgressLabel={fileUploadInProgressLabel}
-				/>
-			))}
-		</FileListStyle>
-	);
-};
+}: Props) => (
+	<FileListStyle data-testid="file-list" {...otherProps}>
+		{files.map((file, index) => (
+			<FileListItem
+				key={file.tmpId || index}
+				onCancel={() => onCancel(file)}
+				onFileRemove={() => onFileRemove(file)}
+				cancelLabel={cancelLabel}
+				removeLabel={removeLabel}
+				file={file}
+				fileUploadErrorLabel={fileUploadErrorLabel}
+				fileUploadInProgressLabel={fileUploadInProgressLabel}
+			/>
+		))}
+	</FileListStyle>
+);
 
 const FileListItem: React.FC<FileListItemProps> = ({
 	file,

@@ -14,9 +14,10 @@ export interface IState {
 	onConfirm: () => void;
 }
 
+const defaultMessage = 'Weet u zeker dat u dit item definitief wilt verwijderen?';
 const initialState: IState = {
 	title: 'Waarschuwing',
-	message: 'Weet u zeker dat u dit item definitief wilt verwijderen?',
+	message: '',
 	textCancelButton: 'Nee',
 	textConfirmButton: 'Ja',
 	onCancel: () => {},
@@ -26,7 +27,7 @@ const initialState: IState = {
 const store = new BehaviorSubject(initialState);
 
 export const confirm = ({ ...props }: Partial<IState>) => {
-	store.next({ ...initialState, ...props });
+	store.next({ ...initialState, message: defaultMessage, ...props });
 };
 
 const ConfirmDialog: React.FC<{}> = () => {
@@ -42,6 +43,7 @@ const ConfirmDialog: React.FC<{}> = () => {
 		});
 		return () => setState(initialState);
 	}, []);
+
 	return (
 		<Modal id="confirm-dialog" open={isVisible}>
 			<Modal.TopBar hideCloseButton>
