@@ -5,7 +5,7 @@ import { Button } from '@amsterdam/asc-ui';
 import ColumnFilter from './ColumnFilter';
 import { Close } from '@amsterdam/asc-assets';
 
-type Props = {
+export type Props = {
 	// Material UI DataGrid columns definitions
 	columns?: GridColDef[];
 	// Material UI DataGrid row definitions
