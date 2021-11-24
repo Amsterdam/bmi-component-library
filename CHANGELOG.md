@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7-alpha.2](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.1...v0.0.7-alpha.2) (2021-11-24)
+
+
+### Bug Fixes
+
+* **confirmdialog:** fixed bug that caused confirm dialog to be instantly visible ([f5d13d0](https://github.com/Amsterdam/bmi-component-library/commit/f5d13d020fc4392368db10959a5d7f8028b66a28))
+* **fileupload:** ensuring multiple failed uploads each have a unique key ([ac7182e](https://github.com/Amsterdam/bmi-component-library/commit/ac7182eb735dbfb0e7ecb4e80fdd7527c14a994a))
+* **fileupload:** ensuring tmpId counter is not reset on each re-render ([864fb9d](https://github.com/Amsterdam/bmi-component-library/commit/864fb9db1f771060161bfc11a153399878b72a35))
+
 ### [0.0.7-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.0...v0.0.7-alpha.1) (2021-11-22)
 
 
