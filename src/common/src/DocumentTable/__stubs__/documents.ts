@@ -1,0 +1,103 @@
+import { ComponentProps } from 'react';
+import DocumentTable from '../DocumentTable';
+
+export const documents: ComponentProps<typeof DocumentTable>['rows'] = [
+	{
+		id: '593a3fce-dd0e-4b80-ae52-1127b04083df',
+		filename: '__FILENAME__  #1',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #1',
+		documentType: '__DOCUMENT_TYPE__ #1',
+		year: 1900,
+	},
+	{
+		id: '2404b589-ba65-4908-8907-7108f7f1462c',
+		filename: '__FILENAME__  #2',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #2',
+		documentType: '__DOCUMENT_TYPE__ #2',
+		year: 1901,
+	},
+	{
+		id: '7ff9e462-6cc4-4d7f-82d2-504a215967d3',
+		filename: '__FILENAME__  #3',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #3',
+		documentType: '__DOCUMENT_TYPE__ #3',
+		year: 1902,
+	},
+	{
+		id: '66601eda-d025-419a-8193-68aca9f9f273',
+		filename: '__FILENAME__  #4',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #4',
+		documentType: '__DOCUMENT_TYPE__ #4',
+		year: 1903,
+	},
+	{
+		id: 'cc6c8c9a-a88e-4e14-88f7-282178d46df6',
+		filename: '__FILENAME__  #5',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #5',
+		documentType: '__DOCUMENT_TYPE__ #5',
+		year: 1904,
+	},
+	{
+		id: 'a78b7ad1-4f55-4bc1-8a5d-bd089325f352',
+		filename: '__FILENAME__  #6',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #6',
+		documentType: '__DOCUMENT_TYPE__ #6',
+		year: 1905,
+	},
+	{
+		id: 'b9ba0656-30c3-45d8-85f6-e287bafd1db9',
+		filename: '__FILENAME__  #7',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #7',
+		documentType: '__DOCUMENT_TYPE__ #7',
+		year: 1906,
+	},
+	{
+		id: '1187460d-c125-49aa-8645-9227a599f186',
+		filename: '__FILENAME__  #8',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #8',
+		documentType: '__DOCUMENT_TYPE__ #8',
+		year: 1907,
+	},
+	{
+		id: 'bb43d91f-aab2-4f38-b65d-45052f8fcb36',
+		filename: '__FILENAME__  #9',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #9',
+		documentType: '__DOCUMENT_TYPE__ #9',
+		year: 1908,
+	},
+	{
+		id: '436719dd-5524-4e3c-b0a5-7e2e423f2eb0',
+		filename: '__FILENAME__  #10',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #10',
+		documentType: '__DOCUMENT_TYPE__ #10',
+		year: 1909,
+	},
+	{
+		id: '8c129857-192e-4bfc-8ef8-4798a7c9d3ff',
+		filename: '__FILENAME__  #11',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #11',
+		documentType: '__DOCUMENT_TYPE__ #11',
+		year: 1910,
+	},
+	{
+		id: '40a0d589-07be-443f-bba3-66cdbb093ae3',
+		filename: '__FILENAME__  #12',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #12',
+		documentType: '__DOCUMENT_TYPE__ #12',
+		year: 1911,
+	},
+	{
+		id: '72be15a9-81f4-4f07-8905-f50a4a0e432d',
+		filename: '__FILENAME__  #13',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #13',
+		documentType: '__DOCUMENT_TYPE__ #13',
+		year: 1912,
+	},
+	{
+		id: '612ce8f0-c247-4cb5-ac6f-59b1fcb267a6',
+		filename: '__FILENAME__  #14',
+		documentDescription: '__DOCUMENT_DESCRIPTION__ #14',
+		documentType: '__DOCUMENT_TYPE__ #14',
+		year: 1913,
+	},
+];
