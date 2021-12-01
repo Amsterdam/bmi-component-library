@@ -1,8 +1,5 @@
-import { ReactElement } from 'react';
-import * as React from 'react';
+import { createMockComponent } from '~/tests/helpers/createMockComponent';
 
-const ColumnFilter = (): ReactElement => {
-	return <></>;
-};
+const ColumnFilter = createMockComponent('ColumnFilter', 'column-filter');
 
 export default ColumnFilter;

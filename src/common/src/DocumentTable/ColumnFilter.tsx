@@ -41,6 +41,4 @@ const ColumnFilter: React.FC<Props> = ({ params, onKeyUp, onClear, ...props }: P
 	);
 };
 
-ColumnFilter.displayName = 'ColumnFilter';
-
 export default ColumnFilter;

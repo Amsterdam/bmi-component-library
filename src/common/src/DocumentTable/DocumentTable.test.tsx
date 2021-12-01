@@ -1,12 +1,14 @@
 import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { render, getByText, screen, fireEvent, act } from '@testing-library/react';
+import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import DocumentTable from './DocumentTable';
 import muiTheme from '../../../theme/material-ui-theme';
 import theme from '../../../theme/theme';
+import { documents } from './__stubs__/documents';
+import userEvent from '@testing-library/user-event';
 
-jest.mock('./ColumnFilter');
+// jest.mock('./ColumnFilter');
 jest.mock('@amsterdam/asc-ui', () => {
 	return {
 		...jest.requireActual('@amsterdam/asc-ui'),
@@ -27,44 +29,6 @@ function index(el: HTMLDivElement | null) {
 	return -1;
 }
 
-const rows = [
-	{
-		id: 1,
-		filename: 'Bouwfoto1',
-		documentDescription: 'Bouwkundig onderzoek',
-		documentType: 'SOK',
-		year: 2021,
-	},
-	{
-		id: 2,
-		filename: 'Overzichtskaart',
-		documentDescription: 'Geotechnisch onderzoek',
-		documentType: 'SOK',
-		year: 2021,
-	},
-	{
-		id: 3,
-		filename: 'Metingen',
-		documentDescription: 'Conditiemetingen bestaande objecten',
-		documentType: 'SOK',
-		year: 2021,
-	},
-	{
-		id: 4,
-		filename: 'Overzichtskaart 2',
-		documentDescription: 'Geotechnisch onderzoek',
-		documentType: 'SOK',
-		year: 2021,
-	},
-	{
-		id: 5,
-		filename: 'Foto onderkant',
-		documentDescription: 'Bouwkundig onderzoek',
-		documentType: 'SOK',
-		year: 2021,
-	},
-];
-
 /**
  * NOTE: without the columnBuffer prop set not all columns will be available for assertions.
  * See: https://stackoverflow.com/questions/65669707/problem-testing-material-ui-datagrid-with-react-testing-library
@@ -72,14 +36,16 @@ const rows = [
 describe('<DocumentTable />', () => {
 	describe('Renders a default set of columns and behaviours', () => {
 		const mockOnDownload = jest.fn();
-		const mockOnRemove = jest.fn();
+		const mockOnRemove = jest.fn().mockImplementation((rowId) => {
+			return Promise.resolve(true);
+		});
 		let container: HTMLElement;
 		beforeEach(() => {
 			({ container } = render(
 				<MUIThemeProvider theme={muiTheme}>
 					<ThemeProvider overrides={theme}>
 						<GlobalStyle />
-						<DocumentTable onDownload={mockOnDownload} onRemove={mockOnRemove} rows={rows} />
+						<DocumentTable onDownload={mockOnDownload} onRemove={mockOnRemove} rows={documents} />
 					</ThemeProvider>
 				</MUIThemeProvider>,
 			));
@@ -103,31 +69,53 @@ describe('<DocumentTable />', () => {
 			expect(index(header4.closest('div.MuiDataGrid-columnHeader'))).toBe(3);
 		});
 
-		test.each([[1], [2], [3], [4], [5]])('Has a column for downloading document %s', (num) => {
-			const link = screen.getByTestId(`document-table-download-${num}`);
-			expect(link).toHaveTextContent(rows.find((row) => row.id === num)?.filename ?? '');
-			fireEvent.click(link);
-			expect(mockOnDownload).toHaveBeenCalledWith(rows.find((row) => row.id === num));
-		});
+		// test.each([[1], [2], [3], [4], [5]])('Has a column for downloading document %s', (num) => {
+		test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(
+			'Has a column for downloading document "%s"',
+			(name, id) => {
+				const link = screen.getByTestId(`document-table-download-${id}`);
+				// expect(link).toHaveTextContent(documents.find((doc) => doc.id === id)?.filename ?? '');
+				expect(link.textContent).toContain(documents.find((doc) => doc.id === id)?.filename ?? '');
+				fireEvent.click(link);
+				expect(mockOnDownload).toHaveBeenCalledWith(documents.find((doc) => doc.id === id));
+			},
+		);
 
-		test.each([[1], [2], [3], [4], [5]])('Has a column for removing row %s', (num) => {
-			const button = screen.getByTestId(`document-table-remove-${num}`);
-			expect(button).toHaveTextContent('Wissen');
-			fireEvent.click(button);
-			expect(mockOnRemove).toHaveBeenCalledWith(num);
-		});
+		test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(
+			'Has a column for removing document "%s"',
+			async (name, id) => {
+				// test.each([[1], [2], [3], [4], [5]])('Has a column for removing row %s', (num) => {
+				const button = screen.getByTestId(`document-table-remove-${id}`);
+				expect(button.textContent).toContain('Wissen');
+				act(() => {
+					fireEvent.click(button);
+				});
+				await waitFor(() => {
+					expect(mockOnRemove).toHaveBeenCalledWith(id);
+				});
+			},
+		);
 
 		// TODO Couldn't get <ColumnFilter /> events to update internal state in set time-box
-		xtest('Allows filtering using <ColumnFilter />', () => {
-			const input = screen.getByTestId('column-filter-filename');
+		test('Allows filtering using <ColumnFilter />', async () => {
+			const input = screen.getByTestId('column-filter-documentDescription');
 			act(() => {
-				fireEvent.keyUp(input, { key: 'o', code: 'KeyE' });
-				fireEvent.change(input, { target: { value: 'foto' } });
+				// fireEvent.change(input, { target: { value: '1' } });
+				// userEvent.keyboard('1');
+				userEvent.type(input, '1');
+				screen.debug(input);
+				// fireEvent.focus(input);
+				// fireEvent.blur(input); // 'Digit1'
+				// fireEvent.keyUp(input, { key: '1', code: 49 }); // 'Digit1'
 			});
-			const row1 = screen.getByText('Bouwfoto1').closest('.MuiDataGrid-row');
-			expect(row1).toHaveAttribute('data-rowindex', '1');
-			const row2 = screen.getByText('Foto onderkant').closest('.MuiDataGrid-row');
-			expect(row2).toHaveAttribute('data-rowindex', '2');
+			await waitFor(() => {
+				const row1 = screen.getByText(documents[0].documentDescription).closest('.MuiDataGrid-row');
+				expect(row1).toHaveAttribute('data-rowindex', '1');
+				const row2 = screen.getByText(documents[9].documentDescription).closest('.MuiDataGrid-row');
+				expect(row2).toHaveAttribute('data-rowindex', '2');
+			});
+			// const row2 = screen.getByText('Foto onderkant').closest('.MuiDataGrid-row');
+			// expect(row2).toHaveAttribute('data-rowindex', '2');
 		});
 	});
 });

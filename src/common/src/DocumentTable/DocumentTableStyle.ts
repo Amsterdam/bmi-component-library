@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { DataGrid } from '@material-ui/data-grid';
 import { themeColor, srOnlyStyle, Pagination } from '@amsterdam/asc-ui';
+import { ComponentProps } from 'react';
 
 export const PaginationStyle = styled(Pagination)`
 	&& {
@@ -9,7 +10,7 @@ export const PaginationStyle = styled(Pagination)`
 	}
 `;
 
-export default styled(DataGrid)`
+export default styled(DataGrid)<ComponentProps<typeof DataGrid>>`
 	&.MuiDataGrid-root {
 		border: none;
 

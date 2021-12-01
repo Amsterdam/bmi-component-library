@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { GridCellParams, GridCellValue, GridColDef, GridRowData } from '@material-ui/data-grid';
-import DocumentTableStyle, { PaginationStyle } from './DocumentTableStyle';
+import React, { useEffect, useMemo } from 'react';
+import { GridCellValue, GridColDef, GridRowModel } from '@material-ui/data-grid';
 import { Button } from '@amsterdam/asc-ui';
-import ColumnFilter from './ColumnFilter';
 import { Close } from '@amsterdam/asc-assets';
+import DocumentTableStyle, { PaginationStyle } from './DocumentTableStyle';
+import ColumnFilter from './ColumnFilter';
 
 type Props = {
 	// Material UI DataGrid columns definitions
 	columns?: GridColDef[];
 	// Material UI DataGrid row definitions
-	rows: GridRowData[];
+	rows: GridRowModel[];
 	// Current state of pagination
 	page?: number;
 	// Page size; defaults to 10
@@ -19,16 +19,18 @@ type Props = {
 	// If true, no removal links are rendered
 	disableRemoval?: boolean;
 	// In case disableRemoval is not set to true
-	onRemove?: (id: GridCellValue) => void;
+	onRemove?: (id: GridCellValue) => Promise<boolean | void>;
 	// In of the default columns being used
-	onDownload?: (row: GridRowData) => void;
+	onDownload?: (row: GridRowModel) => void;
 };
 
-function paginate(rows: GridRowData[], pageSize: number, currentPage: number): GridRowData[] {
+// TODO write test
+export function paginate(rows: GridRowModel[], pageSize: number, currentPage: number): GridRowModel[] {
 	return rows.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 }
 
-function applyFilters(rows: GridRowData[], filters: { [key: string]: string }): GridRowData[] {
+// TODO write test
+export function applyFilters(rows: GridRowModel[], filters: { [key: string]: string }): GridRowModel[] {
 	return rows.filter((row) => {
 		let include = true;
 		Object.keys(filters).some((filterKey) => {
@@ -55,123 +57,88 @@ const DocumentTable: React.FC<Props> = ({
 	onRemove,
 	onDownload,
 }: Props) => {
-	const [tableColumns, setTableColumns] = React.useState<GridColDef[]>(
-		columns !== undefined
-			? columns
-			: [
-					{
-						field: 'filename',
-						headerName: 'Bestandsnaam',
-						renderCell: function renderCell(params: GridCellParams) {
-							// The onDragStart hack prevents being able to reorder the columns by dragging (BUG)
-							return onDownload ? (
-								<a
-									href="#"
-									onClick={(evt) => {
-										evt.stopPropagation();
-										evt.preventDefault();
-										onDownload(params.row);
-									}}
-									onDragStart={(evt) => evt.preventDefault()}
-									data-testid={`document-table-download-${params.id}`}
-								>
-									<span className="sr-only">Download</span>
-									{params.value}
-								</a>
-							) : (
-								<>{params.value}</>
-							);
+	const tableColumns = useMemo(() => {
+		let cols = columns ?? [
+			{
+				field: 'filename',
+				headerName: 'Bestandsnaam',
+				renderCell: function renderCell(params) {
+					// The onDragStart hack prevents being able to reorder the columns by dragging (BUG)
+					return onDownload ? (
+						<a
+							href="#"
+							onClick={(evt) => {
+								evt.stopPropagation();
+								evt.preventDefault();
+								onDownload(params.row);
+							}}
+							onDragStart={(evt) => evt.preventDefault()}
+							data-testid={`document-table-download-${params.id}`}
+						>
+							<span className="sr-only">Download</span>
+							{params.value}
+						</a>
+					) : (
+						<>{params.value}</>
+					);
+				},
+				flex: 1.5,
+				sortable: false,
+				resizable: false,
+			},
+			{
+				field: 'documentDescription',
+				headerName: 'Documentomschrijving',
+				flex: 1.5,
+				sortable: false,
+				resizable: false,
+			},
+			{
+				field: 'documentType',
+				headerName: 'Documenttype',
+				flex: 1.5,
+				sortable: false,
+				resizable: false,
+			},
+			{
+				field: 'year',
+				headerName: 'Jaar',
+				flex: 0.5,
+				sortable: false,
+				resizable: false,
+			},
+		];
+
+		if (!disableFilterRow) {
+			cols = cols.map(
+				(col) =>
+					({
+						...col,
+						renderCell: function renderCell(params) {
+							if (params.id === 0 && params.field === 'id') return <></>;
+							if (params.id === 0)
+								return (
+									<ColumnFilter
+										params={params}
+										onKeyUp={onFilterKeyUp}
+										onClear={() => onClearFilter(params.field)}
+									/>
+								);
+							if (col.renderCell !== undefined) return col.renderCell(params);
+							return <>{params.formattedValue}</>;
 						},
-						flex: 1.5,
-						sortable: false,
-						resizable: false,
-					},
-					{
-						field: 'documentDescription',
-						headerName: 'Documentomschrijving',
-						flex: 1.5,
-						sortable: false,
-						resizable: false,
-					},
-					{
-						field: 'documentType',
-						headerName: 'Documenttype',
-						flex: 1.5,
-						sortable: false,
-						resizable: false,
-					},
-					{
-						field: 'year',
-						headerName: 'Jaar',
-						flex: 0.5,
-						sortable: false,
-						resizable: false,
-					},
-					// eslint-disable-next-line no-mixed-spaces-and-tabs
-			  ],
-	);
-	const [tableRows, setTableRows] = React.useState<GridRowData[]>(rows);
-	const [currentPage, setCurrentPage] = React.useState<number>(page);
-	const [filters, setFilters] = React.useState<{ [key: string]: string }>({});
-	const [filteredRows, setFilteredRows] = React.useState<GridRowData[]>(rows);
-
-	const handleOnKeyUp = React.useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
-		const input = evt.target as HTMLInputElement;
-		const { name, value } = input;
-		setFilters({ ...filters, [name]: value });
-	}, []);
-
-	const handleClearFilter = React.useCallback((key: string) => {
-		delete filters[key];
-		setFilters({ ...filters });
-	}, []);
-
-	const handleRemoval = React.useCallback((id: GridCellValue) => onRemove && onRemove(id), []);
-
-	useEffect(() => {
-		if (disableFilterRow === true) {
-			setTableRows(rows);
-		} else {
-			// Inject additional row for filter inputs
-			const filter: GridRowData = {
-				id: 0,
-			};
-			const rowsWithFilter = [filter, ...paginate(filteredRows, pageSize, currentPage)];
-			setTableColumns(
-				tableColumns.map((col: GridColDef) => ({
-					...col,
-					renderCell: function renderCell(params: GridCellParams) {
-						if (params.id === 0 && params.field === 'id') return <></>;
-						if (params.id === 0)
-							return (
-								<ColumnFilter
-									params={params}
-									onKeyUp={handleOnKeyUp}
-									onClear={() => handleClearFilter(params.field)}
-								/>
-							);
-						if (col.renderCell !== undefined) return col.renderCell(params);
-						return <>{params.formattedValue}</>;
-					},
-				})),
+					} as GridColDef),
 			);
-			setTableRows(rowsWithFilter);
 		}
-	}, [disableFilterRow, currentPage, filteredRows]);
 
-	useEffect(() => {
-		setFilteredRows(applyFilters(rows, filters));
-		setCurrentPage(1);
-	}, [filters]);
-
-	useEffect(() => {
 		if (!disableRemoval) {
-			tableColumns.push({
+			cols.push({
 				field: 'id',
 				headerName: ' ',
 				sortable: false,
 				cellClassName: 'remove',
-				renderCell: function renderCell(params: GridCellParams) {
+				renderCell: function renderCell(params) {
+					if (params.id === 0 && params.field === 'id') return <></>;
 					return (
 						<Button
 							variant="textButton"
@@ -185,9 +152,70 @@ const DocumentTable: React.FC<Props> = ({
 					);
 				},
 			});
-			setTableColumns(tableColumns);
+		}
+
+		return cols;
+	}, [columns, disableFilterRow, disableRemoval]);
+	// Filtered rows contains all rows that were not deleted or filtered out (required for pagination)
+	const [filteredRows, setFilteredRows] = React.useState<GridRowModel[]>(rows);
+	// Paginated subset of filtered rows
+	const [tableRows, setTableRows] = React.useState<GridRowModel[]>(rows);
+	const [currentPage, setCurrentPage] = React.useState<number>(page);
+	const [filters, setFilters] = React.useState<{ [key: string]: string }>({});
+	const [deletedRowIds, setDeletedRowIds] = React.useState<GridCellValue[]>([]);
+
+	const onFilterKeyUp = React.useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
+		const input = evt.target as HTMLInputElement;
+		const { name, value } = input;
+		setFilters({ ...filters, [name]: value });
+	}, []);
+
+	const onClearFilter = React.useCallback((key: string) => {
+		delete filters[key];
+		setFilters({ ...filters });
+	}, []);
+
+	const handleRemoval = React.useCallback(async (id: GridCellValue) => {
+		if (onRemove) {
+			const removed = await onRemove(id);
+			// Expect explicit false in case a confirmation dialog is used and cancelled
+			if (removed !== false) setDeletedRowIds([...deletedRowIds, id]);
 		}
 	}, []);
+
+	/**
+	 * Update rows in case
+	 * - currentPage changed
+	 * - filter was adjusted
+	 * - rows prop changed
+	 * - item was removed
+	 */
+	useEffect(() => {
+		const filteredRows: GridRowModel[] = (disableFilterRow ? rows : applyFilters(rows, filters))
+			// Once filters have been applied, filter out deleted rows
+			.filter((row) => !deletedRowIds.includes(row.id));
+		setFilteredRows(filteredRows);
+
+		setTableRows([
+			...(disableFilterRow
+				? []
+				: [
+						{
+							id: 0,
+						},
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
+				  ]),
+			...paginate(filteredRows, pageSize, currentPage),
+		]);
+
+		// TODO check if there are records on the currentPage, if not, go to the previous page?
+	}, [currentPage, filters, rows, deletedRowIds]);
+
+	// Jump back to page 1 on filter change
+	useEffect(() => setCurrentPage(1), [filters]);
+
+	// Clear deleted rows cache if rows are updated from props
+	useEffect(() => setDeletedRowIds([]), [rows]);
 
 	return (
 		<>
@@ -213,7 +241,5 @@ const DocumentTable: React.FC<Props> = ({
 		</>
 	);
 };
-
-DocumentTable.displayName = 'DocumentTable';
 
 export default DocumentTable;
