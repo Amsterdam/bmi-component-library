@@ -129,8 +129,8 @@ const DocumentTable: React.FC<Props> = ({
 								return (
 									<ColumnFilter
 										params={params}
-										onChange={(value) => {
-											onFilterChange(params.field, value as string);
+										onFilter={(value) => {
+											onFilterChange(params.field, value);
 										}}
 										onClear={() => onClearFilter(params.field)}
 									/>

@@ -6,11 +6,11 @@ type Value = InputHTMLAttributes<HTMLInputElement>['value'];
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	params: Pick<GridCellParams, 'field'>;
-	onChange: (value: string) => void;
+	onFilter: (value: string) => void;
 	onClear: () => void;
 };
 
-const ColumnFilter: React.FC<Props> = ({ params, onChange, onClear, ...props }: Props) => {
+const ColumnFilter: React.FC<Props> = ({ params, onFilter, onClear, ...props }: Props) => {
 	const { field } = params;
 	const [value, setValue] = React.useState<Value>(props?.value ?? '');
 
@@ -19,7 +19,7 @@ const ColumnFilter: React.FC<Props> = ({ params, onChange, onClear, ...props }: 
 		setValue(input.value);
 	};
 
-	useEffect(() => onChange(value as string), [value]);
+	useEffect(() => onFilter(value as string), [value]);
 
 	return (
 		<ColumnFilterStyle>
