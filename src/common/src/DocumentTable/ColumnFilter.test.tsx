@@ -8,7 +8,7 @@ describe('<ColumnFilter />', () => {
 		const { container } = render(
 			<ColumnFilter
 				name="filename"
-				onChange={() => jest.fn()}
+				onFilter={() => jest.fn()}
 				onClear={() => jest.fn()}
 				params={{
 					field: 'filename',
@@ -26,7 +26,7 @@ describe('<ColumnFilter />', () => {
 			<ColumnFilter
 				name="filename"
 				value="seed-words.pdf"
-				onChange={() => jest.fn()}
+				onFilter={() => jest.fn()}
 				onClear={() => jest.fn()}
 				params={{
 					field: 'filename',
@@ -43,7 +43,7 @@ describe('<ColumnFilter />', () => {
 		render(
 			<ColumnFilter
 				name="filename"
-				onChange={mockOnChange}
+				onFilter={mockOnChange}
 				onClear={() => jest.fn()}
 				params={{
 					field: 'filename',
@@ -63,7 +63,7 @@ describe('<ColumnFilter />', () => {
 		const { container } = render(
 			<ColumnFilter
 				name="filename"
-				onChange={() => jest.fn()}
+				onFilter={() => jest.fn()}
 				onClear={mockOnClear}
 				params={{
 					field: 'filename',
