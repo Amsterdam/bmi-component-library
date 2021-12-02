@@ -9,6 +9,7 @@
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": [
 		"**/*.test.tsx",
-		"**/*.stories.tsx"
+		"**/*.stories.tsx",
+		"**/__mocks__/*.tsx"
 	]
 }
