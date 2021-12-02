@@ -24,27 +24,36 @@ type Props = {
 	onDownload?: (row: GridRowModel) => void;
 };
 
+type Filters = Record<string, string>;
+
 // TODO write test
 export function paginate(rows: GridRowModel[], pageSize: number, currentPage: number): GridRowModel[] {
 	return rows.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 }
 
 // TODO write test
-export function applyFilters(rows: GridRowModel[], filters: { [key: string]: string }): GridRowModel[] {
-	return rows.filter((row) => {
-		let include = true;
-		Object.keys(filters).some((filterKey) => {
-			if (
-				filters?.[filterKey].length &&
-				!String(row[filterKey]).toLowerCase().includes(String(filters[filterKey].toLowerCase()))
-			) {
-				include = false;
-				return true;
-			}
-			return false;
-		});
-		return include;
-	});
+export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowModel[] {
+	return Object.keys(filters).length === 0
+		? rows
+		: rows.filter((row) => {
+				let include = true;
+				// Only include if all of the applied filters have a positive match on each respective column
+				// iterate over each applied filter,
+				// if any of the applied filters don't have a match on this row => exclude
+				Object.keys(filters).some((filterKey) => {
+					if (
+						filters?.[filterKey].length &&
+						!String(row[filterKey]).toLowerCase().includes(String(filters[filterKey]).toLowerCase())
+					) {
+						// Filter string not found in column value
+						include = false;
+						return true;
+					}
+					return false;
+				});
+				return include;
+				// eslint-disable-next-line no-mixed-spaces-and-tabs
+		  });
 }
 
 const DocumentTable: React.FC<Props> = ({
@@ -120,7 +129,9 @@ const DocumentTable: React.FC<Props> = ({
 								return (
 									<ColumnFilter
 										params={params}
-										onKeyUp={onFilterKeyUp}
+										onChange={(value) => {
+											onFilterChange(params.field, value as string);
+										}}
 										onClear={() => onClearFilter(params.field)}
 									/>
 								);
@@ -161,13 +172,11 @@ const DocumentTable: React.FC<Props> = ({
 	// Paginated subset of filtered rows
 	const [tableRows, setTableRows] = React.useState<GridRowModel[]>(rows);
 	const [currentPage, setCurrentPage] = React.useState<number>(page);
-	const [filters, setFilters] = React.useState<{ [key: string]: string }>({});
+	const [filters, setFilters] = React.useState<Filters>({});
 	const [deletedRowIds, setDeletedRowIds] = React.useState<GridCellValue[]>([]);
 
-	const onFilterKeyUp = React.useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
-		const input = evt.target as HTMLInputElement;
-		const { name, value } = input;
-		setFilters({ ...filters, [name]: value });
+	const onFilterChange = React.useCallback((name: string, value: string) => {
+		setFilters((prevState) => ({ ...prevState, [name]: value }));
 	}, []);
 
 	const onClearFilter = React.useCallback((key: string) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, getByTestId, queryByTestId, render } from '@testing-library/react';
+import { act, fireEvent, getByTestId, queryByTestId, render, waitFor, screen } from '@testing-library/react';
 import 'jest-styled-components';
 import ColumnFilter from './ColumnFilter';
 
@@ -8,7 +8,7 @@ describe('<ColumnFilter />', () => {
 		const { container } = render(
 			<ColumnFilter
 				name="filename"
-				onKeyUp={() => jest.fn()}
+				onChange={() => jest.fn()}
 				onClear={() => jest.fn()}
 				params={{
 					field: 'filename',
@@ -26,7 +26,7 @@ describe('<ColumnFilter />', () => {
 			<ColumnFilter
 				name="filename"
 				value="seed-words.pdf"
-				onKeyUp={() => jest.fn()}
+				onChange={() => jest.fn()}
 				onClear={() => jest.fn()}
 				params={{
 					field: 'filename',
@@ -38,21 +38,24 @@ describe('<ColumnFilter />', () => {
 		expect(queryByTestId(container, 'column-filter-cancel-filename')).toBeInTheDocument();
 	});
 
-	test('onKeyUp triggers callback', () => {
-		const mockOnKeyUp = jest.fn();
-		const { container } = render(
+	test('onKeyUp triggers callback', async () => {
+		const mockOnChange = jest.fn();
+		render(
 			<ColumnFilter
 				name="filename"
-				onKeyUp={mockOnKeyUp}
+				onChange={mockOnChange}
 				onClear={() => jest.fn()}
 				params={{
 					field: 'filename',
 				}}
 			/>,
 		);
-		const input = getByTestId(container, 'column-filter-filename') as HTMLInputElement;
-		fireEvent.keyUp(input, { key: 'o', code: 'KeyE' });
-		expect(mockOnKeyUp.mock.calls[0][0].key).toBe('o');
+		act(() => {
+			fireEvent.change(screen.getByTestId('column-filter-filename'), { target: { value: 'o' } });
+		});
+		await waitFor(() => {
+			expect(mockOnChange).toHaveBeenCalledWith('o');
+		});
 	});
 
 	test('Clicking on cancel icon clears value', () => {
@@ -60,7 +63,7 @@ describe('<ColumnFilter />', () => {
 		const { container } = render(
 			<ColumnFilter
 				name="filename"
-				onKeyUp={() => jest.fn()}
+				onChange={() => jest.fn()}
 				onClear={mockOnClear}
 				params={{
 					field: 'filename',
