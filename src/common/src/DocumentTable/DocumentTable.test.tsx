@@ -2,21 +2,10 @@ import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
-import DocumentTable from './DocumentTable';
+import DocumentTable, { applyFilters, paginate } from './DocumentTable';
 import muiTheme from '../../../theme/material-ui-theme';
 import theme from '../../../theme/theme';
 import { documents } from './__stubs__/documents';
-import userEvent from '@testing-library/user-event';
-
-// jest.mock('./ColumnFilter');
-jest.mock('@amsterdam/asc-ui', () => {
-	return {
-		...jest.requireActual('@amsterdam/asc-ui'),
-		Pagination: jest.fn().mockImplementation(function Pagination() {
-			return <></>;
-		}),
-	};
-});
 
 function index(el: HTMLDivElement | null) {
 	const children = el?.parentNode?.childNodes;
@@ -29,28 +18,30 @@ function index(el: HTMLDivElement | null) {
 	return -1;
 }
 
+const getRow = (el: HTMLElement) => el.closest('.MuiDataGrid-row');
+
 /**
  * NOTE: without the columnBuffer prop set not all columns will be available for assertions.
  * See: https://stackoverflow.com/questions/65669707/problem-testing-material-ui-datagrid-with-react-testing-library
  */
 describe('<DocumentTable />', () => {
-	describe('Renders a default set of columns and behaviours', () => {
-		const mockOnDownload = jest.fn();
-		const mockOnRemove = jest.fn().mockImplementation((rowId) => {
-			return Promise.resolve(true);
-		});
-		let container: HTMLElement;
-		beforeEach(() => {
-			({ container } = render(
-				<MUIThemeProvider theme={muiTheme}>
-					<ThemeProvider overrides={theme}>
-						<GlobalStyle />
-						<DocumentTable onDownload={mockOnDownload} onRemove={mockOnRemove} rows={documents} />
-					</ThemeProvider>
-				</MUIThemeProvider>,
-			));
-		});
+	const mockOnDownload = jest.fn();
+	const mockOnRemove = jest.fn().mockImplementation((rowId) => {
+		return Promise.resolve(true);
+	});
+	let container: HTMLElement;
+	beforeEach(() => {
+		({ container } = render(
+			<MUIThemeProvider theme={muiTheme}>
+				<ThemeProvider overrides={theme}>
+					<GlobalStyle />
+					<DocumentTable onDownload={mockOnDownload} onRemove={mockOnRemove} rows={documents} />
+				</ThemeProvider>
+			</MUIThemeProvider>,
+		));
+	});
 
+	describe('Renders a default set of columns and behaviours', () => {
 		test('Default columns', () => {
 			const header1 = getByText(container, 'Bestandsnaam') as HTMLDivElement;
 			expect(header1.className).toBe('MuiDataGrid-columnHeaderTitle');
@@ -69,12 +60,10 @@ describe('<DocumentTable />', () => {
 			expect(index(header4.closest('div.MuiDataGrid-columnHeader'))).toBe(3);
 		});
 
-		// test.each([[1], [2], [3], [4], [5]])('Has a column for downloading document %s', (num) => {
 		test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(
 			'Has a column for downloading document "%s"',
 			(name, id) => {
 				const link = screen.getByTestId(`document-table-download-${id}`);
-				// expect(link).toHaveTextContent(documents.find((doc) => doc.id === id)?.filename ?? '');
 				expect(link.textContent).toContain(documents.find((doc) => doc.id === id)?.filename ?? '');
 				fireEvent.click(link);
 				expect(mockOnDownload).toHaveBeenCalledWith(documents.find((doc) => doc.id === id));
@@ -84,7 +73,6 @@ describe('<DocumentTable />', () => {
 		test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(
 			'Has a column for removing document "%s"',
 			async (name, id) => {
-				// test.each([[1], [2], [3], [4], [5]])('Has a column for removing row %s', (num) => {
 				const button = screen.getByTestId(`document-table-remove-${id}`);
 				expect(button.textContent).toContain('Wissen');
 				act(() => {
@@ -95,27 +83,126 @@ describe('<DocumentTable />', () => {
 				});
 			},
 		);
+	});
 
-		// TODO Couldn't get <ColumnFilter /> events to update internal state in set time-box
-		test('Allows filtering using <ColumnFilter />', async () => {
-			const input = screen.getByTestId('column-filter-documentDescription');
+	describe('Allows filtering using <ColumnFilter />', () => {
+		test('Single column filter', async () => {
 			act(() => {
-				// fireEvent.change(input, { target: { value: '1' } });
-				// userEvent.keyboard('1');
-				userEvent.type(input, '1');
-				screen.debug(input);
-				// fireEvent.focus(input);
-				// fireEvent.blur(input); // 'Digit1'
-				// fireEvent.keyUp(input, { key: '1', code: 49 }); // 'Digit1'
+				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
+					target: { value: '1' },
+				});
 			});
 			await waitFor(() => {
-				const row1 = screen.getByText(documents[0].documentDescription).closest('.MuiDataGrid-row');
-				expect(row1).toHaveAttribute('data-rowindex', '1');
-				const row2 = screen.getByText(documents[9].documentDescription).closest('.MuiDataGrid-row');
-				expect(row2).toHaveAttribute('data-rowindex', '2');
+				expect(getRow(screen.getByText(documents[0].documentDescription))).toHaveAttribute(
+					'data-rowindex',
+					'1',
+				);
+				expect(getRow(screen.getByText(documents[9].documentDescription))).toHaveAttribute(
+					'data-rowindex',
+					'2',
+				);
+				expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute(
+					'data-rowindex',
+					'3',
+				);
 			});
-			// const row2 = screen.getByText('Foto onderkant').closest('.MuiDataGrid-row');
-			// expect(row2).toHaveAttribute('data-rowindex', '2');
+		});
+
+		test('Multiple columns filter', async () => {
+			act(() => {
+				fireEvent.change(screen.getByTestId('column-filter-filename'), {
+					target: { value: '1' },
+				});
+				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
+					target: { value: '2' },
+				});
+			});
+			await waitFor(() => {
+				expect(getRow(screen.getByText(documents[11].documentDescription))).toHaveAttribute(
+					'data-rowindex',
+					'1',
+				);
+			});
+		});
+	});
+
+	test('Clicking the x icon on <ColumnFilter /> clears the filter', async () => {
+		act(() => {
+			fireEvent.change(screen.getByTestId('column-filter-documentDescription'), { target: { value: '2' } });
+		});
+		const clearButton = screen.getByTestId('column-filter-cancel-documentDescription');
+		await waitFor(() => {
+			expect(clearButton).toBeInTheDocument();
+			expect(getRow(screen.getByText(documents[1].documentDescription))).toHaveAttribute('data-rowindex', '1');
+		});
+		act(() => {
+			fireEvent.click(clearButton);
+		});
+		await waitFor(() => {
+			expect(getRow(screen.getByText(documents[0].documentDescription))).toHaveAttribute('data-rowindex', '1');
+		});
+	});
+
+	test('Allows paginating the result set', async () => {
+		act(() => {
+			fireEvent.click(screen.getByTestId('pageButton-2'));
+		});
+
+		await waitFor(() => {
+			expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute('data-rowindex', '1');
+		});
+	});
+
+	describe('paginate() ', () => {
+		test('pageSize 2', () => {
+			expect(paginate(documents, 2, 1).map((doc) => doc.filename)).toEqual([
+				'__FILENAME__  #1',
+				'__FILENAME__  #2',
+			]);
+			expect(paginate(documents, 2, 2).map((doc) => doc.filename)).toEqual([
+				'__FILENAME__  #3',
+				'__FILENAME__  #4',
+			]);
+		});
+
+		test('pageSize 10', () => {
+			expect(paginate(documents, 10, 1).map((doc) => doc.filename)).toEqual([
+				'__FILENAME__  #1',
+				'__FILENAME__  #2',
+				'__FILENAME__  #3',
+				'__FILENAME__  #4',
+				'__FILENAME__  #5',
+				'__FILENAME__  #6',
+				'__FILENAME__  #7',
+				'__FILENAME__  #8',
+				'__FILENAME__  #9',
+				'__FILENAME__  #10',
+			]);
+			expect(paginate(documents, 10, 2).map((doc) => doc.filename)).toEqual([
+				'__FILENAME__  #11',
+				'__FILENAME__  #12',
+				'__FILENAME__  #13',
+				'__FILENAME__  #14',
+			]);
+		});
+	});
+
+	describe('applyFilters()', () => {
+		test('Single filter', () => {
+			expect(applyFilters(documents, { documentDescription: '1' }).map((doc) => doc.filename)).toEqual([
+				'__FILENAME__  #1',
+				'__FILENAME__  #10',
+				'__FILENAME__  #11',
+				'__FILENAME__  #12',
+				'__FILENAME__  #13',
+				'__FILENAME__  #14',
+			]);
+		});
+
+		test('Multiple filters', () => {
+			expect(
+				applyFilters(documents, { filename: '2', documentDescription: '1' }).map((doc) => doc.filename),
+			).toEqual(['__FILENAME__  #12']);
 		});
 	});
 });

@@ -1,22 +1,25 @@
-import React, { ChangeEvent, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes, useEffect } from 'react';
 import { GridCellParams } from '@material-ui/data-grid';
 import ColumnFilterStyle, { InputStyle, CancelIconStyle } from './ColumnFilterStyle';
 
+type Value = InputHTMLAttributes<HTMLInputElement>['value'];
+
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	params: Pick<GridCellParams, 'field'>;
-	onKeyUp: (evt: React.KeyboardEvent<HTMLInputElement>) => void;
+	onChange: (value: string) => void;
 	onClear: () => void;
 };
 
-const ColumnFilter: React.FC<Props> = ({ params, onKeyUp, onClear, ...props }: Props) => {
+const ColumnFilter: React.FC<Props> = ({ params, onChange, onClear, ...props }: Props) => {
 	const { field } = params;
-	const [value, setValue] = React.useState<string | number | readonly string[]>(props?.value ?? '');
+	const [value, setValue] = React.useState<Value>(props?.value ?? '');
 
 	const handleOnKeyUp = (evt: React.KeyboardEvent<HTMLInputElement>) => {
 		const input = evt.target as HTMLInputElement;
 		setValue(input.value);
-		onKeyUp(evt);
 	};
+
+	useEffect(() => onChange(value as string), [value]);
 
 	return (
 		<ColumnFilterStyle>
