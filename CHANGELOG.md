@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7-alpha.3](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.2...v0.0.7-alpha.3) (2021-12-03)
+
+
+### Bug Fixes
+
+* **column filter:** renamed onchange to onfilter to work around TS glitch ([d8be4fc](https://github.com/Amsterdam/bmi-component-library/commit/d8be4fc83d68d9216a22b613dd2727b111276b1d))
+* **documenttable:** [wip] refactor of <DocumentTable> to fix state issues ([28f7846](https://github.com/Amsterdam/bmi-component-library/commit/28f7846d19b10a6cd2e27a1657b82c9ce44365d9))
+* **documenttable:** fixed state issues with documenttable and its column filters ([c0fd2be](https://github.com/Amsterdam/bmi-component-library/commit/c0fd2be2450d59c36e613ed0570fbbb09706e072))
+
 ### [0.0.7-alpha.2](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.1...v0.0.7-alpha.2) (2021-11-24)
 
 
