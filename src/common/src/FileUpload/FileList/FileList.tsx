@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, Close, Document } from '@amsterdam/asc-assets';
+import { Close, Document } from '@amsterdam/asc-assets';
 import classNames from 'classnames';
 
 import {
@@ -102,7 +102,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
 						onClick={() => onCancel(file)}
 						variant="textButton"
 						iconSize={14}
-						iconLeft={<ChevronLeft />}
+						iconLeft={<Close />}
 					>
 						{cancelLabel}
 					</FileRemoveStyle>
