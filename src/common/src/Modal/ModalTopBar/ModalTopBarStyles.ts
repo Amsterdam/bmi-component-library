@@ -7,7 +7,7 @@ const ModalTopBarStyle = styled(TopBar)`
 	padding: 0 ${themeSpacing(2)} 0 ${themeSpacing(3)};
 
 	@media screen and ${breakpoint('min-width', 'tabletM')} {
-		padding: 0 ${themeSpacing(2)} 0 ${themeSpacing(7)};
+		padding: 0 ${themeSpacing(3)} 0 ${themeSpacing(7)};
 	}
 `;
 
