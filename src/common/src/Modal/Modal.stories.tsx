@@ -22,7 +22,9 @@ const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
 		return (
 			<Modal {...args} id="asset-view" open={isModalVisible}>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setModalVisibility(false)}>
-					Afgerond - Assetnaam
+					<Heading styleAs="h4" as="h2">
+						Afgerond - Assetnaam
+					</Heading>
 				</Modal.TopBar>
 				<Modal.Content>
 					<ModalBlockStyle>
@@ -43,11 +45,17 @@ const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
 				</Modal.Content>
 				<Modal.Actions>
 					<Modal.Actions.Left>
-						<Button onClick={() => setModalVisibility(false)}>Annuleren</Button>
+						<Button variant="primaryInverted" onClick={() => setModalVisibility(false)}>
+							Annuleren
+						</Button>
 					</Modal.Actions.Left>
 					<Modal.Actions.Right>
-						<Button style={{ marginRight: '8px' }}>Vorige</Button>
-						<Button variant="primary">Volgende</Button>
+						<Button variant="primaryInverted" style={{ marginRight: '8px' }}>
+							Vorige
+						</Button>
+						<Button variant="secondary" taskflow>
+							Volgende
+						</Button>
 					</Modal.Actions.Right>
 				</Modal.Actions>
 			</Modal>
