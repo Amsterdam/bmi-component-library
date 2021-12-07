@@ -5,7 +5,7 @@ export const ModalActionsCss = css`
 	display: flex;
 	height: 64px;
 	padding: ${themeSpacing(2)} ${themeSpacing(3)};
-	border-top: 1px solid ${themeColor('tint', 'level7')};
+	border-top: 2px solid ${themeColor('tint', 'level6')};
 	background-color: ${themeColor('tint', 'level1')};
 	text-align: right;
 `;
