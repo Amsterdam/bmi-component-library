@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.3...v0.0.7) (2021-12-07)
+
+
+### Bug Fixes
+
+* **filelist:** close icons for cancellation of file uploads instead of chevrons ([61375b1](https://github.com/Amsterdam/bmi-component-library/commit/61375b187aa33749f0b6936c4caa01471c77e428))
+* **modal:** brought default modal styles inline with design system after qa session ([7fcba89](https://github.com/Amsterdam/bmi-component-library/commit/7fcba8936d7ec9d9c827d64db4ad2df609e32d1d))
+* **modal footer:** adjusted modal footer styles to better align with the design system ([a17a950](https://github.com/Amsterdam/bmi-component-library/commit/a17a9506de9af92548afbcb08c5c9e2f7b04d159))
+* **modal header:** positioned the close button on the modal header a little better ([8c109bb](https://github.com/Amsterdam/bmi-component-library/commit/8c109bb8e228c9253f0062b15801e68a870abe5f))
+
 ### [0.0.7-alpha.3](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.2...v0.0.7-alpha.3) (2021-12-03)
 
 
