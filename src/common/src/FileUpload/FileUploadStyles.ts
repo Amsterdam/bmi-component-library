@@ -20,7 +20,6 @@ export const FileUploadStyle = styled.div`
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	max-width: 620px;
 	min-width: 70px;
 	padding: ${themeSpacing(8)};
 	border-width: 2px;
