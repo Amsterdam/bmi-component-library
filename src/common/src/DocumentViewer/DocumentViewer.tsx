@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Heading, Spinner, themeColor} from "@amsterdam/asc-ui";
 import {DocumentViewerStyle} from "./DocumentViewerStyles";
+import DocumentRenderer from "./DocumentRenderer";
 
 type Props = {
 	uri: string;
 }
 
-type DocumentState = {
+export type DocumentState = {
 	contentType: string;
-	fileName: string;
+	uri: string;
 }
 
 const DocumentViewer: React.FC<Props> = ({uri}: Props) => {
@@ -34,9 +35,7 @@ const DocumentViewer: React.FC<Props> = ({uri}: Props) => {
 					throw "Fout bij het ophalen.";
 				}
 
-				const fileName = uri.split("/").pop() || "Onbekend bestand";
-
-				setDocument({ ...document, contentType: contentType, fileName: fileName });
+				setDocument({ ...document, contentType: contentType, uri: uri });
 			})
 			.catch((error) => {
 				setError(error);
@@ -52,9 +51,15 @@ const DocumentViewer: React.FC<Props> = ({uri}: Props) => {
 	if (error)
 		return <Alert level="error" outline>{error}</Alert>
 
+	if (!document)
+		return <></>;
+
+	const fileName = document.uri.split("/").pop() || "Onbekend bestand";
+
 	return (
 		<DocumentViewerStyle>
-			<Heading forwardedAs="h3">{document?.fileName}</Heading>
+			<Heading forwardedAs="h3">{fileName}</Heading>
+			<DocumentRenderer document={document} />
 		</DocumentViewerStyle>
 	)
 }
