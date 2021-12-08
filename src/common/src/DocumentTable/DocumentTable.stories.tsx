@@ -18,3 +18,11 @@ Default.args = {
 	disableFilterRow: false,
 	disableRemoval: false,
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+	rows: [],
+	disableFilterRow: false,
+	disableRemoval: false,
+	loading: true,
+};
