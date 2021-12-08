@@ -50,7 +50,7 @@ const ConfirmDialog: React.FC = () => {
 	}, []);
 
 	return (
-		<Modal id="confirm-dialog" open={isVisible}>
+		<Modal id="confirm-dialog" open={isVisible} size="sm">
 			<Modal.TopBar hideCloseButton>
 				<Heading forwardedAs="h4">{state.title}</Heading>
 			</Modal.TopBar>
@@ -60,8 +60,18 @@ const ConfirmDialog: React.FC = () => {
 			<Modal.Actions>
 				<Modal.Actions.Left>
 					<ButtonStyles
-						data-testid="cancel-button"
+						data-testid="confirm-button"
+						variant="primary"
 						style={{ marginRight: '8px' }}
+						onClick={() => {
+							setIsVisible(false);
+							state.onConfirm();
+						}}
+					>
+						{state.textConfirmButton}
+					</ButtonStyles>
+					<ButtonStyles
+						data-testid="cancel-button"
 						variant="primaryInverted"
 						onClick={() => {
 							setIsVisible(false);
@@ -69,16 +79,6 @@ const ConfirmDialog: React.FC = () => {
 						}}
 					>
 						{state.textCancelButton}
-					</ButtonStyles>
-					<ButtonStyles
-						data-testid="confirm-button"
-						variant="primary"
-						onClick={() => {
-							setIsVisible(false);
-							state.onConfirm();
-						}}
-					>
-						{state.textConfirmButton}
 					</ButtonStyles>
 				</Modal.Actions.Left>
 			</Modal.Actions>
