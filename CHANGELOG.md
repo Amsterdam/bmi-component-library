@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7...v0.0.8) (2021-12-08)
+
+
+### Bug Fixes
+
+* **ConfirmDialog:** BehaviorSubject state is now being reset on unmount ([3c3ef37](https://github.com/Amsterdam/bmi-component-library/commit/3c3ef3781176da5db1bf30fcfe23704598f04634))
+* **ConfirmDialog:** Better alignment with design system ([c438fea](https://github.com/Amsterdam/bmi-component-library/commit/c438fea6b478a982de16959faee4da9a939183c4))
+
 ### [0.0.7](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.3...v0.0.7) (2021-12-07)
 
 
