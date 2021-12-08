@@ -67,6 +67,10 @@ export default styled(DataGrid)<ComponentProps<typeof DataGrid>>`
 					color: ${themeColor('secondary', 'main')};
 				}
 			}
+
+			> span[aria-live] {
+				width: 100%;
+			}
 		}
 
 		.MuiDataGrid-cell,
