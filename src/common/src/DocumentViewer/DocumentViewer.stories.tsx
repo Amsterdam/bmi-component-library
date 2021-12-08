@@ -8,6 +8,9 @@ export default {
 };
 
 export const NotFound: Story = () => {
-	return <DocumentViewer url="assets/notfound" />
+	return <DocumentViewer uri="assets/notfound" />
 }
 
+export const Image: Story = () => {
+	return <DocumentViewer uri="assets/example.png" />
+}
