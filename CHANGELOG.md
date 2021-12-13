@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.8...v0.0.9) (2021-12-13)
+
+
+### Features
+
+* **DocumentTable:** Introduction of a loading state with a <Skeleton /> in place of each cell. ([096b18e](https://github.com/Amsterdam/bmi-component-library/commit/096b18e30068b74da8e55ecfc8fcd1e01d370662))
+
 ### [0.0.8](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7...v0.0.8) (2021-12-08)
 
 
