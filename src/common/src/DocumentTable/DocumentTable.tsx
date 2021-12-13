@@ -8,7 +8,7 @@ import ColumnFilter from './ColumnFilter';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 
-type Props = {
+export type Props = {
 	// Material UI DataGrid columns definitions
 	columns?: GridColDef[];
 	// Material UI DataGrid row definitions
@@ -143,6 +143,18 @@ const DocumentTable: React.FC<Props> = ({
 										onClear={() => onClearFilter(params.field)}
 									/>
 								);
+							if (col.renderCell !== undefined) return col.renderCell(params);
+							return <>{params.formattedValue}</>;
+						},
+					} as GridColDef),
+			);
+		} else {
+			cols = cols.map(
+				(col) =>
+					({
+						...col,
+						renderCell: function renderCell(params) {
+							if (loading) return <Skeleton />;
 							if (col.renderCell !== undefined) return col.renderCell(params);
 							return <>{params.formattedValue}</>;
 						},
