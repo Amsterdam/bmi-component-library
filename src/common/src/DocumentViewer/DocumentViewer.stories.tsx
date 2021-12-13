@@ -8,13 +8,13 @@ export default {
 };
 
 export const NotFound: Story = () => {
-	return <DocumentViewer uri="assets/notfound" />
-}
+	return <DocumentViewer uri="assets/notfound" />;
+};
 
 export const NoViewerAvailable: Story = () => {
-	return <DocumentViewer uri="assets/example.xlsx" />
-}
+	return <DocumentViewer uri="assets/example.xlsx" />;
+};
 
 export const Image: Story = () => {
-	return <DocumentViewer uri="assets/example.png" />
-}
+	return <DocumentViewer uri="assets/example.png" />;
+};
