@@ -2,7 +2,7 @@ import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
-import DocumentTable, { applyFilters, paginate } from './DocumentTable';
+import DocumentTable, { applyFilters, paginate, Props } from './DocumentTable';
 import muiTheme from '../../../theme/material-ui-theme';
 import theme from '../../../theme/theme';
 import { documents } from './__stubs__/documents';
@@ -30,15 +30,19 @@ describe('<DocumentTable />', () => {
 		return Promise.resolve(true);
 	});
 	let container: HTMLElement;
-	beforeEach(() => {
-		({ container } = render(
+
+	const renderDocumentTable = (props: Partial<Props> = {}) =>
+		render(
 			<MUIThemeProvider theme={muiTheme}>
 				<ThemeProvider overrides={theme}>
 					<GlobalStyle />
-					<DocumentTable onDownload={mockOnDownload} onRemove={mockOnRemove} rows={documents} />
+					<DocumentTable onDownload={mockOnDownload} onRemove={mockOnRemove} rows={documents} {...props} />
 				</ThemeProvider>
 			</MUIThemeProvider>,
-		));
+		);
+
+	beforeEach(() => {
+		({ container } = renderDocumentTable());
 	});
 
 	describe('Renders a default set of columns and behaviours', () => {
@@ -203,6 +207,22 @@ describe('<DocumentTable />', () => {
 			expect(
 				applyFilters(documents, { filename: '2', documentDescription: '1' }).map((doc) => doc.filename),
 			).toEqual(['__FILENAME__  #12']);
+		});
+	});
+
+	describe('Has a loading state where each cell renders as a <Skeleton /> component', () => {
+		test('With filter', () => {
+			({ container } = renderDocumentTable({ loading: true }));
+			expect(container.getElementsByClassName('react-loading-skeleton').length).toBe(55);
+		});
+
+		test('Without filter', () => {
+			({ container } = renderDocumentTable({
+				loading: true,
+				disableFilterRow: true,
+				rows: [],
+			}));
+			expect(container.getElementsByClassName('react-loading-skeleton').length).toBe(50);
 		});
 	});
 });
