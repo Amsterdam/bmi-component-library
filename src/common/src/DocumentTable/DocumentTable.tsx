@@ -76,7 +76,7 @@ const DocumentTable: React.FC<Props> = ({
 				field: 'filename',
 				headerName: 'Bestandsnaam',
 				renderCell: function renderCell(params) {
-					if (loading) return <Skeleton height="20px" width="100px" />;
+					if (loading) return <Skeleton />;
 					// The onDragStart hack prevents being able to reorder the columns by dragging (BUG)
 					return onDownload ? (
 						<a
