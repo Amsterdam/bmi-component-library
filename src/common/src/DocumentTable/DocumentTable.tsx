@@ -31,12 +31,10 @@ export type Props = {
 
 type Filters = Record<string, string>;
 
-// TODO write test
 export function paginate(rows: GridRowModel[], pageSize: number, currentPage: number): GridRowModel[] {
 	return rows.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 }
 
-// TODO write test
 export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowModel[] {
 	return Object.keys(filters).length === 0
 		? rows
