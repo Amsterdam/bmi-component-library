@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.9...v0.0.10) (2021-12-14)
+
+
+### Bug Fixes
+
+* **documenttable:** increased margin between table and pagination ([8c025d1](https://github.com/Amsterdam/bmi-component-library/commit/8c025d12123ac6a14b16521904357df5ff607fb4))
+
 ### [0.0.9](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.8...v0.0.9) (2021-12-13)
 
 
