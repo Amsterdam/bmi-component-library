@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.10...v0.0.11) (2021-12-14)
+
+
+### Bug Fixes
+
+* **modal:** better way of determining children count ([1ab3acc](https://github.com/Amsterdam/bmi-component-library/commit/1ab3acc95c7e8e67e9203868879591bfaa0c083a))
+* **modal:** production compatible method of determining modal actions left/right ([b2c7fc6](https://github.com/Amsterdam/bmi-component-library/commit/b2c7fc67acc66dc13768b99a3258febac6f66f4e))
+
 ### [0.0.10](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.9...v0.0.10) (2021-12-14)
 
 
