@@ -3,7 +3,7 @@ import { GridCellValue, GridColDef, GridRowModel } from '@material-ui/data-grid'
 import { Button } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
 import Skeleton from 'react-loading-skeleton';
-import DocumentTableStyle, { PaginationStyle } from './DocumentTableStyle';
+import { StyledPagination, StyledDataGrid } from './DocumentTableStyle';
 import ColumnFilter from './ColumnFilter';
 
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -257,7 +257,7 @@ const DocumentTable: React.FC<Props> = ({
 
 	return (
 		<>
-			<DocumentTableStyle
+			<StyledDataGrid
 				columns={tableColumns}
 				rows={loading ? skeletonRows : tableRows}
 				disableColumnFilter
@@ -271,7 +271,7 @@ const DocumentTable: React.FC<Props> = ({
 				columnBuffer={tableColumns.length}
 			/>
 			{!loading && (
-				<PaginationStyle
+				<StyledPagination
 					collectionSize={filteredRows.length}
 					pageSize={pageSize}
 					page={currentPage}
