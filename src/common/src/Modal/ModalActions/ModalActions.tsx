@@ -15,15 +15,7 @@ export interface IModalActions extends React.FunctionComponent<Props> {
 }
 
 const ModalActions = ({ children }: Props) => {
-	let hasLeftAndRightContent = false;
-
-	React.Children.map(children, (child, idx) => {
-		if (idx > 0) {
-			hasLeftAndRightContent = true;
-		}
-	});
-
-	return hasLeftAndRightContent ? (
+	return React.Children.count(children) > 1 ? (
 		<ModalActionsSplitStyle data-testid="modal-actions">{children}</ModalActionsSplitStyle>
 	) : (
 		<ModalActionsStyle data-testid="modal-actions">{children}</ModalActionsStyle>
