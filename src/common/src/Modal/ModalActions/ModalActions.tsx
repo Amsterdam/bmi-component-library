@@ -17,8 +17,8 @@ export interface IModalActions extends React.FunctionComponent<Props> {
 const ModalActions = ({ children }: Props) => {
 	let hasLeftAndRightContent = false;
 
-	React.Children.map(children, (child) => {
-		if (child?.type?.name === 'ModalActionsLeft') {
+	React.Children.map(children, (child, idx) => {
+		if (idx > 0) {
 			hasLeftAndRightContent = true;
 		}
 	});
