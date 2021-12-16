@@ -14,7 +14,7 @@ import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
 import FileList from './FileList/FileList';
 
 export type Props = {
-	getPostUrl: () => Promise<string>;
+	getPostUrl: (file: CustomFile) => Promise<string>;
 	getHeaders: () => Promise<{ [key: string]: string }>;
 	placeholder: string;
 	droppingLabel: string;
