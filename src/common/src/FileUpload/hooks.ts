@@ -14,7 +14,7 @@ export type Files = CustomFileOrRejection[];
 let tmpId = 0;
 
 export const useFileUpload = (
-	getPostUrl: () => Promise<string>,
+	getPostUrl: (file: CustomFile) => Promise<string>,
 	getHeaders: () => Promise<{ [key: string]: string }>,
 	httpMethod: 'POST' | 'PUT' = 'POST',
 	storedFiles: CustomFileOrRejection[] = [],
@@ -35,9 +35,9 @@ export const useFileUpload = (
 			}
 
 			const makeRequest = async (rawFile: File, nextTmpId: number) => {
-				const postUrl = await getPostUrl();
-				const headers = await getHeaders();
 				const customFile: CustomFile = Object.assign(rawFile, { tmpId: nextTmpId, progress: 0 });
+				const postUrl = await getPostUrl(customFile);
+				const headers = await getHeaders();
 				setFiles((previousFiles) => [...previousFiles, customFile] as Files);
 
 				const formData = new FormData();
