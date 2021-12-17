@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { CustomFileOrRejection } from './hooks';
 
 const defaultProps: Props = {
-	getPostUrl: () => Promise.resolve('api/endpoint'),
+	getPostUrl: (file) => Promise.resolve('api/endpoint'),
 	getHeaders: () => Promise.resolve({}),
 	placeholder: 'Sleep de bestanden in dit vlak of',
 	droppingLabel: 'bestanden geselecteerd',

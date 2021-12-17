@@ -9,7 +9,10 @@ export default {
 };
 
 const defaultProps: Props = {
-	getPostUrl: () => Promise.resolve('https://v2.convertapi.com/upload'), //fakeapi
+	getPostUrl: (file) => {
+		console.log(':: getPostUrl', file);
+		return Promise.resolve('https://v2.convertapi.com/upload');
+	}, //fakeapi
 	placeholder: 'Sleep de bestanden in dit vlak of',
 	droppingLabel: 'bestanden geselecteerd',
 	selectFilesLabel: 'selecteer bestanden',
@@ -22,9 +25,9 @@ const defaultProps: Props = {
 		return Promise.resolve({});
 	},
 	onFileSuccess: (file) => {
-		console.log(file);
+		console.log(':: onFileSuccess', file);
 	},
-	onFileRemove: (file) => console.log('remove file from redux store of database', file),
+	onFileRemove: (file) => console.log(':: onFileRemove', file),
 };
 
 const Template: Story<Props> = (args) => {
