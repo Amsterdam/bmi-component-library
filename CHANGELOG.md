@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.11...v0.0.12-alpha.0) (2021-12-17)
+
+
+### Features
+
+* **fileupload hooks:** send file with getPostUrl callback ([9674f58](https://github.com/Amsterdam/bmi-component-library/commit/9674f587db3e6f0df3699d6c2cc2c2b18f46faec))
+
 ### [0.0.11](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.10...v0.0.11) (2021-12-14)
 
 

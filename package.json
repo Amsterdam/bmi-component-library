@@ -1,6 +1,6 @@
 {
 	"name": "@amsterdam/bmi-component-library",
-	"version": "0.0.11",
+	"version": "0.0.12-alpha.0",
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
 	"main": "lib/index.js",
 	"module": "es/index.js",
