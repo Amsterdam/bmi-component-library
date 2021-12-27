@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import { DataGrid } from '@material-ui/data-grid';
-import { themeColor, srOnlyStyle, Pagination } from '@amsterdam/asc-ui';
+import { themeColor, srOnlyStyle, Pagination, themeSpacing } from '@amsterdam/asc-ui';
 import { ComponentProps } from 'react';
 
-export const PaginationStyle = styled(Pagination)`
+export const StyledPagination = styled(Pagination)<ComponentProps<typeof Pagination>>`
 	&& {
-		padding-top: 10px;
-		margin-top: 42px;
+		padding-top: ${themeSpacing(1)};
 	}
 `;
 
-export default styled(DataGrid)<ComponentProps<typeof DataGrid>>`
+export const StyledDataGrid = styled(DataGrid)<ComponentProps<typeof DataGrid>>`
 	&.MuiDataGrid-root {
 		border: none;
+		margin-bottom: ${themeSpacing(12)};
 
 		.MuiDataGrid-columnHeader {
 			padding: 10px 15px;
@@ -66,6 +66,10 @@ export default styled(DataGrid)<ComponentProps<typeof DataGrid>>`
 				&:hover {
 					color: ${themeColor('secondary', 'main')};
 				}
+			}
+
+			> span[aria-live] {
+				width: 100%;
 			}
 		}
 

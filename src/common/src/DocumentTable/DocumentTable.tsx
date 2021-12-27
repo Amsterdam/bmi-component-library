@@ -2,10 +2,13 @@ import React, { useEffect, useMemo } from 'react';
 import { GridCellValue, GridColDef, GridRowModel } from '@material-ui/data-grid';
 import { Button } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
-import DocumentTableStyle, { PaginationStyle } from './DocumentTableStyle';
+import Skeleton from 'react-loading-skeleton';
+import { StyledPagination, StyledDataGrid } from './DocumentTableStyle';
 import ColumnFilter from './ColumnFilter';
 
-type Props = {
+import 'react-loading-skeleton/dist/skeleton.css';
+
+export type Props = {
 	// Material UI DataGrid columns definitions
 	columns?: GridColDef[];
 	// Material UI DataGrid row definitions
@@ -22,16 +25,16 @@ type Props = {
 	onRemove?: (id: GridCellValue) => Promise<boolean | void>;
 	// In of the default columns being used
 	onDownload?: (row: GridRowModel) => void;
+	// Renders table as skeleton
+	loading?: boolean;
 };
 
 type Filters = Record<string, string>;
 
-// TODO write test
 export function paginate(rows: GridRowModel[], pageSize: number, currentPage: number): GridRowModel[] {
 	return rows.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 }
 
-// TODO write test
 export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowModel[] {
 	return Object.keys(filters).length === 0
 		? rows
@@ -65,6 +68,7 @@ const DocumentTable: React.FC<Props> = ({
 	pageSize = 10,
 	onRemove,
 	onDownload,
+	loading = false,
 }: Props) => {
 	const tableColumns = useMemo(() => {
 		let cols = columns ?? [
@@ -72,6 +76,7 @@ const DocumentTable: React.FC<Props> = ({
 				field: 'filename',
 				headerName: 'Bestandsnaam',
 				renderCell: function renderCell(params) {
+					if (loading) return <Skeleton />;
 					// The onDragStart hack prevents being able to reorder the columns by dragging (BUG)
 					return onDownload ? (
 						<a
@@ -124,6 +129,7 @@ const DocumentTable: React.FC<Props> = ({
 					({
 						...col,
 						renderCell: function renderCell(params) {
+							if (loading) return <Skeleton />;
 							if (params.id === 0 && params.field === 'id') return <></>;
 							if (params.id === 0)
 								return (
@@ -140,6 +146,18 @@ const DocumentTable: React.FC<Props> = ({
 						},
 					} as GridColDef),
 			);
+		} else {
+			cols = cols.map(
+				(col) =>
+					({
+						...col,
+						renderCell: function renderCell(params) {
+							if (loading) return <Skeleton />;
+							if (col.renderCell !== undefined) return col.renderCell(params);
+							return <>{params.formattedValue}</>;
+						},
+					} as GridColDef),
+			);
 		}
 
 		if (!disableRemoval) {
@@ -149,6 +167,7 @@ const DocumentTable: React.FC<Props> = ({
 				sortable: false,
 				cellClassName: 'remove',
 				renderCell: function renderCell(params) {
+					if (loading) return <Skeleton />;
 					if (params.id === 0 && params.field === 'id') return <></>;
 					return (
 						<Button
@@ -166,7 +185,8 @@ const DocumentTable: React.FC<Props> = ({
 		}
 
 		return cols;
-	}, [columns, disableFilterRow, disableRemoval]);
+	}, [columns, disableFilterRow, disableRemoval, loading]);
+
 	// Filtered rows contains all rows that were not deleted or filtered out (required for pagination)
 	const [filteredRows, setFilteredRows] = React.useState<GridRowModel[]>(rows);
 	// Paginated subset of filtered rows
@@ -191,6 +211,15 @@ const DocumentTable: React.FC<Props> = ({
 			if (removed !== false) setDeletedRowIds([...deletedRowIds, id]);
 		}
 	}, []);
+
+	const skeletonRows = useMemo(() => {
+		const skeletonRow = tableColumns.reduce((acc, col, idx) => {
+			acc[col.field] = '';
+			return acc;
+		}, {} as GridRowModel);
+
+		return [...new Array(pageSize + (disableFilterRow ? 0 : 1))].map((n, idx) => ({ ...skeletonRow, id: idx + 2 }));
+	}, [tableColumns]);
 
 	/**
 	 * Update rows in case
@@ -228,9 +257,9 @@ const DocumentTable: React.FC<Props> = ({
 
 	return (
 		<>
-			<DocumentTableStyle
+			<StyledDataGrid
 				columns={tableColumns}
-				rows={tableRows}
+				rows={loading ? skeletonRows : tableRows}
 				disableColumnFilter
 				disableColumnMenu
 				autoHeight
@@ -241,12 +270,14 @@ const DocumentTable: React.FC<Props> = ({
 				headerHeight={42}
 				columnBuffer={tableColumns.length}
 			/>
-			<PaginationStyle
-				collectionSize={filteredRows.length}
-				pageSize={pageSize}
-				page={currentPage}
-				onPageChange={setCurrentPage}
-			/>
+			{!loading && (
+				<StyledPagination
+					collectionSize={filteredRows.length}
+					pageSize={pageSize}
+					page={currentPage}
+					onPageChange={setCurrentPage}
+				/>
+			)}
 		</>
 	);
 };

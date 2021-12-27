@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.11...v0.0.12-alpha.0) (2021-12-17)
+
+
+### Features
+
+* **fileupload hooks:** send file with getPostUrl callback ([9674f58](https://github.com/Amsterdam/bmi-component-library/commit/9674f587db3e6f0df3699d6c2cc2c2b18f46faec))
+
+### [0.0.11](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.10...v0.0.11) (2021-12-14)
+
+
+### Bug Fixes
+
+* **modal:** better way of determining children count ([1ab3acc](https://github.com/Amsterdam/bmi-component-library/commit/1ab3acc95c7e8e67e9203868879591bfaa0c083a))
+* **modal:** production compatible method of determining modal actions left/right ([b2c7fc6](https://github.com/Amsterdam/bmi-component-library/commit/b2c7fc67acc66dc13768b99a3258febac6f66f4e))
+
+### [0.0.10](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.9...v0.0.10) (2021-12-14)
+
+
+### Bug Fixes
+
+* **documenttable:** increased margin between table and pagination ([8c025d1](https://github.com/Amsterdam/bmi-component-library/commit/8c025d12123ac6a14b16521904357df5ff607fb4))
+
+### [0.0.9](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.8...v0.0.9) (2021-12-13)
+
+
+### Features
+
+* **DocumentTable:** Introduction of a loading state with a <Skeleton /> in place of each cell. ([096b18e](https://github.com/Amsterdam/bmi-component-library/commit/096b18e30068b74da8e55ecfc8fcd1e01d370662))
+
+### [0.0.8](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7...v0.0.8) (2021-12-08)
+
+
+### Bug Fixes
+
+* **ConfirmDialog:** BehaviorSubject state is now being reset on unmount ([3c3ef37](https://github.com/Amsterdam/bmi-component-library/commit/3c3ef3781176da5db1bf30fcfe23704598f04634))
+* **ConfirmDialog:** Better alignment with design system ([c438fea](https://github.com/Amsterdam/bmi-component-library/commit/c438fea6b478a982de16959faee4da9a939183c4))
+
 ### [0.0.7](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.7-alpha.3...v0.0.7) (2021-12-07)
 
 
