@@ -29,9 +29,11 @@ describe('<CreatableSelect />', () => {
 	});
 
 	test('Allows creating a new option', async () => {
+		const onChangeMock = jest.fn();
 		const { form, input } = renderCreatableSelect({
 			label: 'Documentomschrijving',
 			createLabel: 'Create', // Expected by react-select-event
+			onChange: onChangeMock,
 		});
 		expect(form).toHaveFormValues({});
 		await selectEvent.create(input, '__NEW_OPTION__', {
@@ -40,6 +42,7 @@ describe('<CreatableSelect />', () => {
 		});
 		await selectEvent.select(input, '__NEW_OPTION__');
 		expect(form).toHaveFormValues({ 'creatable-test': '__NEW_OPTION__' });
+		expect(onChangeMock).toHaveBeenCalledWith('__NEW_OPTION__');
 	});
 
 	test('onCreateOption() callback is triggered when creating a new option', async () => {
@@ -54,5 +57,20 @@ describe('<CreatableSelect />', () => {
 			waitForElement: false,
 		});
 		expect(createOptionMock).toHaveBeenCalledWith('__NEW_OPTION__');
+	});
+
+	test('onChange() callback is triggered when selecting an option', async () => {
+		const onChangeMock = jest.fn();
+		const createOptionMock = jest.fn();
+		const { form, input } = renderCreatableSelect({
+			onCreateOption: createOptionMock,
+			onChange: onChangeMock,
+			label: 'Documentomschrijving',
+			createLabel: 'Create', // Expected by react-select-event
+		});
+		expect(form).toHaveFormValues({});
+		await selectEvent.select(input, defaultOptions[0].label);
+
+		expect(onChangeMock).toHaveBeenCalledWith(defaultOptions[0].value);
 	});
 });
