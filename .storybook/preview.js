@@ -12,6 +12,7 @@ export const parameters = {
 			date: /Date$/,
 		},
 	},
+	order: ['Common', 'Form', 'Theme'],
 };
 
 export const decorators = [
