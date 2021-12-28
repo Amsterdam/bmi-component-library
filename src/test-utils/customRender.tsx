@@ -8,7 +8,7 @@ const AllTheProviders: React.FC = ({ children }) => <ThemeProvider overrides={th
 
 const customRender = <Q extends Queries = typeof queries, Container extends Element | DocumentFragment = HTMLElement>(
 	ui: React.ReactElement,
-	options: RenderOptions<Q, Container>,
+	options?: RenderOptions<Q, Container>,
 ): RenderResult<Q, Container> => render(ui, { wrapper: AllTheProviders, ...options });
 
 export * from '@testing-library/react';
