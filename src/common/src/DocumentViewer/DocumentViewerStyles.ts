@@ -7,5 +7,5 @@ export const DocumentViewerStyle = styled.div`
 `;
 
 export const SpinnerStyle = styled(Spinner)`
-	text-align: center;
+	margin: 0 auto;
 `;

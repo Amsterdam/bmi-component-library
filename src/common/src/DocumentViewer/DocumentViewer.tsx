@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Heading, Spinner, themeColor } from '@amsterdam/asc-ui';
-import { DocumentViewerStyle } from './DocumentViewerStyles';
+import { Alert, Heading, themeColor } from '@amsterdam/asc-ui';
+import { DocumentViewerStyle, SpinnerStyle } from './DocumentViewerStyles';
 import DocumentRenderer from './DocumentRenderer';
 
 type Props = {
@@ -59,10 +59,10 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) =>
 			});
 	}, [uri]);
 
-	if (loading) {
+	if (!loading) {
 		return (
 			<DocumentViewerStyle>
-				<Spinner color={themeColor('secondary')} size={25} />
+				<SpinnerStyle color={themeColor('secondary')} size={25} />
 			</DocumentViewerStyle>
 		);
 	}
