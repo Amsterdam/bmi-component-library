@@ -18,23 +18,16 @@ export type DocumentState = {
 
 const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) => {
 	const [documentState, setDocumentState] = useState<DocumentState>({ uri, loading: false });
+	const { loading, filename, error, contentType } = documentState;
 
 	const updateDocumentState = (documentState: Partial<DocumentState>) => {
-		setDocumentState((prevState) => {
-			return {
-				...prevState,
-				...documentState,
-			};
-		});
+		setDocumentState((prevState) => ({
+			...prevState,
+			...documentState,
+		}));
 	};
 
-	const getRequestHeaders = (): HeadersInit => {
-		if (authorizationHeader) {
-			return { Authorization: authorizationHeader };
-		}
-
-		return {};
-	};
+	const getRequestHeaders = (): HeadersInit => (authorizationHeader ? { Authorization: authorizationHeader } : {});
 
 	useEffect(() => {
 		const filename = uri.split('/').pop() || 'Onbekend bestand';
@@ -43,27 +36,30 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) =>
 		fetch(uri, { method: 'HEAD', headers: getRequestHeaders() })
 			.then((response) => {
 				if (!response.ok) {
-					throw response.status === 404 ? 'Document niet gevonden.' : 'Fout bij het ophalen.';
+					const error = response.status === 404 ? 'Document niet gevonden.' : 'Fout bij het ophalen.';
+					updateDocumentState({
+						loading: false,
+						error: error,
+					});
+
+					return Promise.reject(error);
 				}
 
-				return response;
+				return response.headers;
 			})
-			.then((response) => {
-				const contentTypeRaw = response.headers.get('content-type');
-				const contentTypes = contentTypeRaw?.split(';') || [];
-
-				if (!contentTypes[0]) {
-					throw 'Fout bij het ophalen.';
-				}
-
-				updateDocumentState({ loading: false, contentType: contentTypes[0] });
-			})
-			.catch((error) => {
-				updateDocumentState({ loading: false, error });
+			.then((headers) => {
+				const [firstContentType] = headers.get('content-type')?.split(';') || [];
+				if (!firstContentType)
+					updateDocumentState({
+						loading: false,
+						error: 'Fout bij het ophalen.',
+					});
+				console.log(firstContentType);
+				updateDocumentState({ loading: false, contentType: firstContentType });
 			});
 	}, [uri]);
 
-	if (documentState.loading) {
+	if (loading) {
 		return (
 			<DocumentViewerStyle>
 				<Spinner color={themeColor('secondary')} size={25} />
@@ -73,15 +69,13 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) =>
 
 	return (
 		<DocumentViewerStyle>
-			<Heading forwardedAs="h3">{documentState.filename}</Heading>
-			{documentState.error && (
+			<Heading forwardedAs="h3">{filename}</Heading>
+			{error && (
 				<Alert level="error" outline>
-					{documentState.error}
+					{error}
 				</Alert>
 			)}
-			{documentState.contentType && (
-				<DocumentRenderer uri={documentState.uri} contentType={documentState.contentType} />
-			)}
+			{contentType && <DocumentRenderer uri={uri} contentType={contentType} />}
 		</DocumentViewerStyle>
 	);
 };
