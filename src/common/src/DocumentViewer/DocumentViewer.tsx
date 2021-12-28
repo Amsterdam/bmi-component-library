@@ -42,7 +42,7 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) =>
 						error: error,
 					});
 
-					return Promise.reject(error);
+					throw new Error(error);
 				}
 
 				return response.headers;
@@ -54,12 +54,12 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) =>
 						loading: false,
 						error: 'Fout bij het ophalen.',
 					});
-				console.log(firstContentType);
+
 				updateDocumentState({ loading: false, contentType: firstContentType });
 			});
 	}, [uri]);
 
-	if (!loading) {
+	if (loading) {
 		return (
 			<DocumentViewerStyle>
 				<SpinnerStyle color={themeColor('secondary')} size={25} />
