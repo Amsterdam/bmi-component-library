@@ -34,7 +34,11 @@ describe('<CreatableSelect />', () => {
 			createLabel: 'Create', // Expected by react-select-event
 		});
 		expect(form).toHaveFormValues({});
-		await selectEvent.create(input, '__NEW_OPTION__', {});
+		await selectEvent.create(input, '__NEW_OPTION__', {
+			// onchange is not triggered with onCreateOption causing selectEvent to fail without this
+			waitForElement: false,
+		});
+		await selectEvent.select(input, '__NEW_OPTION__');
 		expect(form).toHaveFormValues({ 'creatable-test': '__NEW_OPTION__' });
 	});
 
