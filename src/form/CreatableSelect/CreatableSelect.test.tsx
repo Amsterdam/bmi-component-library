@@ -31,9 +31,10 @@ describe('<CreatableSelect />', () => {
 	test('Allows creating a new option', async () => {
 		const { form, input } = renderCreatableSelect({
 			label: 'Documentomschrijving',
+			createLabel: 'Create', // Expected by react-select-event
 		});
 		expect(form).toHaveFormValues({});
-		await selectEvent.create(input, '__NEW_OPTION__');
+		await selectEvent.create(input, '__NEW_OPTION__', {});
 		expect(form).toHaveFormValues({ 'creatable-test': '__NEW_OPTION__' });
 	});
 
@@ -42,6 +43,7 @@ describe('<CreatableSelect />', () => {
 		const { form, input } = renderCreatableSelect({
 			onCreateOption: createOptionMock,
 			label: 'Documentomschrijving',
+			createLabel: 'Create', // Expected by react-select-event
 		});
 		expect(form).toHaveFormValues({});
 		await selectEvent.create(input, '__NEW_OPTION__', {
