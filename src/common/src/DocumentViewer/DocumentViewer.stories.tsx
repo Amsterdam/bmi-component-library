@@ -8,7 +8,7 @@ export default {
 };
 
 export const NotFound: Story = () => {
-	return <DocumentViewer uri="assets/notfound" />;
+	return <DocumentViewer uri="assets/notfound.txt" />;
 };
 
 export const NoViewerAvailable: Story = () => {

@@ -5,63 +5,83 @@ import DocumentRenderer from './DocumentRenderer';
 
 type Props = {
 	uri: string;
+	authorizationHeader?: string;
 };
 
 export type DocumentState = {
-	contentType: string;
 	uri: string;
+	loading: boolean;
+	filename?: string;
+	error?: string;
+	contentType?: string;
 };
 
-const DocumentViewer: React.FC<Props> = ({ uri }: Props) => {
-	const [loading, setLoading] = useState<boolean>(false);
-	const [error, setError] = useState<string | null>(null);
-	const [document, setDocument] = useState<DocumentState | null>();
+const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader }: Props) => {
+	const [documentState, setDocumentState] = useState<DocumentState>({ uri, loading: false });
+
+	const updateDocumentState = (documentState: Partial<DocumentState>) => {
+		setDocumentState((prevState) => {
+			return {
+				...prevState,
+				...documentState,
+			};
+		});
+	};
+
+	const getRequestHeaders = (): HeadersInit => {
+		if (authorizationHeader) {
+			return { Authorization: authorizationHeader };
+		}
+
+		return {};
+	};
 
 	useEffect(() => {
-		setLoading(true);
-		setError(null);
+		const filename = uri.split('/').pop() || 'Onbekend bestand';
+		updateDocumentState({ loading: true, error: undefined, contentType: undefined, filename });
 
-		fetch(uri, { method: 'HEAD' })
+		fetch(uri, { method: 'HEAD', headers: getRequestHeaders() })
 			.then((response) => {
 				if (!response.ok) {
 					throw response.status === 404 ? 'Document niet gevonden.' : 'Fout bij het ophalen.';
 				}
 
+				return response;
+			})
+			.then((response) => {
 				const contentTypeRaw = response.headers.get('content-type');
 				const contentTypes = contentTypeRaw?.split(';') || [];
-				const contentType = contentTypes.length ? contentTypes[0] : undefined;
 
-				if (contentType === undefined) {
+				if (!contentTypes[0]) {
 					throw 'Fout bij het ophalen.';
 				}
 
-				setDocument({ ...document, contentType: contentType, uri: uri });
+				updateDocumentState({ loading: false, contentType: contentTypes[0] });
 			})
 			.catch((error) => {
-				setError(error);
-			})
-			.finally(() => {
-				setLoading(false);
+				updateDocumentState({ loading: false, error });
 			});
 	}, [uri]);
 
-	if (loading) return <Spinner color={themeColor('secondary')} size={25} />;
-
-	if (error)
+	if (documentState.loading) {
 		return (
-			<Alert level="error" outline>
-				{error}
-			</Alert>
+			<DocumentViewerStyle>
+				<Spinner color={themeColor('secondary')} size={25} />
+			</DocumentViewerStyle>
 		);
-
-	if (!document) return <></>;
-
-	const fileName = document.uri.split('/').pop() || 'Onbekend bestand';
+	}
 
 	return (
 		<DocumentViewerStyle>
-			<Heading forwardedAs="h3">{fileName}</Heading>
-			<DocumentRenderer document={document} />
+			<Heading forwardedAs="h3">{documentState.filename}</Heading>
+			{documentState.error && (
+				<Alert level="error" outline>
+					{documentState.error}
+				</Alert>
+			)}
+			{documentState.contentType && (
+				<DocumentRenderer uri={documentState.uri} contentType={documentState.contentType} />
+			)}
 		</DocumentViewerStyle>
 	);
 };
