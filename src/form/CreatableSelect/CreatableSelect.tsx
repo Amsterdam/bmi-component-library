@@ -4,16 +4,21 @@ import Creatable from 'react-select/creatable';
 import amsStyles, { StyledLabel } from './ReactSelectStyles';
 
 export type Props = {
-	// name: string;
-	// id: string;
 	label?: string;
+	createLabel?: string;
 } & ComponentProps<typeof Creatable>;
 
-const CreatableSelect: React.FC<Props> = ({ inputId, label, ...props }) => {
+const CreatableSelect: React.FC<Props> = ({ inputId, label, createLabel = 'Voeg toe', ...props }) => {
 	return (
 		<>
 			{label && <StyledLabel htmlFor={inputId} label={label} />}
-			<Creatable styles={amsStyles} inputId={inputId} openMenuOnFocus {...props} />
+			<Creatable
+				styles={amsStyles}
+				inputId={inputId}
+				openMenuOnFocus
+				{...props}
+				formatCreateLabel={(value: string) => `${createLabel} "${value}"`}
+			/>
 		</>
 	);
 };
