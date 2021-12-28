@@ -6,7 +6,7 @@ type Props = {
 	contentType: string;
 };
 
-const contentTypes = [
+const contentTypes: string[] = [
 	'jpg',
 	'jpeg',
 	'image/jpg',
