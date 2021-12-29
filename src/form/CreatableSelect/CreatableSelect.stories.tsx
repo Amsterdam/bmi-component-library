@@ -8,19 +8,13 @@ export default {
 	component: CreatableSelect,
 };
 
-const Template: Story<Props> = ({ id = 'creatable-demo', value, ...props }) => {
+const Template: Story<Props> = ({ id = 'creatable-demo', ...props }) => {
 	return (
 		<CreatableSelect
 			id={id}
 			isClearable
 			onChange={(val) => console.log('onChange', val)}
-			options={options.map((opt) => {
-				return {
-					...opt,
-					// @ts-ignore
-					isSelected: value?.value === opt.value,
-				};
-			})}
+			options={options}
 			{...props}
 		/>
 	);
