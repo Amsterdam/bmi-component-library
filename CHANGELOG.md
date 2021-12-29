@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12-alpha.3](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.2...v0.0.12-alpha.3) (2021-12-29)
+
+
+### Features
+
+* **creatable:** Added error state to CreatableSelect ([aa68b3c](https://github.com/Amsterdam/bmi-component-library/commit/aa68b3c9aff0f7c6f0fbbeb1becc6b39bbf7bb54))
+
 ### [0.0.12-alpha.2](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.1...v0.0.12-alpha.2) (2021-12-29)
 
 
