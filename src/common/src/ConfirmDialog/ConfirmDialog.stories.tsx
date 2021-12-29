@@ -1,5 +1,5 @@
 import React from 'react';
-import { Story } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
 import ConfirmDialog, { confirm } from './ConfirmDialog';
 
 export default {
@@ -16,16 +16,26 @@ const props = {
 	onConfirm: () => {
 		console.log('Ja');
 	},
+	onCloseButton: () => {
+		console.log('Close');
+	},
 };
 
-const Template: Story<React.ComponentProps<typeof ConfirmDialog>> = () => {
-	return (
+storiesOf('Dialog', module)
+	.add('Default', () => (
 		<>
 			<button onClick={() => confirm(props)}>Verwijder</button>
 			<ConfirmDialog />
 		</>
-	);
-};
-
-export const Default = Template.bind({});
-Default.args = {};
+	))
+	.add('With Close Button', () => (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog hideCloseButton={false}/>
+		</>
+	))	.add('Dialog XS', () => (
+	<>
+		<button onClick={() => confirm(props)}>Verwijder</button>
+		<ConfirmDialog size={'xs'}/>
+	</>
+));
