@@ -58,14 +58,14 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }
 
 	if (loading) {
 		return (
-			<DocumentViewerStyle>
+			<DocumentViewerStyle data-testid="document-viewer">
 				<SpinnerStyle color={themeColor('secondary')} size={25} />
 			</DocumentViewerStyle>
 		);
 	}
 
 	return (
-		<DocumentViewerStyle>
+		<DocumentViewerStyle data-testid="document-viewer">
 			<Heading forwardedAs="h3">{filename}</Heading>
 			{error && (
 				<Alert level="error" outline>
