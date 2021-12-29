@@ -11,7 +11,7 @@ export default {
 const Template: Story<Props> = ({ id = 'creatable-demo', ...props }) => {
 	return (
 		<CreatableSelect
-			id={id}
+			inputId={id}
 			isClearable
 			onChange={(val) => console.log('onChange', val)}
 			options={options}
@@ -32,4 +32,11 @@ export const Preselected = Template.bind({});
 Preselected.args = {
 	label: 'Documentomschrijving',
 	value: options[3],
+};
+
+export const WithError = Template.bind({});
+WithError.args = {
+	label: 'Documentomschrijving',
+	value: '',
+	error: true,
 };

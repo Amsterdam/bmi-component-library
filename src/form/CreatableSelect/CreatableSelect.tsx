@@ -1,20 +1,29 @@
 import React from 'react';
 import { ComponentProps } from 'react';
 import Creatable from 'react-select/creatable';
-import amsStyles, { StyledLabel } from './ReactSelectStyles';
+import getAMSStyles, { StyledLabel } from './ReactSelectStyles';
 
 type CreatableProps = ComponentProps<typeof Creatable>;
 export type Props = {
 	label?: string;
 	createLabel?: string;
+	error?: boolean;
 } & CreatableProps;
 
-const CreatableSelect: React.FC<Props> = ({ inputId, label, options, value, createLabel = 'Voeg toe', ...props }) => {
+const CreatableSelect: React.FC<Props> = ({
+	inputId,
+	label,
+	options,
+	value,
+	error,
+	createLabel = 'Voeg toe',
+	...props
+}) => {
 	return (
 		<>
 			{label && <StyledLabel htmlFor={inputId} label={label} />}
 			<Creatable
-				styles={amsStyles}
+				styles={getAMSStyles(error)}
 				value={value}
 				inputId={inputId}
 				openMenuOnFocus
