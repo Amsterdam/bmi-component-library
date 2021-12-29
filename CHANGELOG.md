@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12-alpha.2](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.1...v0.0.12-alpha.2) (2021-12-29)
+
+
+### Features
+
+* **creatableselect:** Added prop for new option label ([1f2d5c3](https://github.com/Amsterdam/bmi-component-library/commit/1f2d5c3c8157147572eafaa6f30d5985c8b26ba5))
+* **react-select:** Introduction of styled react-select component of the Creatable kind ([5e57ae1](https://github.com/Amsterdam/bmi-component-library/commit/5e57ae19aa5fb072f84bd60675e47e61c9bce529))
+
+
+### Bug Fixes
+
+* **creatable:** converted back to uncontrolled to leave the controlling to the implementor ([d32bfbc](https://github.com/Amsterdam/bmi-component-library/commit/d32bfbc12ae16de36eca791e22436caa4802028f))
+* **creatable:** CreatableSelect was not being exported ([0cc3c53](https://github.com/Amsterdam/bmi-component-library/commit/0cc3c5355cd949c6fc92a3c2d773e3b47be848c2))
+* **creatable:** fix issues in state management around onCreateOption and onChange ([d1f7d20](https://github.com/Amsterdam/bmi-component-library/commit/d1f7d208948690f87a6c281f5382cfd451e3e5e4))
+
 ### [0.0.12-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.0...v0.0.12-alpha.1) (2021-12-29)
 
 
