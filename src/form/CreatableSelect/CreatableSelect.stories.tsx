@@ -8,15 +8,19 @@ export default {
 	component: CreatableSelect,
 };
 
-const Template: Story<Props> = ({ id = 'creatable-demo', ...props }) => {
+const Template: Story<Props> = ({ id = 'creatable-demo', value, ...props }) => {
 	return (
 		<CreatableSelect
 			id={id}
 			isClearable
 			onChange={(val) => console.log('onChange', val)}
-			// onInputChange={(val) => console.log('onInputChange', val)}
-			onCreateOption={(option) => console.log('onCreateOption', option)}
-			options={options}
+			options={options.map((opt) => {
+				return {
+					...opt,
+					// @ts-ignore
+					isSelected: value?.value === opt.value,
+				};
+			})}
 			{...props}
 		/>
 	);
@@ -28,4 +32,10 @@ Default.args = {};
 export const WithLabel = Template.bind({});
 WithLabel.args = {
 	label: 'Documentomschrijving',
+};
+
+export const Preselected = Template.bind({});
+Preselected.args = {
+	label: 'Documentomschrijving',
+	value: options[3],
 };
