@@ -15,6 +15,6 @@ describe('<DocumentViewer />', () => {
 			render(<DocumentViewer uri="/" />);
 		});
 
-		expect(await screen.getByTestId('document-viewer')).toBeInTheDocument();
+		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
 	});
 });
