@@ -40,8 +40,6 @@ export const useFileUpload = (
 				const headers = await getHeaders();
 				setFiles((previousFiles) => [...previousFiles, customFile] as Files);
 
-				const formData = new FormData();
-				formData.append('file', rawFile);
 				const xhr = new XMLHttpRequest();
 
 				xhr.upload.onprogress = (event) => {
@@ -90,7 +88,7 @@ export const useFileUpload = (
 
 				xhr.open(httpMethod, postUrl, true);
 				Object.keys(headers).forEach((name) => xhr.setRequestHeader(name, headers[name]));
-				xhr.send(formData);
+				xhr.send(rawFile);
 
 				setStateXhr({
 					...stateXhr,
