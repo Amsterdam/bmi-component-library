@@ -12,7 +12,7 @@ type Props = {
 	children?: React.ReactNode | React.ReactNode[] | any;
 	closeOnBackdropClick?: boolean;
 	classnames?: string;
-	size?: 'sm' | 'md' | 'lg' | 'xl';
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 } & React.ComponentProps<typeof ASCModal>;
 export interface IModal extends React.FunctionComponent<Props> {
 	TopBar: React.FunctionComponent<IModalTopBarProps>;

@@ -6,6 +6,10 @@ export const ModalStyle = styled(Modal)`
 	max-height: 90vh;
 	overflow: visible;
 
+	&.modal-xs {
+		max-width: 320px; /* breakpoint phone */
+	}
+
 	&.modal-sm {
 		max-width: 540px; /* breakpoint tabletS */
 	}

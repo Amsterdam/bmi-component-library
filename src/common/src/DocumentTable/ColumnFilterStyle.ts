@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Input, themeColor } from '@amsterdam/asc-ui';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { ComponentProps } from 'react';
 
 export const CancelIconStyle = styled(CancelIcon)`
 	&& {
@@ -14,7 +15,7 @@ export const CancelIconStyle = styled(CancelIcon)`
 `;
 
 // I wasn't able to figure out howto type this in set time-box ¯\_(ツ)_/¯
-export const InputStyle = styled<any>(Input)`
+export const InputStyle = styled(Input)<ComponentProps<typeof Input>>`
 	&& {
 		border: 1px solid ${themeColor('tint', 'level5')};
 		height: 32px;

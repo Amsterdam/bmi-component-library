@@ -1,11 +1,6 @@
 import React from 'react';
-import { Story } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
 import ConfirmDialog, { confirm } from './ConfirmDialog';
-
-export default {
-	title: 'common/ConfirmDialog',
-	component: ConfirmDialog,
-};
 
 const props = {
 	title: 'Waarschuwing',
@@ -16,16 +11,33 @@ const props = {
 	onConfirm: () => {
 		console.log('Ja');
 	},
+	onClose: () => {
+		console.log('sluiten');
+	},
 };
 
-const Template: Story<React.ComponentProps<typeof ConfirmDialog>> = () => {
-	return (
+storiesOf('Dialog', module)
+	.add('Default', () => (
 		<>
 			<button onClick={() => confirm(props)}>Verwijder</button>
 			<ConfirmDialog />
 		</>
-	);
-};
-
-export const Default = Template.bind({});
-Default.args = {};
+	))
+	.add('With Close Button', () => (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog hideCloseButton={false} />
+		</>
+	))
+	.add('Dialog XS', () => (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog size={'xs'} />
+		</>
+	))
+	.add('No Backdrop', () => (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog size={'xs'} backdropOpacity={1} />
+		</>
+	));

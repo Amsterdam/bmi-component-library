@@ -12,7 +12,16 @@ export interface IState {
 	textCancelButton?: string;
 	textConfirmButton?: string;
 	onCancel?: () => void;
+	size?: string;
+	onClose?: () => void;
 }
+
+export type Props = {
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	backdropOpacity?: number;
+	hideCloseButton?: boolean;
+	zIndexOffset?: number;
+};
 
 const initialState: IState = {
 	message: '',
@@ -32,7 +41,14 @@ export const confirm = ({
 	store.next({ title, message, textConfirmButton, textCancelButton, onCancel, onConfirm });
 };
 
-const ConfirmDialog: React.FC = () => {
+export interface IConfirmDialog extends React.FC<Props> {}
+
+const ConfirmDialog: IConfirmDialog = ({
+	size = 'sm',
+	hideCloseButton = true,
+	backdropOpacity = 0.3,
+	zIndexOffset = 1,
+}: Props) => {
 	const [state, setState] = React.useState<IState>(initialState);
 	const [isVisible, setIsVisible] = React.useState<boolean>(false);
 
@@ -50,8 +66,21 @@ const ConfirmDialog: React.FC = () => {
 	}, []);
 
 	return (
-		<Modal id="confirm-dialog" open={isVisible} size="sm">
-			<Modal.TopBar hideCloseButton>
+		<Modal
+			id="confirm-dialog"
+			data-testid="confirm-dialog"
+			open={isVisible}
+			size={size}
+			backdropOpacity={backdropOpacity}
+			zIndexOffset={zIndexOffset}
+		>
+			<Modal.TopBar
+				onCloseButton={() => {
+					setIsVisible(false);
+					state.onCancel && state.onCancel();
+				}}
+				hideCloseButton={hideCloseButton}
+			>
 				<Heading forwardedAs="h4">{state.title}</Heading>
 			</Modal.TopBar>
 			<Modal.Content>
@@ -81,6 +110,7 @@ const ConfirmDialog: React.FC = () => {
 						{state.textCancelButton}
 					</ButtonStyles>
 				</Modal.Actions.Left>
+				<Modal.Actions.Right>&nbsp;</Modal.Actions.Right>
 			</Modal.Actions>
 		</Modal>
 	);

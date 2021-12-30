@@ -3,7 +3,7 @@ import { act, waitFor } from '@testing-library/react';
 import { useFileUpload } from './hooks';
 import { CustomFileOrRejection } from './hooks';
 
-const getPostUrlMock = jest.fn().mockImplementation((file) => {
+const getPostUrlMock = jest.fn().mockImplementation(() => {
 	Promise.resolve(true);
 });
 const getHeadersMock = jest.fn().mockImplementation(() => Promise.resolve({}));
@@ -24,7 +24,9 @@ const headers = {};
 describe('useFileUpload', () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
+		jest.clearAllMocks();
 	});
+
 	it('should return the correct entries', () => {
 		const { result } = renderHook(() => useFileUpload(getPostUrlMock, () => Promise.resolve(headers)));
 

@@ -1,6 +1,6 @@
 {
 	"name": "@amsterdam/bmi-component-library",
-	"version": "0.0.12-alpha.0",
+	"version": "0.0.12-alpha.4",
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
 	"main": "lib/index.js",
 	"module": "es/index.js",
@@ -69,6 +69,7 @@
 		"@types/jest": "^26.0.23",
 		"@types/material-ui": "^0.21.8",
 		"@types/react-dom": "^17.0.5",
+		"@types/react-select": "^5.0.1",
 		"@types/styled-components": "^5.1.9",
 		"@typescript-eslint/eslint-plugin": "^4.22.0",
 		"@typescript-eslint/parser": "^4.22.0",
@@ -93,6 +94,7 @@
 		"lint-staged": "^10.5.4",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^2.2.1",
+		"react-select-event": "^5.3.0",
 		"rxjs": "^7.2.0",
 		"standard-version": "^9.3.0",
 		"stylelint": "^13.13.1",
@@ -113,6 +115,7 @@
 		"react-dom": ">=17.0.2",
 		"react-dropzone": "^11.3.2",
 		"react-loading-skeleton": "^3.0.1",
+		"react-select": "5.2.1",
 		"styled-components": ">=5.2.3"
 	},
 	"peerDependencies": {
