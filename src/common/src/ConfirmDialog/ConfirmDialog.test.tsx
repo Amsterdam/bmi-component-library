@@ -86,13 +86,9 @@ describe('<ConfirmDialog />', () => {
 	});
 
 	test('Should not show close button', () => {
-		const props = {
-			title: 'TestDialog',
-			message: 'Are you sure you want to delete this file?',
-			textCancelButton: 'Cancel',
-			textConfirmButton: 'Confirm',
-			onCancel: jest.fn(),
-			onConfirm: jest.fn(),
+		const props: any = {
+			...defaultProps,
+			...mockedButtonProps,
 		};
 
 		clickAndRenderDialog(props, <ConfirmDialog />);
