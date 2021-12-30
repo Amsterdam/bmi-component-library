@@ -21,6 +21,7 @@ export type Props = {
 	backdropOpacity?: number;
 	hideCloseButton?: boolean;
 	zIndexOffset?: number;
+	disablePortal?: boolean;
 };
 
 const initialState: IState = {
@@ -48,6 +49,7 @@ const ConfirmDialog: IConfirmDialog = ({
 	hideCloseButton = true,
 	backdropOpacity = 0.3,
 	zIndexOffset = 1,
+	disablePortal = false,
 }: Props) => {
 	const [state, setState] = React.useState<IState>(initialState);
 	const [isVisible, setIsVisible] = React.useState<boolean>(false);
@@ -73,6 +75,7 @@ const ConfirmDialog: IConfirmDialog = ({
 			size={size}
 			backdropOpacity={backdropOpacity}
 			zIndexOffset={zIndexOffset}
+			disablePortal={disablePortal}
 		>
 			<Modal.TopBar
 				onCloseButton={() => {
