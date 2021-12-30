@@ -1,69 +1,91 @@
 import React from 'react';
-import { render } from '../../../test-utils/customRender';
-import { screen } from '@testing-library/dom'
-import ConfirmDialog, { IState, confirm } from './ConfirmDialog';
-import userEvent from '@testing-library/user-event';
-
-describe('<ConfirmDialog hideCloseButton="false"/>', () => {
-	let getByTestId: Function;
-	let getByText: any;
-	const onCancelMock = jest.fn();
-	const onConfirmMock = jest.fn();
-	const onCloseMock = jest.fn();
-
-	const props = {
-		title: 'TestDialog',
-		message: 'Are you sure you want to delete this file?',
-		textCancelButton: 'Cancel',
-		textConfirmButton: 'Confirm',
-		onCancel: onCancelMock,
-		onConfirm: onConfirmMock,
-		onCloseButton: onCloseMock
-	} as IState;
-
-	beforeEach(() => {
-		({ getByTestId, getByText } = render(
-			<div>
-				<button data-testid="open-dialog" onClick={() => confirm(props)} />
-				<ConfirmDialog hideCloseButton={false}/>
-			</div>,
-		));
-		const button = getByTestId('open-dialog');
-		userEvent.click(button);
-	});
-
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
-
-	it('should render the ConfirmDialog correctly', () => {
-		expect(getByText('TestDialog')).toBeInTheDocument();
-		expect(getByText('Are you sure you want to delete this file?')).toBeInTheDocument();
-		expect(getByText('Cancel')).toBeInTheDocument();
-		expect(getByText('Confirm')).toBeInTheDocument();
-	});
-
-	it('should call the onCancel function when clicking the cancelButton', () => {
-		const cancelButton = getByTestId('cancel-button');
-		userEvent.click(cancelButton);
-		expect(onCancelMock).toBeCalled();
-	});
-
-	it('should call the onConfirm function when clicking the confirmButton', () => {
-		const confirmButton = getByTestId('confirm-button');
-		userEvent.click(confirmButton);
-		expect(onConfirmMock).toBeCalled();
-	});
-
-	it('should call the onClose function when clicking the closeButton', () => {
-		const confirmButton = getByTestId('modal-close-button');
-		userEvent.click(confirmButton);
-		expect(onCloseMock).toBeCalled();
-	});
-});
+import { fireEvent, render } from '../../../test-utils/customRender';
+import { screen } from '@testing-library/dom';
+import ConfirmDialog, { confirm } from './ConfirmDialog';
 
 describe('<ConfirmDialog />', () => {
-	test('Should not show close button',  () => {
+	const onClick = jest.fn();
+
+	const defaultProps = {
+		title: 'Test Title',
+		message: 'Test Message',
+	};
+
+	const mockedButtonProps = {
+		onCancel: onClick,
+		onConfirm: onClick,
+	};
+
+	const defaultRenders = [
+		['default', 'Test Waarschuwing', 'Weet u zeker dat u dit bestand wilt verwijderen?', 'Ja', 'Nee'],
+		['custom', 'Test Warning', 'Are you sure you want to delete this file?', 'Cancel', 'Confirm'],
+	];
+
+	const buttons = [
+		['confirm', 'confirm-button'],
+		['cancel', 'cancel-button'],
+		['close', 'modal-close-button'],
+	];
+
+	const clickAndRenderDialog = (props: any, element: any) => {
+		render(
+			<>
+				<button data-testid="open-dialog" onClick={() => confirm(props)} />
+				{element}
+			</>,
+		);
+
+		const button = screen.getByTestId('open-dialog');
+		fireEvent.click(button);
+	};
+
+	// checks if the dialog renders
+	test.each(defaultRenders)(
+		'Renders %s dialog without close button',
+		(testCase, title, message, cancelLabel, confirmLabel) => {
+			const props: any = {
+				title: title,
+				message: message,
+				textCancelButton: cancelLabel,
+				textConfirmButton: confirmLabel,
+				...mockedButtonProps,
+			};
+
+			clickAndRenderDialog(props, <ConfirmDialog />);
+
+			expect(screen.getByText(title)).toBeInTheDocument();
+			expect(screen.getByText(message)).toBeInTheDocument();
+			expect(screen.getByText(cancelLabel)).toBeInTheDocument();
+			expect(screen.getByText(confirmLabel)).toBeInTheDocument();
+			expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
+		},
+	);
+
+	// checks if all buttons are clickable with passed methods
+	test.each(buttons)('Test %s button', (testCase, testId) => {
+		const props: any = {
+			...defaultProps,
+			...mockedButtonProps,
+		};
+
+		clickAndRenderDialog(props, <ConfirmDialog hideCloseButton={false} />);
+
+		fireEvent.click(screen.getByTestId(testId));
+		expect(onClick).toHaveBeenCalled();
+	});
+
+	// checks if a dialog without a message renders
+	test('Dialog should not render', () => {
+		const props: any = {
+			...mockedButtonProps,
+		};
+
+		clickAndRenderDialog(props, <ConfirmDialog />);
+
+		expect(screen.queryByTestId('confirm-dialog')).toBeNull();
+	});
+
+	test('Should not show close button', () => {
 		const props = {
 			title: 'TestDialog',
 			message: 'Are you sure you want to delete this file?',
@@ -71,18 +93,10 @@ describe('<ConfirmDialog />', () => {
 			textConfirmButton: 'Confirm',
 			onCancel: jest.fn(),
 			onConfirm: jest.fn(),
-			onCloseButton: jest.fn()
-		} as IState;
+		};
 
-		render(
-			<div>
-				<button data-testid="open-dialog" onClick={() => confirm(props)} />
-				<ConfirmDialog />
-			</div>);
-
-		const button = screen.getByTestId('open-dialog');
-		userEvent.click(button);
+		clickAndRenderDialog(props, <ConfirmDialog />);
 
 		expect(screen.queryByTestId('modal-close-button')).toBeNull();
-	})
-})
+	});
+});

@@ -22,6 +22,7 @@ npm-debug.log*
 .idea/inspectionProfiles/
 .idea/scopes/
 .idea/misc.xml
+.idea/prettier.xml
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

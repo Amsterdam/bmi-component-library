@@ -16,8 +16,8 @@ const props = {
 	onConfirm: () => {
 		console.log('Ja');
 	},
-	onCloseButton: () => {
-		console.log('Close');
+	onClose: () => {
+		console.log('sluiten');
 	},
 };
 
@@ -31,11 +31,12 @@ storiesOf('Dialog', module)
 	.add('With Close Button', () => (
 		<>
 			<button onClick={() => confirm(props)}>Verwijder</button>
-			<ConfirmDialog hideCloseButton={false}/>
+			<ConfirmDialog hideCloseButton={false} />
 		</>
-	))	.add('Dialog XS', () => (
-	<>
-		<button onClick={() => confirm(props)}>Verwijder</button>
-		<ConfirmDialog size={'xs'}/>
-	</>
-));
+	))
+	.add('Dialog XS', () => (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog size={'xs'} />
+		</>
+	));
