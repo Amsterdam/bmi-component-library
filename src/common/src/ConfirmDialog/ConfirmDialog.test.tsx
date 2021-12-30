@@ -42,6 +42,7 @@ describe('<ConfirmDialog />', () => {
 			},
 			{},
 		);
+		expect(screen.queryByTestId('modal')).toBeInTheDocument();
 		expect(screen.getByText(title)).toBeInTheDocument();
 		expect(screen.getByText(message)).toBeInTheDocument();
 		expect(screen.getByText(cancelLabel)).toBeInTheDocument();
@@ -70,12 +71,27 @@ describe('<ConfirmDialog />', () => {
 
 	// checks if a dialog without a message renders
 	test('Dialog should not render', () => {
-		clickAndRenderDialog(callbackMocks);
-		expect(screen.queryByTestId('confirm-dialog')).toBeNull();
+		clickAndRenderDialog({ message: '' });
+		expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
 	});
 
 	test('Should not show close button', () => {
 		clickAndRenderDialog();
+		expect(screen.queryByTestId('modal')).toBeInTheDocument();
 		expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
+	});
+
+	test('Should pass down disablePortal prop', () => {
+		clickAndRenderDialog(
+			{
+				...defaultArg,
+				...callbackMocks,
+			},
+			{
+				hideCloseButton: false,
+			},
+		);
+		expect(screen.queryByTestId('modal')).toBeInTheDocument();
+		// expect(screen.queryByTestId('modal')).toHaveProperty('hideCloseButton', false);
 	});
 });

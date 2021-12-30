@@ -16,7 +16,7 @@ const props = {
 	},
 };
 
-storiesOf('Dialog', module)
+storiesOf('Confirm Dialog', module)
 	.add('Default', () => (
 		<>
 			<button onClick={() => confirm(props)}>Verwijder</button>
@@ -38,6 +38,6 @@ storiesOf('Dialog', module)
 	.add('No Backdrop', () => (
 		<>
 			<button onClick={() => confirm(props)}>Verwijder</button>
-			<ConfirmDialog size={'xs'} backdropOpacity={1} />
+			<ConfirmDialog backdropOpacity={1} />
 		</>
 	));
