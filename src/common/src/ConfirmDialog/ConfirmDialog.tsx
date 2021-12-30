@@ -16,7 +16,7 @@ export interface IState {
 	onClose?: () => void;
 }
 
-type Props = {
+export type Props = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	backdropOpacity?: number;
 	hideCloseButton?: boolean;

@@ -1,98 +1,81 @@
 import React from 'react';
-import { fireEvent, render } from '../../../test-utils/customRender';
 import { screen } from '@testing-library/dom';
-import ConfirmDialog, { confirm } from './ConfirmDialog';
+import { fireEvent, render } from '../../../test-utils/customRender';
+import ConfirmDialog, { confirm, IState, Props } from './ConfirmDialog';
 
 describe('<ConfirmDialog />', () => {
 	const onClick = jest.fn();
 
-	const defaultProps = {
+	const defaultArg = {
 		title: 'Test Title',
 		message: 'Test Message',
 	};
 
-	const mockedButtonProps = {
+	const callbackMocks = {
 		onCancel: onClick,
 		onConfirm: onClick,
 	};
 
-	const defaultRenders = [
-		['default', 'Test Waarschuwing', 'Weet u zeker dat u dit bestand wilt verwijderen?', 'Ja', 'Nee'],
-		['custom', 'Test Warning', 'Are you sure you want to delete this file?', 'Cancel', 'Confirm'],
-	];
-
-	const buttons = [
-		['confirm', 'confirm-button'],
-		['cancel', 'cancel-button'],
-		['close', 'modal-close-button'],
-	];
-
-	const clickAndRenderDialog = (props: any, element: any) => {
+	const clickAndRenderDialog = (args: Partial<IState> = defaultArg, props: Partial<Props> = {}) => {
 		render(
 			<>
-				<button data-testid="open-dialog" onClick={() => confirm(props)} />
-				{element}
+				<button data-testid="open-dialog" onClick={() => confirm(args as IState)} />
+				<ConfirmDialog {...props} />
 			</>,
 		);
-
 		const button = screen.getByTestId('open-dialog');
 		fireEvent.click(button);
 	};
 
 	// checks if the dialog renders
-	test.each(defaultRenders)(
-		'Renders %s dialog without close button',
-		(testCase, title, message, cancelLabel, confirmLabel) => {
-			const props: any = {
+	test.each([
+		['default', 'Test Waarschuwing', 'Weet u zeker dat u dit bestand wilt verwijderen?', 'Ja', 'Nee'],
+		['custom', 'Test Warning', 'Are you sure you want to delete this file?', 'Cancel', 'Confirm'],
+	])('Renders %s dialog without close button', (testCase, title, message, cancelLabel, confirmLabel) => {
+		clickAndRenderDialog(
+			{
 				title: title,
 				message: message,
 				textCancelButton: cancelLabel,
 				textConfirmButton: confirmLabel,
-				...mockedButtonProps,
-			};
-
-			clickAndRenderDialog(props, <ConfirmDialog />);
-
-			expect(screen.getByText(title)).toBeInTheDocument();
-			expect(screen.getByText(message)).toBeInTheDocument();
-			expect(screen.getByText(cancelLabel)).toBeInTheDocument();
-			expect(screen.getByText(confirmLabel)).toBeInTheDocument();
-			expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
-		},
-	);
+				...callbackMocks,
+			},
+			{},
+		);
+		expect(screen.getByText(title)).toBeInTheDocument();
+		expect(screen.getByText(message)).toBeInTheDocument();
+		expect(screen.getByText(cancelLabel)).toBeInTheDocument();
+		expect(screen.getByText(confirmLabel)).toBeInTheDocument();
+		expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
+	});
 
 	// checks if all buttons are clickable with passed methods
-	test.each(buttons)('Test %s button', (testCase, testId) => {
-		const props: any = {
-			...defaultProps,
-			...mockedButtonProps,
-		};
-
-		clickAndRenderDialog(props, <ConfirmDialog hideCloseButton={false} />);
-
+	test.each([
+		['confirm', 'confirm-button'],
+		['cancel', 'cancel-button'],
+		['close', 'modal-close-button'],
+	])('Test %s button', (testCase, testId) => {
+		clickAndRenderDialog(
+			{
+				...defaultArg,
+				...callbackMocks,
+			},
+			{
+				hideCloseButton: false,
+			},
+		);
 		fireEvent.click(screen.getByTestId(testId));
 		expect(onClick).toHaveBeenCalled();
 	});
 
 	// checks if a dialog without a message renders
 	test('Dialog should not render', () => {
-		const props: any = {
-			...mockedButtonProps,
-		};
-
-		clickAndRenderDialog(props, <ConfirmDialog />);
-
+		clickAndRenderDialog(callbackMocks);
 		expect(screen.queryByTestId('confirm-dialog')).toBeNull();
 	});
 
 	test('Should not show close button', () => {
-		const props: any = {
-			...defaultProps,
-			...mockedButtonProps,
-		};
-
-		clickAndRenderDialog(props, <ConfirmDialog />);
-
+		clickAndRenderDialog();
 		expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
 	});
 });
