@@ -34,4 +34,10 @@ storiesOf('Dialog', module)
 			<button onClick={() => confirm(props)}>Verwijder</button>
 			<ConfirmDialog size={'xs'} />
 		</>
+	))
+	.add('No Backdrop', () => (
+		<>
+			<button onClick={() => confirm(props)}>Verwijder</button>
+			<ConfirmDialog size={'xs'} backdropOpacity={1} />
+		</>
 	));

@@ -18,6 +18,7 @@ export interface IState {
 
 type Props = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	backdropOpacity?: number;
 	hideCloseButton?: boolean;
 };
 
@@ -41,7 +42,7 @@ export const confirm = ({
 
 export interface IConfirmDialog extends React.FC<Props> {}
 
-const ConfirmDialog: IConfirmDialog = ({ size = 'sm', hideCloseButton = true }: Props) => {
+const ConfirmDialog: IConfirmDialog = ({ size = 'sm', hideCloseButton = true, backdropOpacity = 0.3 }: Props) => {
 	const [state, setState] = React.useState<IState>(initialState);
 	const [isVisible, setIsVisible] = React.useState<boolean>(false);
 
@@ -59,7 +60,13 @@ const ConfirmDialog: IConfirmDialog = ({ size = 'sm', hideCloseButton = true }: 
 	}, []);
 
 	return (
-		<Modal id="confirm-dialog" data-testid="confirm-dialog" open={isVisible} size={size}>
+		<Modal
+			id="confirm-dialog"
+			data-testid="confirm-dialog"
+			open={isVisible}
+			size={size}
+			backdropOpacity={backdropOpacity}
+		>
 			<Modal.TopBar
 				onCloseButton={() => {
 					setIsVisible(false);
