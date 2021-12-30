@@ -97,6 +97,6 @@ describe('<ConfirmDialog />', () => {
 
 		clickAndRenderDialog(props, <ConfirmDialog />);
 
-		expect(screen.queryByTestId('modal-close-button')).toBeNull();
+		expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
 	});
 });
