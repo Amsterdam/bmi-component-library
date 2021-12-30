@@ -2,11 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ConfirmDialog, { confirm } from './ConfirmDialog';
 
-export default {
-	title: 'common/ConfirmDialog',
-	component: ConfirmDialog,
-};
-
 const props = {
 	title: 'Waarschuwing',
 	message: 'Weet u zeker dat u dit document definitief wilt verwijderen?',
