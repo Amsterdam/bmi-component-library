@@ -1,9 +1,10 @@
-import React from 'react';
+import type { IState, Props } from './ConfirmDialog';
+
+import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/dom';
 import { fireEvent, render } from '../../../test-utils/customRender';
-import ConfirmDialog, { confirm, IState, Props } from './ConfirmDialog';
-import * as asc from '@amsterdam/asc-ui';
-import { createMockComponent, mockComponentProps, mocked } from '~/tests/helpers';
+import { mockComponentProps } from '~/tests/helpers';
+import { Modal } from '@amsterdam/asc-ui';
 
 describe('<ConfirmDialog />', () => {
 	const onClick = jest.fn();
@@ -18,7 +19,8 @@ describe('<ConfirmDialog />', () => {
 		onConfirm: onClick,
 	};
 
-	const clickAndRenderDialog = (args: Partial<IState> = defaultArg, props: Partial<Props> = {}) => {
+	const clickAndRenderDialog = async (args: Partial<IState> = defaultArg, props: Partial<Props> = {}) => {
+		const { default: ConfirmDialog, confirm } = await import('../ConfirmDialog/ConfirmDialog');
 		render(
 			<>
 				<button data-testid="open-dialog" onClick={() => confirm(args as IState)} />
@@ -33,8 +35,8 @@ describe('<ConfirmDialog />', () => {
 	test.each([
 		['default', 'Test Waarschuwing', 'Weet u zeker dat u dit bestand wilt verwijderen?', 'Ja', 'Nee'],
 		['custom', 'Test Warning', 'Are you sure you want to delete this file?', 'Cancel', 'Confirm'],
-	])('Renders %s dialog without close button', (testCase, title, message, cancelLabel, confirmLabel) => {
-		clickAndRenderDialog(
+	])('Renders %s dialog without close button', async (testCase, title, message, cancelLabel, confirmLabel) => {
+		await clickAndRenderDialog(
 			{
 				title: title,
 				message: message,
@@ -57,51 +59,58 @@ describe('<ConfirmDialog />', () => {
 		['confirm', 'confirm-button'],
 		['cancel', 'cancel-button'],
 		['close', 'modal-close-button'],
-	])('Test %s button', (testCase, testId) => {
-		clickAndRenderDialog(
-			{
-				...defaultArg,
-				...callbackMocks,
-			},
-			{
-				hideCloseButton: false,
-			},
-		);
-		fireEvent.click(screen.getByTestId(testId));
-		expect(onClick).toHaveBeenCalled();
+	])('Test %s button', async (testCase, testId) => {
+		jest.isolateModules(async () => {
+			await clickAndRenderDialog(
+				{
+					...defaultArg,
+					...callbackMocks,
+				},
+				{
+					hideCloseButton: false,
+				},
+			);
+			fireEvent.click(screen.getByTestId(testId));
+			expect(onClick).toHaveBeenCalled();
+		});
 	});
 
 	// checks if a dialog without a message renders
-	test('Dialog should not render', () => {
-		clickAndRenderDialog({ message: '' });
-		expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
-	});
-
-	test('Should not show close button', () => {
-		clickAndRenderDialog();
-		expect(screen.queryByTestId('modal')).toBeInTheDocument();
-		expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
-	});
-
-	test('Should pass down disablePortal prop', () => {
-		// @ts-ignore
-		const spy = jest.spyOn(asc, 'Modal').mockImplementation(() => {
-			return <div />;
+	test('Dialog should not render', async () => {
+		jest.isolateModules(async () => {
+			await clickAndRenderDialog({ message: '' });
+			expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
 		});
+	});
 
-		clickAndRenderDialog(
-			{
-				...defaultArg,
-				...callbackMocks,
-			},
-			{
-				hideCloseButton: false,
-			},
-		);
+	test('Should not show close button', async () => {
+		jest.isolateModules(async () => {
+			await clickAndRenderDialog();
+			expect(screen.queryByTestId('modal')).toBeInTheDocument();
+			expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
+		});
+	});
 
-		const props = mockComponentProps(mocked(asc.Modal));
+	test('Should pass down disablePortal prop', async () => {
+		jest.isolateModules(async () => {
+			const mock = jest.fn().mockImplementation(() => <div />);
+			jest.doMock('@amsterdam/asc-ui', () => ({
+				...jest.requireActual('@amsterdam/asc-ui'),
+				Modal: mock,
+			}));
 
-		expect(props).toEqual({});
-		// expect(screen.queryByTestId('modal')).toHaveProperty('hideCloseButton', false);
+			const { default: ConfirmDialog, confirm } = await import('../ConfirmDialog/ConfirmDialog');
+			render(
+				<>
+					<button data-testid="open-dialog" onClick={() => confirm({ ...defaultArg, ...callbackMocks })} />
+					<ConfirmDialog hideCloseButton={false} />
+				</>,
+			);
+			const button = screen.getByTestId('open-dialog');
+			fireEvent.click(button);
+
+			const { disablePortal } = mockComponentProps<ComponentProps<typeof Modal>>(mock);
+			expect(disablePortal).toBe(false);
+		});
 	});
 });
