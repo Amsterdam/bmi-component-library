@@ -2,6 +2,8 @@ import React from 'react';
 import { screen } from '@testing-library/dom';
 import { fireEvent, render } from '../../../test-utils/customRender';
 import ConfirmDialog, { confirm, IState, Props } from './ConfirmDialog';
+import * as asc from '@amsterdam/asc-ui';
+import { createMockComponent, mockComponentProps, mocked } from '~/tests/helpers';
 
 describe('<ConfirmDialog />', () => {
 	const onClick = jest.fn();
@@ -82,6 +84,11 @@ describe('<ConfirmDialog />', () => {
 	});
 
 	test('Should pass down disablePortal prop', () => {
+		// @ts-ignore
+		const spy = jest.spyOn(asc, 'Modal').mockImplementation(() => {
+			return <div />;
+		});
+
 		clickAndRenderDialog(
 			{
 				...defaultArg,
@@ -91,7 +98,10 @@ describe('<ConfirmDialog />', () => {
 				hideCloseButton: false,
 			},
 		);
-		expect(screen.queryByTestId('modal')).toBeInTheDocument();
+
+		const props = mockComponentProps(mocked(asc.Modal));
+
+		expect(props).toEqual({});
 		// expect(screen.queryByTestId('modal')).toHaveProperty('hideCloseButton', false);
 	});
 });
