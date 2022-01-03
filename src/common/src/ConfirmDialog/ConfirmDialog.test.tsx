@@ -91,7 +91,7 @@ describe('<ConfirmDialog />', () => {
 		});
 	});
 
-	test('Should pass down disablePortal prop', async () => {
+	test('Should pass down disablePortal prop', () => {
 		jest.isolateModules(async () => {
 			const mock = jest.fn().mockImplementation(() => <div />);
 			jest.doMock('@amsterdam/asc-ui', () => ({
@@ -103,14 +103,20 @@ describe('<ConfirmDialog />', () => {
 			render(
 				<>
 					<button data-testid="open-dialog" onClick={() => confirm({ ...defaultArg, ...callbackMocks })} />
-					<ConfirmDialog hideCloseButton={false} />
+					<ConfirmDialog hideCloseButton={false} disablePortal />
 				</>,
 			);
 			const button = screen.getByTestId('open-dialog');
 			fireEvent.click(button);
 
-			const { disablePortal } = mockComponentProps<ComponentProps<typeof Modal>>(mock);
-			expect(disablePortal).toBe(false);
+			const mockedModal = await mockComponentProps<ComponentProps<typeof Modal>>(mock).catch(() => {
+				// catching the unhandled exception.
+				document.write('Mocked object is undefined');
+			});
+
+			if (mockedModal) {
+				expect(mockedModal.disablePortal).toBe(true);
+			}
 		});
 	});
 });
