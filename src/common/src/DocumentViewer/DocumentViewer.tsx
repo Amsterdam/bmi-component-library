@@ -38,10 +38,7 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }
 				if (!response.ok)
 					throw new Error(response.status === 404 ? 'Document niet gevonden.' : 'Fout bij het ophalen.');
 
-				return response.headers;
-			})
-			.then((headers) => {
-				const [firstContentType] = headers.get('content-type')?.split(';') || [];
+				const [firstContentType] = response.headers.get('content-type')?.split(';') || [];
 				if (!firstContentType) throw new Error('Fout bij het ophalen.');
 
 				updateDocumentState({ loading: false, contentType: firstContentType });
