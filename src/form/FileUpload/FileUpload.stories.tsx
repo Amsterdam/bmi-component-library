@@ -4,7 +4,7 @@ import FileUpload, { Props } from './FileUpload';
 import { CustomFileOrRejection } from './hooks';
 
 export default {
-	title: 'common/FileUpload',
+	title: 'form/FileUpload',
 	component: FileUpload,
 };
 
