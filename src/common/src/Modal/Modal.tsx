@@ -12,6 +12,7 @@ type Props = {
 	children?: React.ReactNode | React.ReactNode[] | any;
 	closeOnBackdropClick?: boolean;
 	classnames?: string;
+	disablePortal?: boolean;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 } & React.ComponentProps<typeof ASCModal>;
 export interface IModal extends React.FunctionComponent<Props> {
@@ -20,7 +21,7 @@ export interface IModal extends React.FunctionComponent<Props> {
 	Actions: React.FunctionComponent<IModalActionsProps> | any;
 }
 
-const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', ...rest }: Props) => {
+const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, ...rest }: Props) => {
 	const handleClose = () => {
 		if (onClose) {
 			onClose();
@@ -48,7 +49,15 @@ const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', ...rest
 	});
 
 	return (
-		<ModalStyle {...rest} id={id} data-testid="modal" aria-labelledby="modal" className={classes} onClose={handleClose}>
+		<ModalStyle
+			{...rest}
+			id={id}
+			data-testid="modal"
+			aria-labelledby="modal"
+			className={classes}
+			onClose={handleClose}
+			disablePortal={disablePortal}
+		>
 			{childrenWithProps}
 		</ModalStyle>
 	);
