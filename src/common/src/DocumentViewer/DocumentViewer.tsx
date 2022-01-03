@@ -10,7 +10,6 @@ type Props = {
 };
 
 export type DocumentState = {
-	uri: string;
 	loading: boolean;
 	filename?: string;
 	error?: string;
@@ -18,7 +17,7 @@ export type DocumentState = {
 };
 
 const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }: Props) => {
-	const [documentState, setDocumentState] = useState<DocumentState>({ uri, loading: false });
+	const [documentState, setDocumentState] = useState<DocumentState>({ loading: true });
 	const { loading, filename, error, contentType } = documentState;
 
 	const updateDocumentState = (documentState: Partial<DocumentState>) => {
@@ -59,7 +58,7 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }
 	if (loading) {
 		return (
 			<DocumentViewerStyle data-testid="document-viewer">
-				<SpinnerStyle color={themeColor('secondary')} size={25} />
+				<SpinnerStyle data-testid="spinner" color={themeColor('secondary')} size={25} />
 			</DocumentViewerStyle>
 		);
 	}

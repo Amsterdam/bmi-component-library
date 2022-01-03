@@ -1,12 +1,13 @@
 import React from 'react';
 import { Alert, Link, Paragraph } from '@amsterdam/asc-ui';
+import { DocumentRendererStyle } from './DocumentRendererStyles';
 
 type Props = {
 	uri: string;
 	contentType: string;
 };
 
-const contentTypes: string[] = [
+export const imageContentTypes: string[] = [
 	'jpg',
 	'jpeg',
 	'image/jpg',
@@ -22,17 +23,23 @@ const contentTypes: string[] = [
 ];
 
 const DocumentRenderer: React.FC<Props> = ({ uri, contentType }) => {
-	if (contentTypes.indexOf(contentType) > -1) {
-		return <img src={uri} alt="Afbeelding" />;
+	if (imageContentTypes.indexOf(contentType) > -1) {
+		return (
+			<DocumentRendererStyle data-testid="document-renderer">
+				<img src={uri} alt="Afbeelding" />
+			</DocumentRendererStyle>
+		);
 	}
 
 	return (
-		<Alert level="warning" outline>
-			<Paragraph>Document kan niet weergegeven worden in de browser.</Paragraph>
-			<Link href={uri} icon="download">
-				Download
-			</Link>
-		</Alert>
+		<DocumentRendererStyle data-testid="document-renderer">
+			<Alert level="warning" outline>
+				<Paragraph>Document kan niet weergegeven worden in de browser.</Paragraph>
+				<Link href={uri} icon="download">
+					Download
+				</Link>
+			</Alert>
+		</DocumentRendererStyle>
 	);
 };
 
