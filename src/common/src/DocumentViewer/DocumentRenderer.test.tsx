@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import DocumentRenderer, { imageContentTypes } from './DocumentRenderer';
+import DocumentRenderer, { imageContentTypes, pdfContentTypes } from './DocumentRenderer';
 import { render } from '../../../test-utils/customRender';
 
 describe('<DocumentRenderer />', () => {
@@ -21,5 +21,17 @@ describe('<DocumentRenderer />', () => {
 		expect(screen.getByTestId('document-renderer')).toBeInTheDocument();
 		expect(screen.getByRole('img')).toHaveAttribute('src', uri);
 		expect(screen.getByRole('img')).toHaveAttribute('alt', 'Afbeelding');
+	});
+
+	test.each(pdfContentTypes)('renders an object when "%s" is the content type', (contentType) => {
+		const uri = '/document.pdf';
+		render(<DocumentRenderer uri={uri} contentType={contentType} />);
+
+		expect(screen.getByTestId('document-renderer')).toBeInTheDocument();
+		expect(screen.getByRole('document')).toHaveAttribute('data', uri);
+		expect(screen.getByRole('document')).toHaveAttribute('type', contentType);
+		expect(screen.getByText('Document kan niet weergegeven worden in de browser.')).toBeInTheDocument();
+		expect(screen.getByText('Download')).toBeInTheDocument();
+		expect(screen.getByRole('link')).toHaveAttribute('href', uri);
 	});
 });

@@ -44,7 +44,7 @@ const renderImage = (uri: string) => (
 
 const renderPDF = (uri: string, contentType: string) => (
 	<DocumentRendererStyle data-testid="document-renderer">
-		<object data={uri} type={contentType} width="100%" height="100vh">
+		<object data={uri} type={contentType} width="100%" height="100%" role="document">
 			{renderDownloadDocument(uri)}
 		</object>
 	</DocumentRendererStyle>
