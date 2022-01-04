@@ -22,25 +22,41 @@ export const imageContentTypes: string[] = [
 	'image/tiff',
 ];
 
+export const pdfContentTypes: string[] = ['application/pdf', 'pdf'];
+
 const DocumentRenderer: React.FC<Props> = ({ uri, contentType }) => {
 	if (imageContentTypes.indexOf(contentType) > -1) {
-		return (
-			<DocumentRendererStyle data-testid="document-renderer">
-				<img src={uri} alt="Afbeelding" />
-			</DocumentRendererStyle>
-		);
+		return renderImage(uri);
 	}
 
-	return (
-		<DocumentRendererStyle data-testid="document-renderer">
-			<Alert level="warning" outline>
-				<Paragraph>Document kan niet weergegeven worden in de browser.</Paragraph>
-				<Link href={uri} icon="download">
-					Download
-				</Link>
-			</Alert>
-		</DocumentRendererStyle>
-	);
+	if (pdfContentTypes.indexOf(contentType) > -1) {
+		return renderPDF(uri, contentType);
+	}
+
+	return <DocumentRendererStyle data-testid="document-renderer">{renderDownloadDocument(uri)}</DocumentRendererStyle>;
 };
+
+const renderImage = (uri: string) => (
+	<DocumentRendererStyle data-testid="document-renderer">
+		<img src={uri} alt="Afbeelding" />
+	</DocumentRendererStyle>
+);
+
+const renderPDF = (uri: string, contentType: string) => (
+	<DocumentRendererStyle data-testid="document-renderer">
+		<object data={uri} type={contentType} width="100%" height="100vh">
+			{renderDownloadDocument(uri)}
+		</object>
+	</DocumentRendererStyle>
+);
+
+const renderDownloadDocument = (uri: string) => (
+	<Alert level="warning" outline>
+		<Paragraph>Document kan niet weergegeven worden in de browser.</Paragraph>
+		<Link href={uri} icon="download">
+			Download
+		</Link>
+	</Alert>
+);
 
 export default DocumentRenderer;

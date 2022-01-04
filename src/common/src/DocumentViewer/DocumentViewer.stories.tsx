@@ -18,3 +18,7 @@ export const NoViewerAvailable: Story = () => {
 export const Image: Story = () => {
 	return <DocumentViewer uri="assets/example.png" />;
 };
+
+export const PDF: Story = () => {
+	return <DocumentViewer uri="assets/example.pdf" />;
+};
