@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const DocumentRendererStyle = styled.div`
-	display: flex;
-	flex: 1;
+	& object {
+		height: calc(100vh - 80px);
+		width: 100%;
+	}
 `;
