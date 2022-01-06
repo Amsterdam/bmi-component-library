@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Heading, themeColor } from '@amsterdam/asc-ui';
 import { DocumentViewerStyle, SpinnerStyle } from './DocumentViewerStyles';
-import DocumentRenderer from './DocumentRenderer';
+import DocumentRenderer from './Renderer/DocumentRenderer';
 
 type Props = {
 	uri: string;
