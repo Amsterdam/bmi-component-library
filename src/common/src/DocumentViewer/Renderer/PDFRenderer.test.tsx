@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { render } from '../../../../test-utils/customRender';
+import { render } from '~/tests/helpers/customRender';
 import PDFRenderer from './PDFRenderer';
 
 describe('<PDFRenderer />', () => {

@@ -2,10 +2,9 @@ import type { IState, Props } from './ConfirmDialog';
 
 import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/dom';
-import { fireEvent, render } from '../../../test-utils/customRender';
 import { mockComponentProps } from '~/tests/helpers';
 import { Modal } from '@amsterdam/asc-ui';
-import { act, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 describe('<ConfirmDialog />', () => {
 	const onClick = jest.fn();

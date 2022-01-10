@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/react';
 import DocumentRenderer, { ImageContentTypes, PDFContentTypes } from './DocumentRenderer';
-import { render } from '../../../../test-utils/customRender';
+import { render } from '~/tests/helpers/customRender';
 import DownloadRenderer from './DownloadRenderer';
 import { mockComponentProps, mocked } from '~/tests/helpers';
 import ImageRenderer from './ImageRenderer';

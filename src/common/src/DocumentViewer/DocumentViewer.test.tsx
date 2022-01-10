@@ -1,7 +1,7 @@
 import React from 'react';
 import DocumentViewer from './DocumentViewer';
 import { act, screen, waitFor } from '@testing-library/react';
-import { render } from '../../../test-utils/customRender';
+import { render } from '~/tests/helpers/customRender';
 
 describe('<DocumentViewer />', () => {
 	beforeEach(() => {
