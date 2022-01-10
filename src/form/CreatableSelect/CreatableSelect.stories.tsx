@@ -50,5 +50,4 @@ MenuPortal.args = {
 	zIndexMenu: 9999,
 	label: 'Documentomschrijving',
 	value: '',
-	error: true,
 };

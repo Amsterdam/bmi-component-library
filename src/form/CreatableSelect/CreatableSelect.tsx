@@ -24,7 +24,7 @@ const CreatableSelect: React.FC<Props> = ({
 		<>
 			{label && <StyledLabel htmlFor={inputId} label={label} />}
 			<Creatable
-				styles={getAMSStyles(props)}
+				styles={getAMSStyles({ error, ...props })}
 				value={value}
 				inputId={inputId}
 				openMenuOnFocus
