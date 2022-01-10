@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12-alpha.7](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.6...v0.0.12-alpha.7) (2022-01-10)
+
+
+### Features
+
+* **creatable-select:** Allowing zIndex/portal control of the CreatableSelect component through props ([0ac102b](https://github.com/Amsterdam/bmi-component-library/commit/0ac102b550801f51b7765bcf7aedb1bb6401ab74))
+* **documentviewer:** add DocumentViewer component ([077f3df](https://github.com/Amsterdam/bmi-component-library/commit/077f3dff4872ffff12283fb19f03e9c28fbc15e3))
+* **documentviewer:** add DocumentViewer component ([aa11f20](https://github.com/Amsterdam/bmi-component-library/commit/aa11f207d09e00b5c227e552babfa05619ce06d4))
+* **documentviewer:** add DocumentViewer component ([82ca7b4](https://github.com/Amsterdam/bmi-component-library/commit/82ca7b44d254dc3fc6ee74a95176b4d5ea1fe04c))
+* **documentviewer:** add DocumentViewer component ([68e4ac1](https://github.com/Amsterdam/bmi-component-library/commit/68e4ac19d9b22f0337e9b1335326615490052f2a))
+* **documentviewer:** add DocumentViewer component ([4c76ba7](https://github.com/Amsterdam/bmi-component-library/commit/4c76ba79d096fde47b04b81362e00dccf9a937b4))
+* **documentviewer:** add DocumentViewer component ([2117d94](https://github.com/Amsterdam/bmi-component-library/commit/2117d944e9b0b19c1a2e2e03160d9c0d5b6d1c3f))
+* **documentviewer:** add DocumentViewer component ([5ad757b](https://github.com/Amsterdam/bmi-component-library/commit/5ad757b64c5aa8cf38739168d1ab8d22e7452246))
+* **documentviewer:** add PDF renderer ([a73e2fc](https://github.com/Amsterdam/bmi-component-library/commit/a73e2fc87bebd020daaf57707704fb1f279e16a3))
+* **documentviewer:** add PDF renderer ([ab2c94e](https://github.com/Amsterdam/bmi-component-library/commit/ab2c94e1d9a4ef4b10da7689742ebd6c946def0d))
+* **documentviewer:** add PDF renderer ([4bbc63e](https://github.com/Amsterdam/bmi-component-library/commit/4bbc63eea3976160c943424aa2cbd879189a00bc))
+* **documentviewer:** add tests ([d4feaa1](https://github.com/Amsterdam/bmi-component-library/commit/d4feaa1909cb9f668915946c77658f4afbb99ec8))
+* **documentviewer:** add tests ([46d66cf](https://github.com/Amsterdam/bmi-component-library/commit/46d66cf9a4fde4e08e331ed11a208a9419fdd90d))
+* **documentviewer:** add tests ([d5be52f](https://github.com/Amsterdam/bmi-component-library/commit/d5be52feff5e29cc85b1cd120e816c3aacd1766e))
+* **documentviewer:** add tests ([ec086e9](https://github.com/Amsterdam/bmi-component-library/commit/ec086e9478d237c39fc7270704bc5db981bc3900))
+* **documentviewer:** bump storybook version ([04e97e0](https://github.com/Amsterdam/bmi-component-library/commit/04e97e0d9c824fb1049eec5a0900df565f7b0296))
+* **documentviewer:** review comments ([70fbb39](https://github.com/Amsterdam/bmi-component-library/commit/70fbb3974919f4c9b44972ad35de7b686bc4812e))
+* **documentviewer:** review comments ([f034c79](https://github.com/Amsterdam/bmi-component-library/commit/f034c7984ade512d4087f1fd18c0d029cdb42aa1))
+* **documentviewer:** review comments ([5c7bc46](https://github.com/Amsterdam/bmi-component-library/commit/5c7bc46e56ad6ea21dfa407075f49815ab9d20d2))
+* **documentviewer:** review comments ([4543bd5](https://github.com/Amsterdam/bmi-component-library/commit/4543bd567971f8e80ee9b1b52daa5e88b9ba7d2a))
+* **documentviewer:** review comments ([68b27a0](https://github.com/Amsterdam/bmi-component-library/commit/68b27a095f1e75d5900e8b98481e70fce1466621))
+* **documentviewer:** review comments ([0937b48](https://github.com/Amsterdam/bmi-component-library/commit/0937b48be563363dfa29f33845c29aaffad555a9))
+
+
+### Bug Fixes
+
+* **creatable-select:** error prop was not being passed to getAMSStyles() ([3f3e0bb](https://github.com/Amsterdam/bmi-component-library/commit/3f3e0bbc8e795e6d5f54488d4571b46a5eab1d24))
+
 ### [0.0.12-alpha.6](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.5...v0.0.12-alpha.6) (2022-01-03)
 
 ### [0.0.12-alpha.5](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.4...v0.0.12-alpha.5) (2021-12-30)
