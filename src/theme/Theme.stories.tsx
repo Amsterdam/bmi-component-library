@@ -105,5 +105,3 @@ export const MUIPalette = () => (
 			))}
 	</>
 );
-
-MUIPalette.storyName = 'MUI Palette';

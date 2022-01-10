@@ -3,10 +3,17 @@ module.exports = {
 		es6: true,
 		node: true,
 	},
-	extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/eslint-recommended'],
+	extends: [
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:storybook/recommended',
+	],
 	parserOptions: {
-		ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-		sourceType: 'module', // Allows for the use of imports
+		ecmaVersion: 2018,
+		// Allows for the parsing of modern ECMAScript features
+		sourceType: 'module',
+		// Allows for the use of imports
 		ecmaFeatures: {
 			jsx: true, // Allows for the parsing of JSX
 		},
