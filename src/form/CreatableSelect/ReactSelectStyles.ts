@@ -2,6 +2,7 @@ import { StylesConfig } from 'react-select';
 import styled from 'styled-components';
 import { ComponentProps } from 'react';
 import { Label } from '@amsterdam/asc-ui';
+import { Props } from './CreatableSelect';
 
 export const StyledLabel = styled(Label)<ComponentProps<typeof Label>>`
 	font-weight: 700;
@@ -10,7 +11,7 @@ export const StyledLabel = styled(Label)<ComponentProps<typeof Label>>`
 // @see https://designsystem.amsterdam.nl/7awj1hc9f/p/6561a5-selection-dropdown
 // @see https://react-select.com/styles
 // @see https://github.com/Amsterdam/amsterdam-styled-components/blob/main/packages/asc-ui/src/components/Select/SelectStyle.ts
-const getReactSelectStyles = (error: boolean = false) =>
+const getReactSelectStyles = ({ error = false, zIndexMenu }: Props) =>
 	({
 		control: (styles, { isFocused }) => ({
 			...styles,
@@ -59,7 +60,9 @@ const getReactSelectStyles = (error: boolean = false) =>
 		menu: (styles) => ({
 			...styles,
 			borderRadius: '0px',
+			zIndex: zIndexMenu ? zIndexMenu : styles.zIndex,
 		}),
+		menuPortal: (styles) => (zIndexMenu ? { ...styles, zIndex: zIndexMenu } : styles),
 	} as StylesConfig);
 
 export default getReactSelectStyles;

@@ -21,7 +21,9 @@ const Template: Story<Props> = ({ id = 'creatable-demo', ...props }) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+	zIndexMenu: 9999,
+};
 
 export const WithLabel = Template.bind({});
 WithLabel.args = {
@@ -36,6 +38,16 @@ Preselected.args = {
 
 export const WithError = Template.bind({});
 WithError.args = {
+	label: 'Documentomschrijving',
+	value: '',
+	error: true,
+};
+
+export const MenuPortal: Story = Template.bind({});
+MenuPortal.storyName = 'Menu in portal';
+MenuPortal.args = {
+	menuPortalTarget: document.body,
+	zIndexMenu: 9999,
 	label: 'Documentomschrijving',
 	value: '',
 	error: true,

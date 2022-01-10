@@ -8,6 +8,7 @@ export type Props = {
 	label?: string;
 	createLabel?: string;
 	error?: boolean;
+	zIndexMenu?: number;
 } & CreatableProps;
 
 const CreatableSelect: React.FC<Props> = ({
@@ -23,7 +24,7 @@ const CreatableSelect: React.FC<Props> = ({
 		<>
 			{label && <StyledLabel htmlFor={inputId} label={label} />}
 			<Creatable
-				styles={getAMSStyles(error)}
+				styles={getAMSStyles(props)}
 				value={value}
 				inputId={inputId}
 				openMenuOnFocus
