@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from '@amsterdam/asc-ui';
-import theme from '../theme/theme';
+import theme from '../../src/theme/theme';
 import { queries, Queries } from '@testing-library/dom';
 
 const AllTheProviders: React.FC = ({ children }) => <ThemeProvider overrides={theme}>{children}</ThemeProvider>;

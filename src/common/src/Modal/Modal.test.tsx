@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from './Modal';
 import { fireEvent } from '@testing-library/react';
-import { render } from '../../../test-utils/customRender';
+import { render } from '~/tests/helpers/customRender';
 
 describe('<Modal />', () => {
 	it('should render correctly', () => {
