@@ -18,7 +18,6 @@ describe('<DocumentViewer />', () => {
 		});
 
 		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
-		expect(screen.queryByText('notfound.jpg')).toBeInTheDocument();
 		expect(screen.getByRole('alert').textContent).toBe('Document niet gevonden.');
 	});
 
@@ -32,7 +31,6 @@ describe('<DocumentViewer />', () => {
 		});
 
 		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
-		expect(screen.queryByText('Onbekend bestand')).toBeInTheDocument();
 		expect(screen.getByRole('alert').textContent).toBe('Document niet gevonden.');
 	});
 
@@ -46,7 +44,6 @@ describe('<DocumentViewer />', () => {
 		});
 
 		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
-		expect(screen.queryByText('cannotbeloaded.jpg')).toBeInTheDocument();
 		expect(screen.getByRole('alert').textContent).toBe('Fout bij het ophalen.');
 	});
 
@@ -60,14 +57,19 @@ describe('<DocumentViewer />', () => {
 		});
 
 		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
-		expect(screen.queryByText('image.jpg')).toBeInTheDocument();
 		expect(screen.getByRole('alert').textContent).toBe('Fout bij het ophalen.');
 	});
 
 	it('should render with image document', async () => {
 		fetchMock.mockImplementationOnce(
 			(): Promise<Response> =>
-				Promise.resolve({ headers: new Headers({ 'content-type': 'image/jpg' }), ok: true } as Response),
+				Promise.resolve({
+					headers: new Headers({
+						'content-type': 'image/jpg',
+						'content-disposition': 'attachment; filename="image.jpg"',
+					}),
+					ok: true,
+				} as Response),
 		);
 
 		await act(async () => {
@@ -77,24 +79,6 @@ describe('<DocumentViewer />', () => {
 		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
 		expect(screen.queryByText('image.jpg')).toBeInTheDocument();
 		expect(screen.getByRole('img')).toBeInTheDocument();
-	});
-
-	it('should render and passes Authorization header through', async () => {
-		fetchMock.mockImplementationOnce(
-			(): Promise<Response> => Promise.resolve({ ok: false, status: 404 } as Response),
-		);
-
-		const uri = '/image.jpg';
-		const token = 'Bearer testtoken';
-
-		await act(async () => {
-			render(<DocumentViewer uri={uri} authorizationHeader={token} />);
-		});
-
-		expect(fetchMock).toHaveBeenCalledWith(uri, {
-			headers: { Authorization: token },
-			method: 'HEAD',
-		});
 	});
 
 	it('should render and calls callback on failure', async () => {
