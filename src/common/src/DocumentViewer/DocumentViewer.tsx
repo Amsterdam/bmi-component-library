@@ -5,7 +5,6 @@ import DocumentRenderer from './Renderer/DocumentRenderer';
 
 type Props = {
 	uri: string;
-	authorizationHeader?: string;
 	onFailure?: (e: Error) => void;
 };
 
@@ -16,7 +15,7 @@ export type DocumentState = {
 	contentType?: string;
 };
 
-const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }: Props) => {
+const DocumentViewer: React.FC<Props> = ({ uri, onFailure }: Props) => {
 	const [documentState, setDocumentState] = useState<DocumentState>({ loading: true });
 	const { loading, filename, error, contentType } = documentState;
 
@@ -27,13 +26,10 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }
 		}));
 	};
 
-	const getRequestHeaders = (): HeadersInit => (authorizationHeader ? { Authorization: authorizationHeader } : {});
-
 	useEffect(() => {
-		const filename = uri.split('/').pop() || 'Onbekend bestand';
-		updateDocumentState({ loading: true, error: undefined, contentType: undefined, filename });
+		updateDocumentState({ loading: true, error: undefined, contentType: undefined });
 
-		fetch(uri, { method: 'HEAD', headers: getRequestHeaders() })
+		fetch(uri, { method: 'GET' })
 			.then((response) => {
 				if (!response.ok)
 					throw new Error(response.status === 404 ? 'Document niet gevonden.' : 'Fout bij het ophalen.');
@@ -41,7 +37,11 @@ const DocumentViewer: React.FC<Props> = ({ uri, authorizationHeader, onFailure }
 				const [firstContentType] = response.headers.get('content-type')?.split(';') || [];
 				if (!firstContentType) throw new Error('Fout bij het ophalen.');
 
-				updateDocumentState({ loading: false, contentType: firstContentType });
+				// extract filename from header and remove double quotes around it
+				const filenameParts = response.headers.get('content-disposition')?.split('filename=') || [];
+				const filename = filenameParts[1]?.replace(/^"(.+(?="$))"$/, '$1');
+
+				updateDocumentState({ loading: false, contentType: firstContentType, filename });
 			})
 			.catch((e: Error) => {
 				updateDocumentState({
