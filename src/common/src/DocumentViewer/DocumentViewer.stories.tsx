@@ -8,17 +8,17 @@ export default {
 };
 
 export const NotFound: Story = () => {
-	return <DocumentViewer uri="assets/notfound.txt" />;
+	return <DocumentViewer currentFilename="notfound.txt" uri="assets/notfound.txt" />;
 };
 
 export const NoViewerAvailable: Story = () => {
-	return <DocumentViewer uri="assets/example.xlsx" />;
+	return <DocumentViewer currentFilename="example.xlsx" uri="assets/example.xlsx" />;
 };
 
 export const Image: Story = () => {
-	return <DocumentViewer uri="assets/example.png" />;
+	return <DocumentViewer currentFilename="example.png" uri="assets/example.png" />;
 };
 
 export const PDF: Story = () => {
-	return <DocumentViewer uri="assets/example.pdf" />;
+	return <DocumentViewer currentFilename="example.pdf" uri="assets/example.pdf" />;
 };

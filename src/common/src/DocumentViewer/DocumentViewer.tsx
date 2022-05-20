@@ -6,6 +6,7 @@ import DocumentRenderer from './Renderer/DocumentRenderer';
 type Props = {
 	uri: string;
 	onFailure?: (e: Error) => void;
+	currentFilename?: string;
 };
 
 export type DocumentState = {
@@ -15,7 +16,7 @@ export type DocumentState = {
 	contentType?: string;
 };
 
-const DocumentViewer: React.FC<Props> = ({ uri, onFailure }: Props) => {
+const DocumentViewer: React.FC<Props> = ({ uri, onFailure, currentFilename }: Props) => {
 	const [documentState, setDocumentState] = useState<DocumentState>({ loading: true });
 	const { loading, filename, error, contentType } = documentState;
 
@@ -62,7 +63,7 @@ const DocumentViewer: React.FC<Props> = ({ uri, onFailure }: Props) => {
 
 	return (
 		<DocumentViewerStyle data-testid="document-viewer">
-			<Heading forwardedAs="h3">{filename}</Heading>
+			<Heading forwardedAs="h3">{filename ?? currentFilename}</Heading>
 			{error && (
 				<Alert level="error" outline>
 					{error}
