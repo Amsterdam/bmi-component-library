@@ -60,26 +60,44 @@ describe('<DocumentViewer />', () => {
 		expect(screen.getByRole('alert').textContent).toBe('Fout bij het ophalen.');
 	});
 
-	it('should render with image document', async () => {
-		fetchMock.mockImplementationOnce(
-			(): Promise<Response> =>
-				Promise.resolve({
-					headers: new Headers({
-						'content-type': 'image/jpg',
-						'content-disposition': 'attachment; filename="image.jpg"',
-					}),
-					ok: true,
-				} as Response),
-		);
+	test.each([
+		[
+			'is in header',
+			{
+				'content-type': 'image/jpg',
+				'content-disposition': 'attachment; filename="image.jpg"',
+			},
+			undefined,
+			'image.jpg',
+		],
+		[
+			'is not in header',
+			{
+				'content-type': 'image/jpg',
+			},
+			'anotherImage.jpg',
+			'anotherImage.jpg',
+		],
+	])(
+		'should render with image document and show filename when filename %s',
+		async (testName, headers, filename, filenameToCheck) => {
+			fetchMock.mockImplementationOnce(
+				(): Promise<Response> =>
+					Promise.resolve({
+						headers: new Headers(headers),
+						ok: true,
+					} as Response),
+			);
 
-		await act(async () => {
-			render(<DocumentViewer uri="/image.jpg" />);
-		});
+			await act(async () => {
+				render(<DocumentViewer currentFilename={filename} uri="/image.jpg" />);
+			});
 
-		expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
-		expect(screen.queryByText('image.jpg')).toBeInTheDocument();
-		expect(screen.getByRole('img')).toBeInTheDocument();
-	});
+			expect(screen.getByTestId('document-viewer')).toBeInTheDocument();
+			expect(screen.queryByText(filenameToCheck)).toBeInTheDocument();
+			expect(screen.getByRole('img')).toBeInTheDocument();
+		},
+	);
 
 	it('should render and calls callback on failure', async () => {
 		fetchMock.mockImplementationOnce(
