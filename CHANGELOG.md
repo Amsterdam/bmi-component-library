@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12-alpha.9](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.8...v0.0.12-alpha.9) (2022-05-23)
+
+
+### Bug Fixes
+
+* **documentviewer:** documentViewer now also accepts currentFilename as seperate input ([4ead4ed](https://github.com/Amsterdam/bmi-component-library/commit/4ead4ed8c1673891ce976cb98d80766fe546fb59))
+
 ### [0.0.12-alpha.8](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.7...v0.0.12-alpha.8) (2022-05-07)
 
 ### [0.0.12-alpha.7](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.6...v0.0.12-alpha.7) (2022-01-10)
