@@ -1,5 +1,5 @@
 import React, { ChangeEvent, InputHTMLAttributes, useEffect } from 'react';
-import { GridCellParams } from '@material-ui/data-grid';
+import { GridCellParams } from '@mui/x-data-grid';
 import ColumnFilterStyle, { InputStyle, CancelIconStyle } from './ColumnFilterStyle';
 
 type Value = InputHTMLAttributes<HTMLInputElement>['value'];

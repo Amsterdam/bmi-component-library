@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { GridCellValue, GridColDef, GridRowModel } from '@material-ui/data-grid';
+import { GridColDef, GridRowModel } from '@mui/x-data-grid';
 import { Button } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
 import Skeleton from 'react-loading-skeleton';
@@ -22,7 +22,7 @@ export type Props = {
 	// If true, no removal links are rendered
 	disableRemoval?: boolean;
 	// In case disableRemoval is not set to true
-	onRemove?: (id: GridCellValue) => Promise<boolean | void>;
+	onRemove?: (id: string) => Promise<boolean | void>;
 	// In of the default columns being used
 	onDownload?: (row: GridRowModel) => void;
 	// Renders table as skeleton
@@ -193,7 +193,7 @@ const DocumentTable: React.FC<Props> = ({
 	const [tableRows, setTableRows] = React.useState<GridRowModel[]>(rows);
 	const [currentPage, setCurrentPage] = React.useState<number>(page);
 	const [filters, setFilters] = React.useState<Filters>({});
-	const [deletedRowIds, setDeletedRowIds] = React.useState<GridCellValue[]>([]);
+	const [deletedRowIds, setDeletedRowIds] = React.useState<string[]>([]);
 
 	const onFilterChange = React.useCallback((name: string, value: string) => {
 		setFilters((prevState) => ({ ...prevState, [name]: value }));
@@ -204,7 +204,7 @@ const DocumentTable: React.FC<Props> = ({
 		setFilters({ ...filters });
 	}, []);
 
-	const handleRemoval = React.useCallback(async (id: GridCellValue) => {
+	const handleRemoval = React.useCallback(async (id: string) => {
 		if (onRemove) {
 			const removed = await onRemove(id);
 			// Expect explicit false in case a confirmation dialog is used and cancelled
@@ -269,6 +269,7 @@ const DocumentTable: React.FC<Props> = ({
 				rowHeight={42}
 				headerHeight={42}
 				columnBuffer={tableColumns.length}
+				getRowHeight={() => 'auto'}
 			/>
 			{!loading && (
 				<StyledPagination

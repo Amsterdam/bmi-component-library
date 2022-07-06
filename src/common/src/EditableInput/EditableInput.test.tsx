@@ -20,19 +20,19 @@ describe('<EditableInput />', () => {
 		expect(queryByTestId('editable-input')).toBeInTheDocument();
 	});
 
-	it('should clear the input after clicking the clearbutton', () => {
+	it('should clear the input after clicking the clearbutton', async () => {
 		const clearButton = queryByTestId('input-clear-button');
-		userEvent.click(clearButton);
+		await userEvent.click(clearButton);
 		expect(queryByTestId('editable-input').value).toBe('');
 	});
 
-	it('should restore the input to the original value', () => {
+	it('should restore the input to the original value', async () => {
 		const input = queryByTestId('editable-input');
 		fireEvent.change(input, { target: { value: 'a' } });
 		expect(queryByTestId('editable-input').value).toBe('a');
 
 		const restoreIcon = queryByTestId('input-restore-button');
-		userEvent.click(restoreIcon);
+		await userEvent.click(restoreIcon);
 		expect(queryByTestId('editable-input').value).toBe('test');
 	});
 });

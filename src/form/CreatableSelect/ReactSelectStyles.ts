@@ -1,10 +1,9 @@
 import { StylesConfig } from 'react-select';
 import styled from 'styled-components';
-import { ComponentProps } from 'react';
 import { Label } from '@amsterdam/asc-ui';
 import { Props } from './CreatableSelect';
 
-export const StyledLabel = styled(Label)<ComponentProps<typeof Label>>`
+export const StyledLabel = styled(Label)`
 	font-weight: 700;
 `;
 

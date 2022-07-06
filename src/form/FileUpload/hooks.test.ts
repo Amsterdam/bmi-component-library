@@ -3,9 +3,7 @@ import { act, waitFor } from '@testing-library/react';
 import { useFileUpload } from './hooks';
 import { CustomFileOrRejection } from './hooks';
 
-const getPostUrlMock = jest.fn().mockImplementation(() => {
-	Promise.resolve(true);
-});
+const getPostUrlMock = jest.fn().mockImplementation(() => Promise.resolve(true));
 const getHeadersMock = jest.fn().mockImplementation(() => Promise.resolve({}));
 const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
 

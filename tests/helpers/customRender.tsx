@@ -4,7 +4,9 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import theme from '../../src/theme/theme';
 import { queries, Queries } from '@testing-library/dom';
 
-const AllTheProviders: React.FC = ({ children }) => <ThemeProvider overrides={theme}>{children}</ThemeProvider>;
+const AllTheProviders = ({ children }: React.PropsWithChildren) => (
+	<ThemeProvider overrides={theme}>{children}</ThemeProvider>
+);
 
 const customRender = <Q extends Queries = typeof queries, Container extends Element | DocumentFragment = HTMLElement>(
 	ui: React.ReactElement,
