@@ -93,21 +93,13 @@ describe('<DocumentTable />', () => {
 		test('Single column filter', async () => {
 			act(() => {
 				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
-					target: { value: '1' },
+					target: { value: '11' },
 				});
 			});
 			await waitFor(() => {
-				expect(getRow(screen.getByText(documents[0].documentDescription))).toHaveAttribute(
-					'data-rowindex',
-					'1',
-				);
-				expect(getRow(screen.getByText(documents[9].documentDescription))).toHaveAttribute(
-					'data-rowindex',
-					'2',
-				);
 				expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute(
 					'data-rowindex',
-					'3',
+					'1',
 				);
 			});
 		});
