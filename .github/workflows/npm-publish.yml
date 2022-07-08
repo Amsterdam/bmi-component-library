@@ -41,7 +41,7 @@ jobs:
                     git config --local user.name "github-actions[bot]"
 
             -   name: Prepare stable release
-                if: github.ref == 'refs/heads/master'
+                if: github.ref == 'refs/heads/main'
                 run: npm run release -- --release-as ${{ github.event.inputs.version_bump_type }} --no-verify
 
             -   name: Status
