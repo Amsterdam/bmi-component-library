@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import FileUpload, { Props } from './FileUpload';
 import userEvent from '@testing-library/user-event';
 import { CustomFileOrRejection } from './hooks';
@@ -85,9 +85,7 @@ describe('<FileUpload />', () => {
 			const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 			// file.tmpId = 1;
 
-			await act(async () => {
-				userEvent.upload(input, file);
-			});
+			await userEvent.upload(input, file);
 
 			expect(xhrMock.open).toBeCalledWith(httpMethod, 'api/endpoint', true);
 			expect(input.files[0]).toStrictEqual(file);
@@ -105,9 +103,7 @@ describe('<FileUpload />', () => {
 			new File(['there'], 'there.png', { type: 'image/png' }),
 		];
 
-		await act(async () => {
-			userEvent.upload(input, files);
-		});
+		await userEvent.upload(input, files);
 
 		expect(xhrMock.open).toBeCalledWith('POST', 'api/endpoint', true);
 		expect(input.files).toHaveLength(2);

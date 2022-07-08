@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
 import { lighten, darken } from 'polished';
 import theme from './theme';
 
@@ -67,7 +67,7 @@ const muiTheme = createTheme({
 			primary: theme.colors?.tint?.level7 ?? 'rgba(0, 0, 0, 0.87)',
 			secondary: theme.colors?.tint?.level6 ?? 'rgba(0, 0, 0, 0.54)',
 			disabled: theme.colors?.tint?.level5 ?? 'rgba(0, 0, 0, 0.38)',
-			hint: theme.colors?.tint?.level4 ?? 'rgba(0, 0, 0, 0.38)',
+			// hint: theme.colors?.tint?.level4 ?? 'rgba(0, 0, 0, 0.38)',
 		},
 		action: {
 			active: 'rgba(0, 0, 0, 0.54)',

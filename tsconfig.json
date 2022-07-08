@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"types": ["jest", "node", "styled-components"],
+		"types": ["jest", "node", "styled-components", "@testing-library/jest-dom", "jest-fetch-mock"],
 		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
@@ -20,15 +20,16 @@
 		"typeRoots": ["node_modules/@types", "/types"],
 		"baseUrl": ".",
 		"paths": {
-			"~/tests/*": ["tests/*"]
+			"~/tests/*": ["tests/*"],
+			"@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
 		},
 		"rootDir": "./",
 		"outDir": "./lib",
 		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true
+		"declaration": false,
+		"declarationMap": false
 	},
 	"files": ["src/index.ts"],
-	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/,**/*.ts", "tests/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, DataGridProps } from '@mui/x-data-grid';
 import { themeColor, srOnlyStyle, Pagination, themeSpacing } from '@amsterdam/asc-ui';
 import { ComponentProps } from 'react';
 
@@ -9,7 +9,7 @@ export const StyledPagination = styled(Pagination)<ComponentProps<typeof Paginat
 	}
 `;
 
-export const StyledDataGrid = styled(DataGrid)<ComponentProps<typeof DataGrid>>`
+export const StyledDataGrid = styled(DataGrid)<DataGridProps>`
 	&.MuiDataGrid-root {
 		border: none;
 		margin-bottom: ${themeSpacing(12)};
@@ -29,15 +29,6 @@ export const StyledDataGrid = styled(DataGrid)<ComponentProps<typeof DataGrid>>`
 
 		.MuiDataGrid-columnSeparator {
 			display: none;
-		}
-
-		/**
-		 * Disable fixed row height while feature is missing. See:
-		 * https://github.com/mui-org/material-ui-x/issues/1040
-		 * https://github.com/mui-org/material-ui-x/issues/417
-		 */
-		.MuiDataGrid-windowContainer {
-			height: auto !important;
 		}
 
 		.MuiDataGrid-row,
@@ -87,17 +78,19 @@ export const StyledDataGrid = styled(DataGrid)<ComponentProps<typeof DataGrid>>`
 			outline: none;
 		}
 
+		/* stylelint-disable no-descending-specificity */
 		.MuiDataGrid-row {
-			&.Mui-odd,
-			&.Mui-odd:hover {
-				background-color: ${themeColor('tint', 'level2')};
-			}
-
-			&.Mui-even,
-			&.Mui-even:hover {
+			&:nth-child(odd),
+			&:nth-child(odd):hover {
 				background-color: ${themeColor('tint', 'level1')};
 			}
+
+			&:nth-child(even),
+			&:nth-child(even):hover {
+				background-color: ${themeColor('tint', 'level2')};
+			}
 		}
+		/* stylelint-enable no-descending-specificity */
 
 		.MuiDataGrid-cell.remove button {
 			line-height: 22px;

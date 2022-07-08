@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Input, themeColor } from '@amsterdam/asc-ui';
-import CancelIcon from '@material-ui/icons/Cancel';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ComponentProps } from 'react';
 
 export const CancelIconStyle = styled(CancelIcon)`

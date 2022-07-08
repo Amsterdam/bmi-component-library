@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import DocumentTable, { applyFilters, paginate, Props } from './DocumentTable';
 import muiTheme from '../../../theme/material-ui-theme';
 import theme from '../../../theme/theme';
@@ -48,19 +48,19 @@ describe('<DocumentTable />', () => {
 	describe('Renders a default set of columns and behaviours', () => {
 		test('Default columns', () => {
 			const header1 = getByText(container, 'Bestandsnaam') as HTMLDivElement;
-			expect(header1.className).toBe('MuiDataGrid-columnHeaderTitle');
+			expect(header1.className).toContain('MuiDataGrid-columnHeaderTitle');
 			expect(index(header1.closest('div.MuiDataGrid-columnHeader'))).toBe(0);
 
 			const header2 = getByText(container, 'Documentomschrijving') as HTMLDivElement;
-			expect(header2.className).toBe('MuiDataGrid-columnHeaderTitle');
+			expect(header2.className).toContain('MuiDataGrid-columnHeaderTitle');
 			expect(index(header2.closest('div.MuiDataGrid-columnHeader'))).toBe(1);
 
 			const header3 = getByText(container, 'Documenttype') as HTMLDivElement;
-			expect(header3.className).toBe('MuiDataGrid-columnHeaderTitle');
+			expect(header3.className).toContain('MuiDataGrid-columnHeaderTitle');
 			expect(index(header3.closest('div.MuiDataGrid-columnHeader'))).toBe(2);
 
 			const header4 = getByText(container, 'Jaar') as HTMLDivElement;
-			expect(header4.className).toBe('MuiDataGrid-columnHeaderTitle');
+			expect(header4.className).toContain('MuiDataGrid-columnHeaderTitle');
 			expect(index(header4.closest('div.MuiDataGrid-columnHeader'))).toBe(3);
 		});
 
@@ -93,21 +93,13 @@ describe('<DocumentTable />', () => {
 		test('Single column filter', async () => {
 			act(() => {
 				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
-					target: { value: '1' },
+					target: { value: '11' },
 				});
 			});
 			await waitFor(() => {
-				expect(getRow(screen.getByText(documents[0].documentDescription))).toHaveAttribute(
-					'data-rowindex',
-					'1',
-				);
-				expect(getRow(screen.getByText(documents[9].documentDescription))).toHaveAttribute(
-					'data-rowindex',
-					'2',
-				);
 				expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute(
 					'data-rowindex',
-					'3',
+					'1',
 				);
 			});
 		});

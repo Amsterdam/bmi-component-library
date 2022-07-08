@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Input } from '@amsterdam/asc-ui';
 
-import CancelIcon from '@material-ui/icons/Cancel';
-import ReplayIcon from '@material-ui/icons/Replay';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 export const EditableInputStyle = styled.div`
 	font-weight: 500;
