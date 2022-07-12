@@ -26,8 +26,8 @@
 		"rootDir": "./",
 		"outDir": "./lib",
 		"sourceMap": true,
-		"declaration": false,
-		"declarationMap": false
+		"declaration": true,
+		"declarationMap": true
 	},
 	"files": ["src/index.ts"],
 	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/,**/*.ts", "tests/**/*.tsx"],
