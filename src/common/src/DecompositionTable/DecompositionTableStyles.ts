@@ -10,4 +10,16 @@ export const StyledDecompositionTable = styled(Table)`
 		background-color: ${themeColor('tint', 'level7')};
 		color: ${themeColor('tint', 'level1')};
 	}
+
+	.row {
+		background-color: rgba(0, 70, 153, 0.2);
+
+		&__unit {
+			background-color: ${themeColor('tint', 'level3')};
+		}
+
+		&__manifestation {
+			background-color: ${themeColor('tint', 'level1')};
+		}
+	}
 `;
