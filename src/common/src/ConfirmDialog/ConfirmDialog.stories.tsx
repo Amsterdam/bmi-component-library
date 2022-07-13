@@ -16,7 +16,7 @@ const props = {
 	},
 };
 
-storiesOf('Confirm Dialog', module)
+storiesOf('common/Confirm Dialog', module)
 	.add('Default', () => (
 		<>
 			<button onClick={() => confirm(props)}>Verwijder</button>
