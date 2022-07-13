@@ -25,7 +25,7 @@
 		"ci:stylelint": "npm run lint:css",
 		"ci:eslint": "npm run lint:js",
 		"storybook": "start-storybook -p 6006",
-		"commit": "git-cz",
+		"commit": "cz",
 		"release": "standard-version"
 	},
 	"repository": {
@@ -57,6 +57,8 @@
 		"@babel/preset-react": "^7.13.13",
 		"@babel/preset-typescript": "^7.13.0",
 		"@babel/runtime": "^7.14.0",
+		"@commitlint/cli": "^17.0.3",
+		"@commitlint/config-conventional": "^17.0.3",
 		"@storybook/addon-actions": "^6.5.9",
 		"@storybook/addon-docs": "^6.5.9",
 		"@storybook/addon-essentials": "^6.5.9",
@@ -81,7 +83,7 @@
 		"babel-plugin-webpack-alias": "^2.1.2",
 		"classnames": "^2.3.1",
 		"commitizen": "^4.2.4",
-		"cz-conventional-changelog": "^3.3.0",
+		"cz-conventional-changelog": "^3.2.0",
 		"eslint": "^7.23.0",
 		"eslint-plugin-react": "^7.23.2",
 		"eslint-plugin-storybook": "^0.5.3",
@@ -131,9 +133,9 @@
 			"git add"
 		]
 	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
-	}
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
