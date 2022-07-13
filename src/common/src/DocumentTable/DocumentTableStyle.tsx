@@ -1,5 +1,6 @@
+import React from 'react';
 import styled from 'styled-components';
-import { DataGrid, DataGridProps } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { themeColor, srOnlyStyle, Pagination, themeSpacing } from '@amsterdam/asc-ui';
 import { ComponentProps } from 'react';
 
@@ -9,8 +10,8 @@ export const StyledPagination = styled(Pagination)<ComponentProps<typeof Paginat
 	}
 `;
 
-export const StyledDataGrid = styled(DataGrid)<DataGridProps>`
-	&.MuiDataGrid-root {
+const DataGridStyles = styled.div`
+	.MuiDataGrid-root {
 		border: none;
 		margin-bottom: ${themeSpacing(12)};
 
@@ -101,3 +102,11 @@ export const StyledDataGrid = styled(DataGrid)<DataGridProps>`
 		}
 	}
 `;
+
+export const StyledDataGrid = (props: ComponentProps<typeof DataGrid>) => {
+	return (
+		<DataGridStyles>
+			<DataGrid {...props} />
+		</DataGridStyles>
+	);
+};
