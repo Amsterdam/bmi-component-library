@@ -19,7 +19,7 @@ export const StyledDataGrid = styled(DataGrid)<DataGridProps>`
 			line-height: 22px !important;
 		}
 
-		.MuiDataGrid-columnHeaderTitleContainer {
+		.MuiDataGrid-columnHetaderTitleContainer {
 			padding: 0;
 		}
 

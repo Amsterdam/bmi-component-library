@@ -4,13 +4,13 @@ import DecompositionTable from './DecompositionTable';
 import { documents } from '../DecompositionTable/__stubs__/documents';
 
 export default {
-	title: 'common/DecompositionTable',
+	title: 'form/DecompositionTable',
 	component: DecompositionTable,
 };
 
 const Template: Story<React.ComponentProps<typeof DecompositionTable>> = (args) => {
     return (
-        <DecompositionTable />
+        <DecompositionTable {...args} />
     );
 }
 
