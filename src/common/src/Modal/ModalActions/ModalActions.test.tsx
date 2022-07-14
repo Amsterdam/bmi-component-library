@@ -18,7 +18,7 @@ describe('<ModalActions />', () => {
 	});
 
 	it('Divider should be transparent, when hideDivider is true', () => {
-		const { container } = render(<ModalActions hideDivider={true}>Foo</ModalActions>);
+		const { container } = render(<ModalActions hideDivider>Foo</ModalActions>);
 		const divider = getByTestId(container, 'modal-actions-divider');
 		const style = window.getComputedStyle(divider);
 		expect(style.backgroundColor).toBe('transparent');
@@ -35,7 +35,7 @@ describe('<ModalActions />', () => {
 	 *  See: https://github.com/jsdom/jsdom/issues/653
 	 */
 	it.skip('should render with expected styles', () => {
-		const { container } = render(<ModalActions>Foo</ModalActions>);
+		// const { container } = render(<ModalActions>Foo</ModalActions>);
 		// const header = getByTestId(container, 'modal-actions');
 		// const boundingRect = header.getBoundingClientRect();
 		// expect(boundingRect.height).toBeGreaterThanOrEqual('24');

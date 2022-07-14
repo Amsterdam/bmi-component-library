@@ -1,3 +1,4 @@
+import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { Button, Paragraph } from '@amsterdam/asc-ui';
 import ModalActions, { Props } from './ModalActions';

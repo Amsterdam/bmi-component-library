@@ -17,7 +17,7 @@ describe('<ModalTopBar />', () => {
 	});
 
 	it('should render without close button, when hideCloseButton is true', () => {
-		const { container } = render(<ModalTopBar hideCloseButton={true}>Foo</ModalTopBar>);
+		const { container } = render(<ModalTopBar hideCloseButton>Foo</ModalTopBar>);
 		expect(queryByTestId(container, 'modal-close-button')).not.toBeInTheDocument();
 	});
 
@@ -34,7 +34,7 @@ describe('<ModalTopBar />', () => {
 	});
 
 	it('Divider should be transparent, when hideDivider is true', () => {
-		const { container } = render(<ModalTopBar hideDivider={true}>Foo</ModalTopBar>);
+		const { container } = render(<ModalTopBar hideDivider>Foo</ModalTopBar>);
 		const divider = getByTestId(container, 'modal-top-bar-divider');
 		const style = window.getComputedStyle(divider);
 		expect(style.backgroundColor).toBe('transparent');

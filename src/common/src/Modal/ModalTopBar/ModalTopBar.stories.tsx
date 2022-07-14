@@ -1,3 +1,4 @@
+import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import ModalTopBar, { Props } from './ModalTopBar';
 import { generateDisabledControls } from '../../../../utils/storybook';
