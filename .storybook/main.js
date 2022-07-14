@@ -14,7 +14,7 @@ module.exports = {
 				 * When props originate from a component in the asc lib we also want to include them in the storybook
 				 */
 				if (prop.declarations !== undefined && prop.declarations.length > 0) {
-					const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
+					const includePropInStory = prop.declarations.find((declaration) => {
 						if (declaration.fileName.includes('node_modules/@amsterdam/asc-ui')) {
 							return true;
 						}
@@ -22,7 +22,7 @@ module.exports = {
 						return !declaration.fileName.includes('node_modules');
 					});
 
-					return Boolean(hasPropAdditionalDescription);
+					return Boolean(includePropInStory);
 				}
 
 				return true;
