@@ -1,15 +1,16 @@
 import React from 'react';
-import { Button, Heading, Icon } from '@amsterdam/asc-ui';
+import { Button, Icon, Divider } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
 import ModalTopBarStyle from './ModalTopBarStyles';
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
 	hideCloseButton?: boolean;
+	hideDivider?: boolean;
 	onCloseButton?: (evt: React.SyntheticEvent) => void;
 }
 
-const ModalTopBar = ({ hideCloseButton = false, onCloseButton, children }: Props) => {
+const ModalTopBar = ({ hideCloseButton = false, hideDivider = false, onCloseButton, children }: Props) => {
 	const renderCloseButton = () => {
 		if (hideCloseButton) {
 			return null;
@@ -19,7 +20,7 @@ const ModalTopBar = ({ hideCloseButton = false, onCloseButton, children }: Props
 			<Button
 				type="button"
 				data-testid="modal-close-button"
-				size={30}
+				size={26}
 				onClick={(evt: React.SyntheticEvent) => {
 					if (typeof onCloseButton !== 'undefined') {
 						onCloseButton(evt);
@@ -27,7 +28,7 @@ const ModalTopBar = ({ hideCloseButton = false, onCloseButton, children }: Props
 				}}
 				variant="blank"
 			>
-				<Icon size={20}>
+				<Icon size={26}>
 					<Close />
 				</Icon>
 			</Button>
@@ -35,11 +36,12 @@ const ModalTopBar = ({ hideCloseButton = false, onCloseButton, children }: Props
 	};
 
 	return (
-		<ModalTopBarStyle>
-			<Heading forwardedAs="div" style={{ flexGrow: 1 }}>
+		<ModalTopBarStyle data-testid="modal-top-bar" hideDivider={hideDivider}>
+			<div className="truncated" data-testid="modal-top-bar-children">
 				{children}
-				{renderCloseButton()}
-			</Heading>
+			</div>
+			{renderCloseButton()}
+			<Divider data-testid="modal-top-bar-divider" />
 		</ModalTopBarStyle>
 	);
 };

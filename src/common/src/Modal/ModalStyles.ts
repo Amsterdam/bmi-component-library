@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { Modal, themeSpacing, breakpoint } from '@amsterdam/asc-ui';
+import ModalTopBarStyle from './ModalTopBar/ModalTopBarStyles';
 
 export const ModalStyle = styled(Modal)`
 	max-width: 90%;
 	max-height: 90vh;
 	overflow: visible;
+	padding: ${themeSpacing(8)};
 
 	&.modal-xs {
 		max-width: 320px; /* breakpoint phone */
@@ -25,15 +27,18 @@ export const ModalStyle = styled(Modal)`
 	&.modal-xl {
 		max-width: 1920px; /* breakpoint desktop */
 	}
+
+	${ModalTopBarStyle} {
+		min-height: 44px;
+	}
 `;
 
 export const ModalBlockStyle = styled.div`
 	display: block;
-	padding: 0 ${themeSpacing(3)};
+	padding: 0;
 	margin: ${themeSpacing(3)} 0;
 
 	@media screen and ${breakpoint('min-width', 'tabletM')} {
-		padding: ${themeSpacing(0)} ${themeSpacing(7)};
 		margin: ${themeSpacing(7)} 0;
 	}
 `;

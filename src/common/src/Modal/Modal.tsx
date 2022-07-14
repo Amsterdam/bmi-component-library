@@ -15,14 +15,16 @@ type Props = {
 	disablePortal?: boolean;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 } & React.ComponentProps<typeof ASCModal>;
+
 export interface IModal extends React.FunctionComponent<Props> {
 	TopBar: React.FunctionComponent<IModalTopBarProps>;
 	Content: React.FunctionComponent<IModalContentProps>;
 	Actions: React.FunctionComponent<IModalActionsProps> | any;
 }
-
-const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, ...rest }: Props) => {
+// https://github.com/storybookjs/storybook/issues/13408
+export const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, ...rest }: Props) => {
 	const handleClose = () => {
+		console.log('handleClose');
 		if (onClose) {
 			onClose();
 		}
