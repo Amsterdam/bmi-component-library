@@ -19,23 +19,19 @@ export interface IModalActions extends React.FunctionComponent<Props> {
 const ModalActions = ({ children, hideDivider = false }: Props) => {
 	return React.Children.count(children) > 1 ? (
 		<ModalActionsSplitStyle data-testid="modal-actions" hideDivider={hideDivider}>
-			<Divider data-testid="modal-actions-divider" />
+			<Divider />
 			{children}
 		</ModalActionsSplitStyle>
 	) : (
 		<ModalActionsStyle data-testid="modal-actions" hideDivider={hideDivider}>
-			<Divider data-testid="modal-actions-divider" />
+			<Divider />
 			{children}
 		</ModalActionsStyle>
 	);
 };
 
-const ModalActionsLeft = ({ children }: Props) => (
-	<ModalActionsLeftStyle data-testid="modal-actions-left">{children}</ModalActionsLeftStyle>
-);
-const ModalActionsRight = ({ children }: Props) => (
-	<ModalActionsRightStyle data-testid="modal-actions-right">{children}</ModalActionsRightStyle>
-);
+const ModalActionsLeft = ({ children }: Props) => <ModalActionsLeftStyle>{children}</ModalActionsLeftStyle>;
+const ModalActionsRight = ({ children }: Props) => <ModalActionsRightStyle>{children}</ModalActionsRightStyle>;
 
 ModalActions.Left = ModalActionsLeft;
 ModalActions.Right = ModalActionsRight;

@@ -1,14 +1,14 @@
 import React from 'react';
-import { render, fireEvent, queryByTestId, getByTestId } from '@testing-library/react';
+import { render, fireEvent, queryByTestId, getByTestId, queryByText } from '@testing-library/react';
 import ModalTopBar from './ModalTopBar';
 
 describe('<ModalTopBar />', () => {
 	it('should render', () => {
 		const { container } = render(<ModalTopBar>Foo</ModalTopBar>);
 		expect(container.firstElementChild).toBeDefined();
-		expect(getByTestId(container, 'modal-top-bar')).toBeDefined();
-		expect(getByTestId(container, 'modal-top-bar-children')).toBeDefined();
-		expect(getByTestId(container, 'modal-top-bar-divider')).toBeDefined();
+		expect(getByTestId(container, 'modal-top-bar')).toBeInTheDocument();
+		expect(queryByText(container, 'Foo')).toBeInTheDocument();
+		expect(container.querySelector('hr')).toBeInTheDocument();
 	});
 
 	it('should render with close button, when hideCloseButton is false', () => {
@@ -28,22 +28,22 @@ describe('<ModalTopBar />', () => {
 
 	it('Divider should not be transparent, when hideDivider is false', () => {
 		const { container } = render(<ModalTopBar hideDivider={false}>Foo</ModalTopBar>);
-		const divider = getByTestId(container, 'modal-top-bar-divider');
-		const style = window.getComputedStyle(divider);
+		const divider = container.querySelector('hr');
+		const style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).not.toBe('transparent');
 	});
 
 	it('Divider should be transparent, when hideDivider is true', () => {
 		const { container } = render(<ModalTopBar hideDivider>Foo</ModalTopBar>);
-		const divider = getByTestId(container, 'modal-top-bar-divider');
-		const style = window.getComputedStyle(divider);
+		const divider = container.querySelector('hr');
+		const style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).toBe('transparent');
 	});
 
 	it('Divider should not be transparent as default', () => {
 		const { container } = render(<ModalTopBar>Foo</ModalTopBar>);
-		const divider = getByTestId(container, 'modal-top-bar-divider');
-		const style = window.getComputedStyle(divider);
+		const divider = container.querySelector('hr');
+		const style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).not.toBe('transparent');
 	});
 
@@ -57,8 +57,8 @@ describe('<ModalTopBar />', () => {
 		// const boundingRect = header.getBoundingClientRect();
 		// expect(boundingRect.height).toBe('68');
 
-		const childrenWrapper = getByTestId(container, 'modal-top-bar-children');
-		const style = window.getComputedStyle(childrenWrapper);
+		const childrenWrapper = queryByText(container, 'Foo');
+		const style = window.getComputedStyle(childrenWrapper as Element);
 		expect(style.fontWeight).toBe('800');
 		expect(style.fontSize).toBe('40px');
 	});

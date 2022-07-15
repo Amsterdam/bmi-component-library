@@ -37,9 +37,9 @@ const ModalTopBar = ({ hideCloseButton = false, hideDivider = false, onCloseButt
 
 	return (
 		<ModalTopBarStyle data-testid="modal-top-bar" hideDivider={hideDivider}>
-			<ModalTopBarTruncatedStyle data-testid="modal-top-bar-children">{children}</ModalTopBarTruncatedStyle>
+			<ModalTopBarTruncatedStyle>{children}</ModalTopBarTruncatedStyle>
 			{renderCloseButton()}
-			<Divider data-testid="modal-top-bar-divider" />
+			<Divider />
 		</ModalTopBarStyle>
 	);
 };
