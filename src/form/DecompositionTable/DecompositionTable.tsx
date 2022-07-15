@@ -1,25 +1,13 @@
 import React from 'react';
-import {
-	TableHeader,
-	TableBody,
-	TableRow,
-	TableCell,
-	Switch,
-	ContextMenu,
-	ContextMenuItem
-} from '@amsterdam/asc-ui';
-import { Ellipsis } from '@amsterdam/asc-assets';
-import { StyledDecompositionTable } from './DecompositionTableStyles';
+import {TableHeader, TableBody, TableRow, TableCell, Switch, ContextMenuItem} from '@amsterdam/asc-ui';
+import {Ellipsis} from '@amsterdam/asc-assets';
+import {StyledDecompositionTable, StyledContextMenu} from './DecompositionTableStyles';
 
 export type Props = {
 	rows: any[];
-	columns: any[];
-}
+};
 
-const DecompositionTable: React.FC<Props> = ({
-	columns,
-	rows,
-}: Props) => {
+const DecompositionTable: React.FC<Props> = ({rows}: Props) => {
 	return (
 		<StyledDecompositionTable>
 			<TableHeader>
@@ -37,7 +25,11 @@ const DecompositionTable: React.FC<Props> = ({
 			</TableHeader>
 			<TableBody>
 				{rows.map((row) => (
-					<TableRow key={row.id} className={`row ${row.elementId && !row.unitId ? 'row__unit' : ''}${row.unitId ? 'row__manifestation' : ''} `}>
+					<TableRow
+						key={row.id}
+						className={`row ${row.elementId && !row.unitId ? 'row__unit' : ''} ${row.unitId ? 'row__manifestation' : ''
+							} `}
+					>
 						<TableCell>{row.code}</TableCell>
 						<TableCell>{row.name}</TableCell>
 						<TableCell>{row.material}</TableCell>
@@ -45,22 +37,23 @@ const DecompositionTable: React.FC<Props> = ({
 						<TableCell>{row.quantityUnitOfMeasurement}</TableCell>
 						<TableCell>{row.location}</TableCell>
 						<TableCell>{row.constructionYear}</TableCell>
-						<TableCell>
-							<Switch aria-label='Relevant' defaultChecked={row.isRelevant} />
+						<TableCell className="centered">
+							{row.isRelevant !== undefined && (
+								<Switch aria-label="Relevant" defaultChecked={row.isRelevant} />
+							)}
 						</TableCell>
 						<TableCell>
-							<ContextMenu arrowIcon={<Ellipsis />}>
+							<StyledContextMenu arrowIcon={<Ellipsis />}>
 								<ContextMenuItem>Bewerk Element</ContextMenuItem>
 								<ContextMenuItem>Voeg bouwdeel toe</ContextMenuItem>
 								<ContextMenuItem>Genereer maatregelen</ContextMenuItem>
-							</ContextMenu>
+							</StyledContextMenu>
 						</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
-		</StyledDecompositionTable >
+		</StyledDecompositionTable>
 	);
-}
-
+};
 
 export default DecompositionTable;
