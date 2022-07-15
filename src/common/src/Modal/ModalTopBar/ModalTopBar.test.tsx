@@ -46,6 +46,7 @@ describe('<ModalTopBar />', () => {
 		const style = window.getComputedStyle(divider);
 		expect(style.backgroundColor).not.toBe('transparent');
 	});
+
 	/**
 	 *  Can't use getBoundClientRect because jsdom only returns the correct keys, not the actual values.
 	 *  See: https://github.com/jsdom/jsdom/issues/653
@@ -66,7 +67,7 @@ describe('<ModalTopBar />', () => {
 	 *  Can't use getBoundClientRect because jsdom only returns the correct keys, not the actual values.
 	 *  See: https://github.com/jsdom/jsdom/issues/653
 	 */
-	it.skip('should truncate long content, test by verify height', () => {
+	it.skip('should truncate long content, test by verifying height', () => {
 		const { container } = render(
 			<ModalTopBar>
 				Commodo laboris cillum occaecat eiusmod aliqua incididunt esse do culpa est deserunt. Culpa mollit ad

@@ -53,7 +53,7 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 						<Button variant="primaryInverted" style={{ marginRight: '8px' }}>
 							Vorige
 						</Button>
-						<Button variant="secondary" taskflow>
+						<Button variant="secondary" taskflow style={{ marginRight: '15px' }}>
 							Volgende
 						</Button>
 					</Modal.Actions.Right>

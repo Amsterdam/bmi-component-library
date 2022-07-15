@@ -24,7 +24,6 @@ export interface IModal extends React.FunctionComponent<Props> {
 // https://github.com/storybookjs/storybook/issues/13408
 export const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, ...rest }: Props) => {
 	const handleClose = () => {
-		console.log('handleClose');
 		if (onClose) {
 			onClose();
 		}

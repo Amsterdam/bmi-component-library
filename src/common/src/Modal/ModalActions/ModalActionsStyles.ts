@@ -11,7 +11,6 @@ export const ModalActionsCss = css<{ hideDivider: boolean }>`
 	${Divider} {
 		grid-column: 1 / span 2;
 		grid-row: 1;
-		align-self: flex-start;
 		background-color: ${({ hideDivider }) => (hideDivider ? 'transparent' : '#000')};
 	}
 `;
@@ -19,13 +18,11 @@ export const ModalActionsCss = css<{ hideDivider: boolean }>`
 export const ModalActionsStyle = styled.footer`
 	${ModalActionsCss}
 	grid-template-columns: 1fr;
-	justify-content: flex-end;
 `;
 
 export const ModalActionsSplitStyle = styled.footer`
 	${ModalActionsCss}
 	grid-template-columns: 1fr 1fr;
-	justify-content: space-between;
 `;
 
 export const ModalActionsLeftStyle = styled.div`
@@ -35,6 +32,6 @@ export const ModalActionsLeftStyle = styled.div`
 
 export const ModalActionsRightStyle = styled.div`
 	display: flex;
-	justify-content: end;
 	grid-column: 2;
+	justify-content: end;
 `;

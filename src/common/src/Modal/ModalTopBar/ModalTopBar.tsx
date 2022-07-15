@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon, Divider } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
-import ModalTopBarStyle from './ModalTopBarStyles';
+import { ModalTopBarStyle, ModalTopBarTruncatedStyle } from './ModalTopBarStyles';
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
@@ -37,9 +37,7 @@ const ModalTopBar = ({ hideCloseButton = false, hideDivider = false, onCloseButt
 
 	return (
 		<ModalTopBarStyle data-testid="modal-top-bar" hideDivider={hideDivider}>
-			<div className="truncated" data-testid="modal-top-bar-children">
-				{children}
-			</div>
+			<ModalTopBarTruncatedStyle data-testid="modal-top-bar-children">{children}</ModalTopBarTruncatedStyle>
 			{renderCloseButton()}
 			<Divider data-testid="modal-top-bar-divider" />
 		</ModalTopBarStyle>

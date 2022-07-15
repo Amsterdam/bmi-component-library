@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Modal, themeSpacing, breakpoint } from '@amsterdam/asc-ui';
-import ModalTopBarStyle from './ModalTopBar/ModalTopBarStyles';
+import { ModalTopBarStyle } from './ModalTopBar/ModalTopBarStyles';
 
 export const ModalStyle = styled(Modal)`
 	max-width: 90%;
