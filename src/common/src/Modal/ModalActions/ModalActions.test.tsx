@@ -30,14 +30,4 @@ describe('<ModalActions />', () => {
 		const style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).not.toBe('transparent');
 	});
-	/**
-	 *  Can't use getBoundClientRect because jsdom only returns the correct keys, not the actual values.
-	 *  See: https://github.com/jsdom/jsdom/issues/653
-	 */
-	it.skip('should render with expected styles', () => {
-		// const { container } = render(<ModalActions>Foo</ModalActions>);
-		// const header = getByTestId(container, 'modal-actions');
-		// const boundingRect = header.getBoundingClientRect();
-		// expect(boundingRect.height).toBeGreaterThanOrEqual('24');
-	});
 });
