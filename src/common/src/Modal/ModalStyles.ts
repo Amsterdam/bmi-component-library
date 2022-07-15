@@ -4,7 +4,8 @@ import { ModalTopBarStyle } from './ModalTopBar/ModalTopBarStyles';
 
 export const ModalStyle = styled(Modal)`
 	max-width: 90%;
-	max-height: 90vh;
+
+	max-height: fit-content;
 	overflow: visible;
 	padding: ${themeSpacing(8)};
 
