@@ -3,7 +3,7 @@ import DecompositionTable from '../DecompositionTable';
 
 const objectId = '9e267f06-6072-4db9-ba0e-e4adccafa0a9';
 
-export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
+export const documents: ComponentProps<typeof DecompositionTable>[ 'rows' ] = [
 	{
 		id: 1,
 		name: 'Hoofddraagconstructie',
@@ -15,6 +15,26 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		isArchived: false,
 		isRelevant: true,
 		objectId,
+		actionItems: {
+			'edit-unit': {
+				label: 'Bewerk element',
+				onClick: () => {
+					console.log('edit-unit');
+				}
+			},
+			'add-unit': {
+				label: 'Voeg bouwdeel toe',
+				onClick: () => {
+					console.log('add-unit');
+				}
+			},
+			'generate-measures': {
+				label: 'Genereer maatregelen',
+				onClick: () => {
+					console.log('Genereer maatregelen');
+				}
+			}
+		}
 	},
 	{
 		id: 2,
@@ -29,7 +49,7 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		objectId,
 	},
 	{
-		id: 1,
+		id: 21,
 		elementId: 2,
 		name: 'Afdekplaat',
 		code: '2049',
@@ -45,7 +65,7 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		objectId,
 	},
 	{
-		id: 1,
+		id: 22,
 		elementId: 2,
 		unitId: 1,
 		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
@@ -61,7 +81,7 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		objectId,
 	},
 	{
-		id: 1,
+		id: 23,
 		elementId: 2,
 		unitId: 1,
 		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
@@ -77,7 +97,7 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		objectId,
 	},
 	{
-		id: 2,
+		id: 3,
 		elementId: 2,
 		name: 'Langsligger',
 		code: '1328',
@@ -93,7 +113,7 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		objectId,
 	},
 	{
-		id: 3,
+		id: 4,
 		elementId: 2,
 		name: 'Leuningafwerking',
 		code: '2145',
@@ -109,7 +129,7 @@ export const documents: ComponentProps<typeof DecompositionTable>['rows'] = [
 		objectId,
 	},
 	{
-		id: 3,
+		id: 5,
 		name: 'Brandblusinstallatie',
 		code: '119',
 		location: 'Amsterdam Centrum',

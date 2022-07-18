@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Table, ContextMenu, themeColor} from '@amsterdam/asc-ui';
+import { Table, ContextMenu, themeColor } from '@amsterdam/asc-ui';
 
 export const StyledDecompositionTable = styled(Table)`
 	width: 100%;
@@ -44,7 +44,11 @@ export const StyledDecompositionTable = styled(Table)`
 `;
 
 export const StyledContextMenu = styled(ContextMenu)`
+	position: relative;
+	width: 30px;
+
 	div[role='menu'] {
-		color: ${themeColor('tint', 'level1')};
+		right: 0;
+		z-index: 999999;
 	}
 `;

@@ -39,24 +39,24 @@ export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowMod
 	return Object.keys(filters).length === 0
 		? rows
 		: rows.filter((row) => {
-				let include = true;
-				// Only include if all of the applied filters have a positive match on each respective column
-				// iterate over each applied filter,
-				// if any of the applied filters don't have a match on this row => exclude
-				Object.keys(filters).some((filterKey) => {
-					if (
-						filters?.[filterKey].length &&
-						!String(row[filterKey]).toLowerCase().includes(String(filters[filterKey]).toLowerCase())
-					) {
-						// Filter string not found in column value
-						include = false;
-						return true;
-					}
-					return false;
-				});
-				return include;
-				// eslint-disable-next-line no-mixed-spaces-and-tabs
-		  });
+			let include = true;
+			// Only include if all of the applied filters have a positive match on each respective column
+			// iterate over each applied filter,
+			// if any of the applied filters don't have a match on this row => exclude
+			Object.keys(filters).some((filterKey) => {
+				if (
+					filters?.[ filterKey ].length &&
+					!String(row[ filterKey ]).toLowerCase().includes(String(filters[ filterKey ]).toLowerCase())
+				) {
+					// Filter string not found in column value
+					include = false;
+					return true;
+				}
+				return false;
+			});
+			return include;
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+		});
 }
 
 const DocumentTable: React.FC<Props> = ({
@@ -126,37 +126,37 @@ const DocumentTable: React.FC<Props> = ({
 		if (!disableFilterRow) {
 			cols = cols.map(
 				(col) =>
-					({
-						...col,
-						renderCell: function renderCell(params) {
-							if (loading) return <Skeleton />;
-							if (params.id === 0 && params.field === 'id') return <></>;
-							if (params.id === 0)
-								return (
-									<ColumnFilter
-										params={params}
-										onFilter={(value) => {
-											onFilterChange(params.field, value);
-										}}
-										onClear={() => onClearFilter(params.field)}
-									/>
-								);
-							if (col.renderCell !== undefined) return col.renderCell(params);
-							return <>{params.formattedValue}</>;
-						},
-					} as GridColDef),
+				({
+					...col,
+					renderCell: function renderCell(params) {
+						if (loading) return <Skeleton />;
+						if (params.id === 0 && params.field === 'id') return <></>;
+						if (params.id === 0)
+							return (
+								<ColumnFilter
+									params={params}
+									onFilter={(value) => {
+										onFilterChange(params.field, value);
+									}}
+									onClear={() => onClearFilter(params.field)}
+								/>
+							);
+						if (col.renderCell !== undefined) return col.renderCell(params);
+						return <>{params.formattedValue}</>;
+					},
+				} as GridColDef),
 			);
 		} else {
 			cols = cols.map(
 				(col) =>
-					({
-						...col,
-						renderCell: function renderCell(params) {
-							if (loading) return <Skeleton />;
-							if (col.renderCell !== undefined) return col.renderCell(params);
-							return <>{params.formattedValue}</>;
-						},
-					} as GridColDef),
+				({
+					...col,
+					renderCell: function renderCell(params) {
+						if (loading) return <Skeleton />;
+						if (col.renderCell !== undefined) return col.renderCell(params);
+						return <>{params.formattedValue}</>;
+					},
+				} as GridColDef),
 			);
 		}
 
@@ -185,22 +185,22 @@ const DocumentTable: React.FC<Props> = ({
 		}
 
 		return cols;
-	}, [columns, disableFilterRow, disableRemoval, loading]);
+	}, [ columns, disableFilterRow, disableRemoval, loading ]);
 
 	// Filtered rows contains all rows that were not deleted or filtered out (required for pagination)
-	const [filteredRows, setFilteredRows] = React.useState<GridRowModel[]>(rows);
+	const [ filteredRows, setFilteredRows ] = React.useState<GridRowModel[]>(rows);
 	// Paginated subset of filtered rows
-	const [tableRows, setTableRows] = React.useState<GridRowModel[]>(rows);
-	const [currentPage, setCurrentPage] = React.useState<number>(page);
-	const [filters, setFilters] = React.useState<Filters>({});
-	const [deletedRowIds, setDeletedRowIds] = React.useState<string[]>([]);
+	const [ tableRows, setTableRows ] = React.useState<GridRowModel[]>(rows);
+	const [ currentPage, setCurrentPage ] = React.useState<number>(page);
+	const [ filters, setFilters ] = React.useState<Filters>({});
+	const [ deletedRowIds, setDeletedRowIds ] = React.useState<string[]>([]);
 
 	const onFilterChange = React.useCallback((name: string, value: string) => {
-		setFilters((prevState) => ({ ...prevState, [name]: value }));
+		setFilters((prevState) => ({ ...prevState, [ name ]: value }));
 	}, []);
 
 	const onClearFilter = React.useCallback((key: string) => {
-		delete filters[key];
+		delete filters[ key ];
 		setFilters({ ...filters });
 	}, []);
 
@@ -208,18 +208,18 @@ const DocumentTable: React.FC<Props> = ({
 		if (onRemove) {
 			const removed = await onRemove(id);
 			// Expect explicit false in case a confirmation dialog is used and cancelled
-			if (removed !== false) setDeletedRowIds([...deletedRowIds, id]);
+			if (removed !== false) setDeletedRowIds([ ...deletedRowIds, id ]);
 		}
 	}, []);
 
 	const skeletonRows = useMemo(() => {
 		const skeletonRow = tableColumns.reduce((acc, col, idx) => {
-			acc[col.field] = '';
+			acc[ col.field ] = '';
 			return acc;
 		}, {} as GridRowModel);
 
-		return [...new Array(pageSize + (disableFilterRow ? 0 : 1))].map((n, idx) => ({ ...skeletonRow, id: idx + 2 }));
-	}, [tableColumns]);
+		return [ ...new Array(pageSize + (disableFilterRow ? 0 : 1)) ].map((n, idx) => ({ ...skeletonRow, id: idx + 2 }));
+	}, [ tableColumns ]);
 
 	/**
 	 * Update rows in case
@@ -238,22 +238,22 @@ const DocumentTable: React.FC<Props> = ({
 			...(disableFilterRow
 				? []
 				: [
-						{
-							id: 0,
-						},
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
-				  ]),
+					{
+						id: 0,
+					},
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
+				]),
 			...paginate(filteredRows, pageSize, currentPage),
 		]);
 
 		// TODO check if there are records on the currentPage, if not, go to the previous page?
-	}, [currentPage, filters, rows, deletedRowIds]);
+	}, [ currentPage, filters, rows, deletedRowIds ]);
 
 	// Jump back to page 1 on filter change
-	useEffect(() => setCurrentPage(1), [filters]);
+	useEffect(() => setCurrentPage(1), [ filters ]);
 
 	// Clear deleted rows cache if rows are updated from props
-	useEffect(() => setDeletedRowIds([]), [rows]);
+	useEffect(() => setDeletedRowIds([]), [ rows ]);
 
 	return (
 		<>

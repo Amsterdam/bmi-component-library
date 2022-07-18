@@ -1,11 +1,11 @@
 import React from 'react';
-import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
-import DocumentTable, { applyFilters, paginate, Props } from './DocumentTable';
+import {GlobalStyle, ThemeProvider} from '@amsterdam/asc-ui';
+import {render, getByText, screen, fireEvent, act, waitFor} from '@testing-library/react';
+import {ThemeProvider as MUIThemeProvider} from '@mui/material/styles';
+import DocumentTable, {applyFilters, paginate, Props} from './DocumentTable';
 import muiTheme from '../../../theme/material-ui-theme';
 import theme from '../../../theme/theme';
-import { documents } from './__stubs__/documents';
+import {documents} from './__stubs__/documents';
 
 function index(el: HTMLDivElement | null) {
 	const children = el?.parentNode?.childNodes;
@@ -42,7 +42,7 @@ describe('<DocumentTable />', () => {
 		);
 
 	beforeEach(() => {
-		({ container } = renderDocumentTable());
+		({container} = renderDocumentTable());
 	});
 
 	describe('Renders a default set of columns and behaviours', () => {
@@ -93,7 +93,7 @@ describe('<DocumentTable />', () => {
 		test('Single column filter', async () => {
 			act(() => {
 				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
-					target: { value: '11' },
+					target: {value: '11'},
 				});
 			});
 			await waitFor(() => {
@@ -107,10 +107,10 @@ describe('<DocumentTable />', () => {
 		test('Multiple columns filter', async () => {
 			act(() => {
 				fireEvent.change(screen.getByTestId('column-filter-filename'), {
-					target: { value: '1' },
+					target: {value: '1'},
 				});
 				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
-					target: { value: '2' },
+					target: {value: '2'},
 				});
 			});
 			await waitFor(() => {
@@ -124,7 +124,7 @@ describe('<DocumentTable />', () => {
 
 	test('Clicking the x icon on <ColumnFilter /> clears the filter', async () => {
 		act(() => {
-			fireEvent.change(screen.getByTestId('column-filter-documentDescription'), { target: { value: '2' } });
+			fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {target: {value: '2'}});
 		});
 		const clearButton = screen.getByTestId('column-filter-cancel-documentDescription');
 		await waitFor(() => {
@@ -185,7 +185,7 @@ describe('<DocumentTable />', () => {
 
 	describe('applyFilters()', () => {
 		test('Single filter', () => {
-			expect(applyFilters(documents, { documentDescription: '1' }).map((doc) => doc.filename)).toEqual([
+			expect(applyFilters(documents, {documentDescription: '1'}).map((doc) => doc.filename)).toEqual([
 				'__FILENAME__  #1',
 				'__FILENAME__  #10',
 				'__FILENAME__  #11',
@@ -197,19 +197,19 @@ describe('<DocumentTable />', () => {
 
 		test('Multiple filters', () => {
 			expect(
-				applyFilters(documents, { filename: '2', documentDescription: '1' }).map((doc) => doc.filename),
+				applyFilters(documents, {filename: '2', documentDescription: '1'}).map((doc) => doc.filename),
 			).toEqual(['__FILENAME__  #12']);
 		});
 	});
 
 	describe('Has a loading state where each cell renders as a <Skeleton /> component', () => {
 		test('With filter', () => {
-			({ container } = renderDocumentTable({ loading: true }));
+			({container} = renderDocumentTable({loading: true}));
 			expect(container.getElementsByClassName('react-loading-skeleton').length).toBe(55);
 		});
 
 		test('Without filter', () => {
-			({ container } = renderDocumentTable({
+			({container} = renderDocumentTable({
 				loading: true,
 				disableFilterRow: true,
 				rows: [],

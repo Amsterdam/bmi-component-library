@@ -1,13 +1,15 @@
 import React from 'react';
-import {TableHeader, TableBody, TableRow, TableCell, Switch, ContextMenuItem} from '@amsterdam/asc-ui';
-import {Ellipsis} from '@amsterdam/asc-assets';
-import {StyledDecompositionTable, StyledContextMenu} from './DecompositionTableStyles';
+import { TableHeader, TableBody, TableRow, TableCell, Switch, ContextMenuItem } from '@amsterdam/asc-ui';
+import { Ellipsis } from '@amsterdam/asc-assets';
+import { StyledDecompositionTable, StyledContextMenu } from './DecompositionTableStyles'
+
 
 export type Props = {
 	rows: any[];
 };
 
-const DecompositionTable: React.FC<Props> = ({rows}: Props) => {
+const DecompositionTable: React.FC<Props> = ({ rows }: Props) => {
+
 	return (
 		<StyledDecompositionTable>
 			<TableHeader>
