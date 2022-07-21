@@ -1,68 +1,92 @@
-import React, { useMemo } from 'react';
-// import { Ellipsis } from '@amsterdam/asc-assets';
-// import { TableHeader, TableBody, TableRow, TableCell, Switch, ContextMenuItem } from '@amsterdam/asc-ui';
-import { StyledDecompositionTable } from './DecompositionTableStyles'
+import React from 'react';
+import { StyledDecompositionTable } from './DecompositionTableStyles';
 import DecompositionTableHeader from './DecompositionTableHeader';
 import DecompositionTableContent from './DecompositionTableContent';
 
-export type Props = {
-	columns: any[];
-	elements: any[];
-	manifestations: any[];
+export type Column = {
+	headerName: 'Code' | 'Deel' | 'Materiaal' | 'Hoeveelheid' | 'Eenheid' | 'Locatie' | 'Jaar' | 'Relevant' | 'Acties';
+	field: string;
 };
 
-const DecompositionTable: React.FunctionComponent<Props> = ({
-	columns,
-	elements,
-	manifestations,
-}: Props) => {
-	const tableColumns = useMemo(() => {
-		const cols = columns ?? [
-			{
-				field: 'code',
-				headerName: 'Code',
-			},
-			{
-				field: 'part',
-				headerName: 'Deel',
-			},
-			{
-				field: 'material',
-				headerName: 'Materiaal',
-			},
-			{
-				field: 'quantity',
-				headerName: 'Hoeveelheid',
-			},
-			{
-				field: 'unit',
-				headerName: 'Eenheid',
-			},
-			{
-				field: 'location',
-				headerName: 'Locatie',
-			},
-			{
-				field: 'year',
-				headerName: 'Jaar',
-			},
-			{
-				field: 'relevant',
-				headerName: 'Relevant',
-			},
-			{
-				field: 'actions',
-				headerName: 'Acties',
-			},
-		];
+const defaultColumns: Column[] = [
+	{
+		field: 'code',
+		headerName: 'Code',
+	},
+	{
+		field: 'name',
+		headerName: 'Deel',
+	},
+	{
+		field: 'material',
+		headerName: 'Materiaal',
+	},
+	{
+		field: 'quantity',
+		headerName: 'Hoeveelheid',
+	},
+	{
+		// Element: no | Unit: yes | Manifestation: yes
+		field: 'quantityUnitOfMeasurement',
+		headerName: 'Eenheid',
+	},
+	{
+		field: 'location',
+		headerName: 'Locatie',
+	},
+	{
+		field: 'constructionYear',
+		headerName: 'Jaar',
+	},
+	{
+		// Element: yes | Unit: yes | Manifestation: no
+		field: 'isRelevant',
+		headerName: 'Relevant',
+	},
+	// {
+	// 	field: 'actions',
+	// 	headerName: 'Acties',
+	// },
+];
 
-		return cols;
-	}, [columns]);
+export type DecompositionRowBase = {
+	id: string;
+	code: string;
+	name: string;
+	quantity: number;
+	location: string;
+	constructionYear: number;
+};
 
+export type ElementRow = DecompositionRowBase & {
+	isRelevant: boolean;
+};
+
+export type UnitRow = DecompositionRowBase & {
+	quantityUnitOfMeasurement: string;
+	isRelevant: boolean;
+	material: string;
+	elementId: string;
+};
+
+export type ManifestationRow = DecompositionRowBase & {
+	quantityUnitOfMeasurement: string;
+	material: string;
+	unitId: string;
+};
+
+export type DecompositionRow = ElementRow | UnitRow | ManifestationRow;
+
+export type Props = {
+	columns?: Column[];
+	decomposition: DecompositionRow[];
+};
+
+const DecompositionTable: React.FunctionComponent<Props> = ({ columns = defaultColumns, decomposition }: Props) => {
 	return (
 		<StyledDecompositionTable>
-			<DecompositionTableHeader columns={tableColumns} />
-			<DecompositionTableContent columns={tableColumns} elements={elements} manifestations={manifestations} />
+			<DecompositionTableHeader columns={columns} />
+			<DecompositionTableContent columns={columns} rows={decomposition} />
 		</StyledDecompositionTable>
 	);
 };

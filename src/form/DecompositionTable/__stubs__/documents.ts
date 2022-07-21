@@ -1,7 +1,9 @@
+import { DecompositionRow, ElementRow, ManifestationRow, UnitRow } from '../DecompositionTable';
+
 const objectId = '9e267f06-6072-4db9-ba0e-e4adccafa0a9';
 const surveyId = '555db989-beeb-b1ea-109e-186686dc08a1';
 
-export const elements = [
+export const decompositionFromgraphQL = [
 	{
 		categoryId: '1',
 		code: '147',
@@ -117,6 +119,50 @@ export const elements = [
 		units: [],
 	},
 ];
+
+export const decomposition: DecompositionRow[] = decompositionFromgraphQL.reduce((accumulator: any, element: any) => {
+	const { id, code, name, quantity, location, constructionYear, isRelevant } = element;
+	accumulator.push({
+		id,
+		code,
+		name,
+		quantity,
+		location,
+		constructionYear,
+		isRelevant,
+	} as ElementRow);
+
+	(element?.units ?? []).forEach((unit: any) => {
+		accumulator.push({
+			id: unit.id,
+			elementId: unit.elementId,
+			name: unit.name,
+			quantity: unit.quantity,
+			quantityUnitOfMeasurement: unit.quantityUnitOfMeasurement,
+			location: unit.location,
+			constructionYear: unit.constructionYear,
+			isRelevant: unit.isRelevant,
+			material: unit.material,
+		} as UnitRow);
+
+		(unit?.manifestations ?? []).forEach((m: any) => {
+			accumulator.push({
+				id: m.id,
+				unitId: m.unitId,
+				name: m.name,
+				quantity: m.quantity,
+				quantityUnitOfMeasurement: m.quantityUnitOfMeasurement,
+				location: m.location,
+				constructionYear: m.constructionYear,
+				material: m.material,
+			} as ManifestationRow);
+		});
+	});
+
+	return accumulator;
+}, []);
+
+console.log('!!', decomposition);
 
 export const manifestations = [
 	{
