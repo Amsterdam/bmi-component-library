@@ -6,11 +6,7 @@ import { decomposition } from './__stubs__/documents';
 
 describe('<StyledDecompositionTable />', (props: Partial<Props> = {}) => {
 	test('renders', () => {
-		console.log('decomposition', decomposition);
-		const args = {
-			rows: decomposition,
-		};
-		const { container } = render(<DecompositionTable {...args} />);
+		const { container } = render(<DecompositionTable decomposition={decomposition} />);
 		expect(container).toBeInTheDocument();
 	});
 });

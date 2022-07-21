@@ -162,8 +162,6 @@ export const decomposition: DecompositionRow[] = decompositionFromgraphQL.reduce
 	return accumulator;
 }, []);
 
-console.log('!!', decomposition);
-
 export const manifestations = [
 	{
 		code: '2049-1',

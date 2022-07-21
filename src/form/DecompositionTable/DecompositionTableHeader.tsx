@@ -10,9 +10,11 @@ const DecompositionTableHeader: React.FunctionComponent<Props> = ({
 }: Props) => {
 	return (
 		<StyledTableHeader>
-			{columns?.map((column) => (
-				<th key={column.field}>{column.headerName}</th>
-			))}
+			<tr>
+				{columns?.map((column) => (
+					<th key={column.field}>{column.headerName}</th>
+				))}
+			</tr>
 		</StyledTableHeader>
 	)
 };
