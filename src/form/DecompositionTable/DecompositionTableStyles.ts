@@ -1,15 +1,10 @@
 import styled from 'styled-components';
-import { Table, ContextMenu, themeColor } from '@amsterdam/asc-ui';
+import { ContextMenu, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 
-export const StyledDecompositionTable = styled(Table)`
+export const StyledDecompositionTable = styled.table`
 	width: 100%;
 	border-collapse: collapse;
 	color: ${themeColor('tint', 'level6')};
-
-	thead {
-		background-color: ${themeColor('tint', 'level7')};
-		color: ${themeColor('tint', 'level1')};
-	}
 
 	.row {
 		background-color: rgba(0, 70, 153, 0.2);
@@ -51,4 +46,25 @@ export const StyledContextMenu = styled(ContextMenu)`
 		right: 0;
 		z-index: 999999;
 	}
+`;
+
+export const StyledTableHeader = styled.thead`
+	width: 100%;
+	background-color: ${themeColor('tint', 'level7')};
+	color: ${themeColor('tint', 'level1')};
+
+	th {
+		margin: 0;
+		padding: ${themeSpacing(2)};
+		position: relative;
+		text-align: left;
+	}
+`;
+
+export const StyledTableContent = styled.tbody`
+	width: 100%;
+`;
+
+export const StyledTableRow = styled.tr`
+	width: 100%;
 `;

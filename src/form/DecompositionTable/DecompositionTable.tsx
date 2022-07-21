@@ -1,59 +1,68 @@
-import React from 'react';
-import { TableHeader, TableBody, TableRow, TableCell, Switch, ContextMenuItem } from '@amsterdam/asc-ui';
-import { Ellipsis } from '@amsterdam/asc-assets';
-import { StyledDecompositionTable, StyledContextMenu } from './DecompositionTableStyles'
-
+import React, { useMemo } from 'react';
+// import { Ellipsis } from '@amsterdam/asc-assets';
+// import { TableHeader, TableBody, TableRow, TableCell, Switch, ContextMenuItem } from '@amsterdam/asc-ui';
+import { StyledDecompositionTable } from './DecompositionTableStyles'
+import DecompositionTableHeader from './DecompositionTableHeader';
+import DecompositionTableContent from './DecompositionTableContent';
 
 export type Props = {
-	rows: any[];
+	columns: any[];
+	elements: any[];
+	manifestations: any[];
 };
 
-const DecompositionTable: React.FC<Props> = ({ rows }: Props) => {
+const DecompositionTable: React.FunctionComponent<Props> = ({
+	columns,
+	elements,
+	manifestations,
+}: Props) => {
+	const tableColumns = useMemo(() => {
+		const cols = columns ?? [
+			{
+				field: 'code',
+				headerName: 'Code',
+			},
+			{
+				field: 'part',
+				headerName: 'Deel',
+			},
+			{
+				field: 'material',
+				headerName: 'Materiaal',
+			},
+			{
+				field: 'quantity',
+				headerName: 'Hoeveelheid',
+			},
+			{
+				field: 'unit',
+				headerName: 'Eenheid',
+			},
+			{
+				field: 'location',
+				headerName: 'Locatie',
+			},
+			{
+				field: 'year',
+				headerName: 'Jaar',
+			},
+			{
+				field: 'relevant',
+				headerName: 'Relevant',
+			},
+			{
+				field: 'actions',
+				headerName: 'Acties',
+			},
+		];
+
+		return cols;
+	}, [columns]);
 
 	return (
 		<StyledDecompositionTable>
-			<TableHeader>
-				<TableRow>
-					<TableCell as="th">Code</TableCell>
-					<TableCell as="th">Deel</TableCell>
-					<TableCell as="th">Materiaal</TableCell>
-					<TableCell as="th">Hoeveelheid</TableCell>
-					<TableCell as="th">Eenheid</TableCell>
-					<TableCell as="th">Locatie</TableCell>
-					<TableCell as="th">Jaar</TableCell>
-					<TableCell as="th">Relevant</TableCell>
-					<TableCell as="th">Acties</TableCell>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				{rows.map((row) => (
-					<TableRow
-						key={row.id}
-						className={`row ${row.elementId && !row.unitId ? 'row__unit' : ''} ${row.unitId ? 'row__manifestation' : ''
-							} `}
-					>
-						<TableCell>{row.code}</TableCell>
-						<TableCell>{row.name}</TableCell>
-						<TableCell>{row.material}</TableCell>
-						<TableCell>{row.quantity}</TableCell>
-						<TableCell>{row.quantityUnitOfMeasurement}</TableCell>
-						<TableCell>{row.location}</TableCell>
-						<TableCell>{row.constructionYear}</TableCell>
-						<TableCell className="centered">
-							{row.isRelevant !== undefined && (
-								<Switch aria-label="Relevant" defaultChecked={row.isRelevant} />
-							)}
-						</TableCell>
-						<TableCell>
-							<StyledContextMenu arrowIcon={<Ellipsis />}>
-								<ContextMenuItem>Bewerk Element</ContextMenuItem>
-								<ContextMenuItem>Voeg bouwdeel toe</ContextMenuItem>
-								<ContextMenuItem>Genereer maatregelen</ContextMenuItem>
-							</StyledContextMenu>
-						</TableCell>
-					</TableRow>
-				))}
-			</TableBody>
+			<DecompositionTableHeader columns={tableColumns} />
+			<DecompositionTableContent columns={tableColumns} elements={elements} manifestations={manifestations} />
 		</StyledDecompositionTable>
 	);
 };
