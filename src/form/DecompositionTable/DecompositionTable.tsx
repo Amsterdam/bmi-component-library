@@ -43,10 +43,10 @@ const defaultColumns: Column[] = [
 		field: 'isRelevant',
 		headerName: 'Relevant',
 	},
-	// {
-	// 	field: 'actions',
-	// 	headerName: 'Acties',
-	// },
+	{
+		field: 'actions',
+		headerName: 'Acties',
+	},
 ];
 
 export type DecompositionRowBase = {

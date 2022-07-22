@@ -3,6 +3,60 @@ import { DecompositionRow, ElementRow, ManifestationRow, UnitRow } from '../Deco
 const objectId = '9e267f06-6072-4db9-ba0e-e4adccafa0a9';
 const surveyId = '555db989-beeb-b1ea-109e-186686dc08a1';
 
+export const manifestations = [
+	{
+		code: '2049-1',
+		conditionId: '1',
+		constructionYear: 1999,
+		deletedAt: '1',
+		elementId: '1',
+		id: '11',
+		location: 'Amsterdam Centrum',
+		material: '',
+		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
+		objectId: objectId,
+		observationPointId: '1',
+		quantity: 2,
+		quantityUnitOfMeasurement: 'pcs',
+		surveyId: surveyId,
+		unitId: '1',
+	},
+	{
+		code: '2049-2',
+		conditionId: '1',
+		constructionYear: 1999,
+		deletedAt: '1',
+		elementId: '1',
+		id: '12',
+		location: 'Amsterdam Centrum',
+		material: '',
+		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
+		objectId: objectId,
+		observationPointId: '1',
+		quantity: 2,
+		quantityUnitOfMeasurement: 'pcs',
+		surveyId: surveyId,
+		unitId: '1',
+	},
+	{
+		code: '2049-2',
+		conditionId: '1',
+		constructionYear: 1999,
+		deletedAt: '1',
+		elementId: '1',
+		id: '13',
+		location: 'Amsterdam Centrum',
+		material: '',
+		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
+		objectId: objectId,
+		observationPointId: '1',
+		quantity: 2,
+		quantityUnitOfMeasurement: 'pcs',
+		surveyId: surveyId,
+		unitId: '1',
+	},
+];
+
 export const decompositionFromgraphQL = [
 	{
 		categoryId: '1',
@@ -33,7 +87,7 @@ export const decompositionFromgraphQL = [
 				deletedAt: '0',
 				elementId: '1',
 				gisibId: 345,
-				id: '1',
+				id: '21',
 				isElectrical: false,
 				isElectricalObjectSpecific: false,
 				isRelevant: false,
@@ -47,6 +101,7 @@ export const decompositionFromgraphQL = [
 				quantity: 1,
 				quantityUnitOfMeasurement: 'm2',
 				surveyId: surveyId,
+				manifestations: manifestations,
 			},
 			{
 				code: '1347',
@@ -55,7 +110,7 @@ export const decompositionFromgraphQL = [
 				deletedAt: '0',
 				elementId: '1',
 				gisibId: 346,
-				id: '1',
+				id: '22',
 				isElectrical: false,
 				isElectricalObjectSpecific: false,
 				isRelevant: false,
@@ -145,6 +200,8 @@ export const decomposition: DecompositionRow[] = decompositionFromgraphQL.reduce
 			material: unit.material,
 		} as UnitRow);
 
+		// console.log(manifestations);
+
 		(unit?.manifestations ?? []).forEach((m: any) => {
 			accumulator.push({
 				id: m.id,
@@ -161,40 +218,3 @@ export const decomposition: DecompositionRow[] = decompositionFromgraphQL.reduce
 
 	return accumulator;
 }, []);
-
-export const manifestations = [
-	{
-		code: '2049-1',
-		conditionId: '1',
-		constructionYear: 1999,
-		deletedAt: '1',
-		elementId: '1',
-		id: '1',
-		location: 'Amsterdam Centrum',
-		material: '',
-		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
-		objectId: objectId,
-		observationPointId: '1',
-		quantity: 2,
-		quantityUnitOfMeasurement: 'pcs',
-		surveyId: surveyId,
-		unitId: '1',
-	},
-	{
-		code: '2049-2',
-		conditionId: '1',
-		constructionYear: 1999,
-		deletedAt: '1',
-		elementId: '1',
-		id: '2',
-		location: 'Amsterdam Centrum',
-		material: '',
-		name: 'Aandrijving en bewegingswerk; elektromechanisch, Algemeen-1',
-		objectId: objectId,
-		observationPointId: '1',
-		quantity: 2,
-		quantityUnitOfMeasurement: 'pcs',
-		surveyId: surveyId,
-		unitId: '1',
-	},
-];
