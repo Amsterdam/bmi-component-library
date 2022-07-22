@@ -22,10 +22,17 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 	return (
 		<>
 			<Button onClick={() => setModalVisibility(true)}>Open modal</Button>
-			<Modal {...args} open={isModalVisible} id="asset-view">
-				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setModalVisibility(false)}>
-					Afgerond - Assetnaam
-				</Modal.TopBar>
+			<Modal
+				{...args}
+				open={isModalVisible}
+				onClose={() => {
+					if (args.closeOnBackdropClick) {
+						setModalVisibility(false);
+					}
+				}}
+				id="asset-view"
+			>
+				<Modal.TopBar onCloseButton={() => setModalVisibility(false)}>Afgerond - Assetnaam</Modal.TopBar>
 				<Modal.Content>
 					<ModalBlockStyle>
 						<Heading forwardedAs="h4">Onjuiste of ontbrekende gegevens?</Heading>

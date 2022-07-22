@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, queryByTestId, getByTestId, queryByText } from '@testing-library/react';
+import { render, fireEvent, getByTestId, queryByText, queryByTestId } from '@testing-library/react';
 import ModalTopBar from './ModalTopBar';
 
 describe('<ModalTopBar />', () => {
@@ -40,11 +40,11 @@ describe('<ModalTopBar />', () => {
 		expect(style.backgroundColor).toBe('transparent');
 	});
 
-	it('Divider should not be transparent as default', () => {
+	it('Divider should be transparent as default', () => {
 		const { container } = render(<ModalTopBar>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).not.toBe('transparent');
+		expect(style.backgroundColor).toBe('transparent');
 	});
 
 	/**
@@ -85,11 +85,7 @@ describe('<ModalTopBar />', () => {
 
 	test('Clicking on close button', () => {
 		const mockOnClose = jest.fn();
-		const { container } = render(
-			<ModalTopBar onCloseButton={mockOnClose} hideCloseButton={false}>
-				Foo
-			</ModalTopBar>,
-		);
+		const { container } = render(<ModalTopBar onCloseButton={mockOnClose}>Foo</ModalTopBar>);
 		const closeButton = getByTestId(container, 'modal-close-button');
 		fireEvent.click(closeButton);
 		expect(mockOnClose).toHaveBeenCalled();

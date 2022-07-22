@@ -5,17 +5,16 @@ import { ModalTopBarStyle, ModalTopBarTruncatedStyle } from './ModalTopBarStyles
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[];
-	hideCloseButton?: boolean;
 	hideDivider?: boolean;
+	hideCloseButton?: boolean;
 	onCloseButton?: (evt: React.SyntheticEvent) => void;
 }
 
-const ModalTopBar = ({ hideCloseButton = false, hideDivider = false, onCloseButton, children }: Props) => {
+const ModalTopBar = ({ hideCloseButton = false, hideDivider = true, onCloseButton, children }: Props) => {
 	const renderCloseButton = () => {
 		if (hideCloseButton) {
 			return null;
 		}
-
 		return (
 			<Button
 				type="button"
@@ -45,5 +44,10 @@ const ModalTopBar = ({ hideCloseButton = false, hideDivider = false, onCloseButt
 };
 
 ModalTopBar.displayName = 'ModalTopBar';
+
+ModalTopBar.defaultProps = {
+	hideDivider: true,
+	hideCloseButton: false,
+};
 
 export default ModalTopBar;

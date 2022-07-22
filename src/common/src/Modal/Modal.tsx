@@ -22,7 +22,16 @@ export interface IModal extends React.FunctionComponent<Props> {
 	Actions: React.FunctionComponent<IModalActionsProps> | any;
 }
 // https://github.com/storybookjs/storybook/issues/13408
-export const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, ...rest }: Props) => {
+export const Modal: IModal = ({
+	id,
+	children,
+	classnames,
+	onClose,
+	size = 'md',
+	disablePortal,
+	open,
+	...rest
+}: Props) => {
 	const handleClose = () => {
 		if (onClose) {
 			onClose();
@@ -57,6 +66,7 @@ export const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', 
 			aria-labelledby="modal"
 			className={classes}
 			onClose={handleClose}
+			open={open}
 			disablePortal={disablePortal}
 		>
 			{childrenWithProps}

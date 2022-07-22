@@ -16,7 +16,7 @@ export interface IModalActions extends React.FunctionComponent<Props> {
 	Right: React.FunctionComponent<Props>;
 }
 
-const ModalActions = ({ children, hideDivider = false }: Props) => {
+const ModalActions = ({ children, hideDivider = true }: Props) => {
 	return React.Children.count(children) > 1 ? (
 		<ModalActionsSplitStyle data-testid="modal-actions" hideDivider={hideDivider}>
 			<Divider />
@@ -36,5 +36,11 @@ const ModalActionsRight = ({ children }: Props) => <ModalActionsRightStyle>{chil
 ModalActions.Left = ModalActionsLeft;
 ModalActions.Right = ModalActionsRight;
 ModalActions.displayName = 'ModalActions';
+
+ModalActions.displayName = 'ModalActions';
+
+ModalActions.defaultProps = {
+	hideDivider: true,
+};
 
 export default ModalActions;

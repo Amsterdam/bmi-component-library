@@ -24,10 +24,10 @@ describe('<ModalActions />', () => {
 		expect(style.backgroundColor).toBe('transparent');
 	});
 
-	it('Divider should not be transparent as default', () => {
+	it('Divider should be transparent as default', () => {
 		const { container } = render(<ModalActions>Foo</ModalActions>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).not.toBe('transparent');
+		expect(style.backgroundColor).toBe('transparent');
 	});
 });
