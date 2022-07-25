@@ -53,7 +53,7 @@ describe('<Modal />', () => {
 			</Modal>,
 		);
 
-		expect(getByTestId('modal-actions')).toHaveStyle('justify-content: flex-end;');
+		expect(getByTestId('modal-actions')).toHaveStyle('grid-template-columns: 1fr;');
 		expect(queryByText('Heading')).toBeInTheDocument();
 		expect(queryByText('Content')).toBeInTheDocument();
 		expect(queryByText('Footer or actions')).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('<Modal />', () => {
 			</Modal>,
 		);
 
-		expect(getByTestId('modal-actions')).toHaveStyle('justify-content: space-between;');
+		expect(getByTestId('modal-actions')).toHaveStyle('grid-template-columns: 1fr 1fr;');
 		expect(queryByText('LeftContent')).toBeInTheDocument();
 		expect(queryByText('RightContent')).toBeInTheDocument();
 	});

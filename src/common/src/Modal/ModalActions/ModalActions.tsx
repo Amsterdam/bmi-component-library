@@ -1,4 +1,5 @@
 import React from 'react';
+import { Divider } from '@amsterdam/asc-ui';
 import {
 	ModalActionsStyle,
 	ModalActionsLeftStyle,
@@ -8,17 +9,24 @@ import {
 
 export interface Props {
 	children?: React.ReactNode | React.ReactNode[] | any;
+	hideDivider?: boolean;
 }
 export interface IModalActions extends React.FunctionComponent<Props> {
 	Left: React.FunctionComponent<Props>;
 	Right: React.FunctionComponent<Props>;
 }
 
-const ModalActions = ({ children }: Props) => {
+const ModalActions = ({ children, hideDivider = true }: Props) => {
 	return React.Children.count(children) > 1 ? (
-		<ModalActionsSplitStyle data-testid="modal-actions">{children}</ModalActionsSplitStyle>
+		<ModalActionsSplitStyle data-testid="modal-actions" hideDivider={hideDivider}>
+			<Divider />
+			{children}
+		</ModalActionsSplitStyle>
 	) : (
-		<ModalActionsStyle data-testid="modal-actions">{children}</ModalActionsStyle>
+		<ModalActionsStyle data-testid="modal-actions" hideDivider={hideDivider}>
+			<Divider />
+			{children}
+		</ModalActionsStyle>
 	);
 };
 
@@ -28,5 +36,11 @@ const ModalActionsRight = ({ children }: Props) => <ModalActionsRightStyle>{chil
 ModalActions.Left = ModalActionsLeft;
 ModalActions.Right = ModalActionsRight;
 ModalActions.displayName = 'ModalActions';
+
+ModalActions.displayName = 'ModalActions';
+
+ModalActions.defaultProps = {
+	hideDivider: true,
+};
 
 export default ModalActions;
