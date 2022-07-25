@@ -2,9 +2,11 @@ import type { IState, Props } from './ConfirmDialog';
 
 import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/dom';
-import { mockComponentProps } from '~/tests/helpers';
-import { Modal } from '@amsterdam/asc-ui';
+import { Modal, ThemeProvider } from '@amsterdam/asc-ui';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { mockComponentProps } from '~/tests/helpers';
+
+import theme from '../../../theme/theme';
 
 describe('<ConfirmDialog />', () => {
 	const onClick = jest.fn();
@@ -19,14 +21,18 @@ describe('<ConfirmDialog />', () => {
 		onConfirm: onClick,
 	};
 
-	const clickAndRenderDialog = async (args: Partial<IState> = defaultArg, props: Partial<Props> = {}) => {
+	const clickAndRenderDialog = async (
+		args: Partial<IState> = defaultArg,
+		props: Partial<Props> = {},
+		customSubject: Props['store'] = undefined,
+	) => {
 		const { default: ConfirmDialog, confirm } = await import('../ConfirmDialog/ConfirmDialog');
 		act(() => {
 			render(
-				<>
-					<button data-testid="open-dialog" onClick={() => confirm(args as IState)} />
-					<ConfirmDialog {...props} />
-				</>,
+				<ThemeProvider overrides={theme}>
+					<button data-testid="open-dialog" onClick={() => confirm(args as IState, customSubject)} />
+					<ConfirmDialog {...props} store={customSubject} />
+				</ThemeProvider>,
 			);
 		});
 		const button = screen.getByTestId('open-dialog');
@@ -127,4 +133,19 @@ describe('<ConfirmDialog />', () => {
 			});
 		});
 	});
+
+	test.todo('Custom BehaviorSubject for isolated state');
+	/* This test works but produces untraceable output :/
+	   Storybook has a working example though
+	test('Custom BehaviorSubject for isolated state', async () => {
+		const customSubject = new BehaviorSubject<IState>(initialState);
+		jest.isolateModules(async () => {
+			await clickAndRenderDialog(undefined, undefined, customSubject);
+			await waitFor(() => {
+				expect(screen.queryByTestId('modal')).toBeInTheDocument();
+				expect(screen.queryByTestId('modal-close-button')).not.toBeInTheDocument();
+			});
+		});
+	});
+	*/
 });
