@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v1.0.1...v1.0.2-alpha.0) (2022-07-25)
+
+
+### Features
+
+* **confirm dialog:** added custom store prop to allow for isolated operation of a confirm dialog ([f26dde3](https://github.com/Amsterdam/bmi-component-library/commit/f26dde3558a6b365ba6cb5cfeea54e4346138c99))
+
 ### [1.0.1](https://github.com/Amsterdam/bmi-component-library/compare/v1.0.0...v1.0.1) (2022-07-13)
 
 ## [1.0.0](https://github.com/Amsterdam/bmi-component-library/compare/v0.0.12-alpha.10...v1.0.0) (2022-07-08)
