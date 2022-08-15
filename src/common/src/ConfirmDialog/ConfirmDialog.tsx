@@ -23,23 +23,27 @@ export type Props = {
 	zIndexOffset?: number;
 	disablePortal?: boolean;
 	open?: boolean;
+	store?: BehaviorSubject<IState>;
 };
 
-const initialState: IState = {
+export const initialState: IState = {
 	message: '',
 	onConfirm: () => {},
 };
 
-const store = new BehaviorSubject(initialState);
+const subject = new BehaviorSubject<IState>(initialState);
 
-export const confirm = ({
-	title = 'Waarschuwing',
-	message = 'Weet u zeker dat u dit item definitief wilt verwijderen?',
-	textConfirmButton = 'Ja',
-	textCancelButton = 'Nee',
-	onConfirm = () => {},
-	onCancel,
-}: IState) => {
+export const confirm = (
+	{
+		title = 'Waarschuwing',
+		message = 'Weet u zeker dat u dit item definitief wilt verwijderen?',
+		textConfirmButton = 'Ja',
+		textCancelButton = 'Nee',
+		onConfirm = () => {},
+		onCancel,
+	}: IState,
+	store = subject,
+) => {
 	store.next({ title, message, textConfirmButton, textCancelButton, onCancel, onConfirm });
 };
 
@@ -52,6 +56,7 @@ const ConfirmDialog: IConfirmDialog = ({
 	zIndexOffset = 1,
 	disablePortal = false,
 	open = false,
+	store = subject,
 }: Props) => {
 	const [state, setState] = React.useState<IState>(initialState);
 	const [isVisible, setIsVisible] = React.useState<boolean>(open);
