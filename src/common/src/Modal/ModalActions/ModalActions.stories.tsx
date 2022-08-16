@@ -18,9 +18,7 @@ const TemplateSingleChild: ComponentStory<typeof ModalActions> = (args) => {
 	return (
 		<ModalActions {...args}>
 			<div>
-				<Button variant="primaryInverted" style={{ marginRight: '8px' }}>
-					Vorige
-				</Button>
+				<Button variant="primaryInverted">Vorige</Button>
 				<Button variant="secondary" taskflow>
 					Volgende
 				</Button>
@@ -36,12 +34,8 @@ const TemplateSplit: ComponentStory<typeof ModalActions> = (args) => {
 				<Button variant="primaryInverted">Annuleren</Button>
 			</ModalActions.Left>
 			<ModalActions.Right>
-				<Button variant="primaryInverted" style={{ marginRight: '8px' }}>
-					Vorige
-				</Button>
-				<Button variant="secondary" taskflow>
-					Volgende
-				</Button>
+				<Button variant="primaryInverted">Vorige</Button>
+				<Button variant="secondary">Volgende</Button>
 			</ModalActions.Right>
 		</ModalActions>
 	);

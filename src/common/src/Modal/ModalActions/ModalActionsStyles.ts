@@ -28,10 +28,12 @@ export const ModalActionsSplitStyle = styled.footer`
 export const ModalActionsLeftStyle = styled.div`
 	display: flex;
 	grid-column: 1;
+	gap: ${themeSpacing(2)}; /* > Safari 14.1 */
 `;
 
 export const ModalActionsRightStyle = styled.div`
 	display: flex;
 	grid-column: 2;
 	justify-content: end;
+	gap: ${themeSpacing(2)}; /* > Safari 14.1 */
 `;
