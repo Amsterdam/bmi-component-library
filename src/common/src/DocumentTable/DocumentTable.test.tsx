@@ -1,6 +1,11 @@
+/**
+ * @fileoverview Test for DocumentTable
+ * @todo Fix broken test and/or documentTable component: `Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function. datagrid`
+ */
 import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
+//import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react'; // see @todo above
+import { render, getByText, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import DocumentTable, { applyFilters, paginate, Props } from './DocumentTable';
 import muiTheme from '../../../theme/material-ui-theme';
@@ -18,7 +23,7 @@ function index(el: HTMLDivElement | null) {
 	return -1;
 }
 
-const getRow = (el: HTMLElement) => el.closest('.MuiDataGrid-row');
+// const getRow = (el: HTMLElement) => el.closest('.MuiDataGrid-row'); // see @todo above
 
 /**
  * NOTE: without the columnBuffer prop set not all columns will be available for assertions.
