@@ -6,6 +6,7 @@ export const ModalTopBarStyle = styled(TopBar)<{ hideDivider: boolean }>`
 	grid-template-columns: 1fr auto;
 	grid-template-rows: 44px ${themeSpacing(6)};
 	padding: 0;
+	margin-bottom: ${({ hideDivider }) => (hideDivider ? 0 : '12px')};
 
 	@media screen and ${breakpoint('min-width', 'tabletS')} {
 		padding: 0;

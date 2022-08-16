@@ -34,21 +34,9 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 			>
 				<Modal.TopBar onCloseButton={() => setModalVisibility(false)}>Afgerond - Assetnaam</Modal.TopBar>
 				<Modal.Content>
-					<ModalBlockStyle>
-						<Heading forwardedAs="h4">Onjuiste of ontbrekende gegevens?</Heading>
-						<Paragraph>
-							Geef aan welke gegevens onjuist zijn of ontbreken. Ook als je weet wat het wel moet zijn. We
-							horen het graag.
-						</Paragraph>
-					</ModalBlockStyle>
-					<Divider gutter />
-					<ModalBlockStyle>
-						<Heading forwardedAs="h4">Vraag of een klacht?</Heading>
-						<Paragraph>
-							Als iets op deze pagina niet goed werkt, onduidelijk is of vragen oproept, geef het aan ons
-							door.
-						</Paragraph>
-					</ModalBlockStyle>
+					<h1>test</h1>
+					<h2>test</h2>
+					<h3>test</h3>
 				</Modal.Content>
 				<Modal.Actions>
 					<Modal.Actions.Left>

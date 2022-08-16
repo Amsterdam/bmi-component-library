@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent, getByTestId, queryByText, queryByTestId } from '@testing-library/react';
 import ModalTopBar from './ModalTopBar';
+import { notNullish } from 'react-select/dist/declarations/src/utils';
 
 describe('<ModalTopBar />', () => {
 	it('should render', () => {
@@ -26,18 +27,26 @@ describe('<ModalTopBar />', () => {
 		expect(getByTestId(container, 'modal-close-button')).toBeDefined();
 	});
 
-	it('Divider should not be transparent, when hideDivider is false', () => {
+	it('Divider and header styling change, when hideDivider is false', () => {
 		const { container } = render(<ModalTopBar hideDivider={false}>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
-		const style = window.getComputedStyle(divider as Element);
+
+		let style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).not.toBe('transparent');
+		expect(style.backgroundColor).not.toBe('');
+
+		const header = getByTestId(container, 'modal-top-bar');
+		expect(header).not.toHaveStyleRule('margin-bottom', '0');
 	});
 
-	it('Divider should be transparent, when hideDivider is true', () => {
+	it('Divider and header styling change, when hideDivider is true', () => {
 		const { container } = render(<ModalTopBar hideDivider>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
-		const style = window.getComputedStyle(divider as Element);
+		let style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).toBe('transparent');
+
+		const header = getByTestId(container, 'modal-top-bar');
+		expect(header).toHaveStyleRule('margin-bottom', '0');
 	});
 
 	it('Divider should be transparent as default', () => {
