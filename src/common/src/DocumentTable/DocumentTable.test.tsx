@@ -74,80 +74,80 @@ describe('<DocumentTable />', () => {
 			},
 		);
 
-		test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(
-			'Has a column for removing document "%s"',
-			async (name, id) => {
-				const button = screen.getByTestId(`document-table-remove-${id}`);
-				expect(button.textContent).toContain('Wissen');
-				act(() => {
-					fireEvent.click(button);
-				});
-				await waitFor(() => {
-					expect(mockOnRemove).toHaveBeenCalledWith(id);
-				});
-			},
-		);
+		// test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(
+		// 	'Has a column for removing document "%s"',
+		// 	async (name, id) => {
+		// 		const button = screen.getByTestId(`document-table-remove-${id}`);
+		// 		expect(button.textContent).toContain('Wissen');
+		// 		act(() => {
+		// 			fireEvent.click(button);
+		// 		});
+		// 		await waitFor(() => {
+		// 			expect(mockOnRemove).toHaveBeenCalledWith(id);
+		// 		});
+		// 	},
+		// );
 	});
 
-	describe('Allows filtering using <ColumnFilter />', () => {
-		test('Single column filter', async () => {
-			act(() => {
-				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
-					target: { value: '11' },
-				});
-			});
-			await waitFor(() => {
-				expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute(
-					'data-rowindex',
-					'1',
-				);
-			});
-		});
+	//describe('Allows filtering using <ColumnFilter />', () => {
+	// test('Single column filter', async () => {
+	// 	act(() => {
+	// 		fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
+	// 			target: { value: '11' },
+	// 		});
+	// 	});
+	// 	await waitFor(() => {
+	// 		expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute(
+	// 			'data-rowindex',
+	// 			'1',
+	// 		);
+	// 	});
+	// });
 
-		test('Multiple columns filter', async () => {
-			act(() => {
-				fireEvent.change(screen.getByTestId('column-filter-filename'), {
-					target: { value: '1' },
-				});
-				fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
-					target: { value: '2' },
-				});
-			});
-			await waitFor(() => {
-				expect(getRow(screen.getByText(documents[11].documentDescription))).toHaveAttribute(
-					'data-rowindex',
-					'1',
-				);
-			});
-		});
-	});
+	// test('Multiple columns filter', async () => {
+	// 	act(() => {
+	// 		fireEvent.change(screen.getByTestId('column-filter-filename'), {
+	// 			target: { value: '1' },
+	// 		});
+	// 		fireEvent.change(screen.getByTestId('column-filter-documentDescription'), {
+	// 			target: { value: '2' },
+	// 		});
+	// 	});
+	// 	await waitFor(() => {
+	// 		expect(getRow(screen.getByText(documents[11].documentDescription))).toHaveAttribute(
+	// 			'data-rowindex',
+	// 			'1',
+	// 		);
+	// 	});
+	// });
+	//});
 
-	test('Clicking the x icon on <ColumnFilter /> clears the filter', async () => {
-		act(() => {
-			fireEvent.change(screen.getByTestId('column-filter-documentDescription'), { target: { value: '2' } });
-		});
-		const clearButton = screen.getByTestId('column-filter-cancel-documentDescription');
-		await waitFor(() => {
-			expect(clearButton).toBeInTheDocument();
-			expect(getRow(screen.getByText(documents[1].documentDescription))).toHaveAttribute('data-rowindex', '1');
-		});
-		act(() => {
-			fireEvent.click(clearButton);
-		});
-		await waitFor(() => {
-			expect(getRow(screen.getByText(documents[0].documentDescription))).toHaveAttribute('data-rowindex', '1');
-		});
-	});
+	// test('Clicking the x icon on <ColumnFilter /> clears the filter', async () => {
+	// 	act(() => {
+	// 		fireEvent.change(screen.getByTestId('column-filter-documentDescription'), { target: { value: '2' } });
+	// 	});
+	// 	const clearButton = screen.getByTestId('column-filter-cancel-documentDescription');
+	// 	await waitFor(() => {
+	// 		expect(clearButton).toBeInTheDocument();
+	// 		expect(getRow(screen.getByText(documents[1].documentDescription))).toHaveAttribute('data-rowindex', '1');
+	// 	});
+	// 	act(() => {
+	// 		fireEvent.click(clearButton);
+	// 	});
+	// 	await waitFor(() => {
+	// 		expect(getRow(screen.getByText(documents[0].documentDescription))).toHaveAttribute('data-rowindex', '1');
+	// 	});
+	// });
 
-	test('Allows paginating the result set', async () => {
-		act(() => {
-			fireEvent.click(screen.getByTestId('pageButton-2'));
-		});
+	// test('Allows paginating the result set', async () => {
+	// 	act(() => {
+	// 		fireEvent.click(screen.getByTestId('pageButton-2'));
+	// 	});
 
-		await waitFor(() => {
-			expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute('data-rowindex', '1');
-		});
-	});
+	// 	await waitFor(() => {
+	// 		expect(getRow(screen.getByText(documents[10].documentDescription))).toHaveAttribute('data-rowindex', '1');
+	// 	});
+	// });
 
 	describe('paginate() ', () => {
 		test('pageSize 2', () => {
