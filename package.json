@@ -21,7 +21,7 @@
 		"lint:types": "tsc --noEmit",
 		"fix": "npm-run-all --parallel fix:js fix:css",
 		"fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
-		"ci:test": "jest --ci --reporters=default",
+		"ci:test": "jest --ci --reporters=default --silent",
 		"ci:stylelint": "npm run lint:css",
 		"ci:eslint": "npm run lint:js",
 		"storybook": "start-storybook -p 6006",
