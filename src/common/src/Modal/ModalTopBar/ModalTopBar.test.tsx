@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, getByTestId, queryByText, queryByTestId } from '@testing-library/react';
 import ModalTopBar from './ModalTopBar';
-import { notNullish } from 'react-select/dist/declarations/src/utils';
 
 describe('<ModalTopBar />', () => {
 	it('should render', () => {
@@ -31,7 +30,7 @@ describe('<ModalTopBar />', () => {
 		const { container } = render(<ModalTopBar hideDivider={false}>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
 
-		let style = window.getComputedStyle(divider as Element);
+		const style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).not.toBe('transparent');
 		expect(style.backgroundColor).not.toBe('');
 
@@ -42,7 +41,7 @@ describe('<ModalTopBar />', () => {
 	it('Divider and header styling change, when hideDivider is true', () => {
 		const { container } = render(<ModalTopBar hideDivider>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
-		let style = window.getComputedStyle(divider as Element);
+		const style = window.getComputedStyle(divider as Element);
 		expect(style.backgroundColor).toBe('transparent');
 
 		const header = getByTestId(container, 'modal-top-bar');
