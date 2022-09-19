@@ -115,6 +115,8 @@
 		"@mui/material": "^5.8.7",
 		"@mui/styled-engine-sc": "^5.8.0",
 		"@mui/x-data-grid": "^5.12.3",
+		"asc-assets-beta": "npm:@amsterdam/asc-assets@^1.0.0-alpha.0",
+		"asc-ui-beta": "npm:@amsterdam/asc-ui@^1.0.0-alpha.0",
 		"react": ">=17.0.2",
 		"react-dom": ">=17.0.2",
 		"react-dropzone": "^11.3.5",

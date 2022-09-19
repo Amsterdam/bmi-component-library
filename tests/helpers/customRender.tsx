@@ -3,7 +3,7 @@ import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import theme from '../../src/theme/theme';
 import { queries, Queries } from '@testing-library/dom';
-
+//@ts-ignore
 const AllTheProviders = ({ children }: React.PropsWithChildren) => (
 	<ThemeProvider overrides={theme}>{children}</ThemeProvider>
 );
