@@ -111,10 +111,10 @@
 	"dependencies": {
 		"@amsterdam/asc-assets": "^0.36.0",
 		"@amsterdam/asc-ui": "^0.36.0",
-		"@mui/icons-material": "^5.8.4",
-		"@mui/material": "^5.8.7",
-		"@mui/styled-engine-sc": "^5.8.0",
-		"@mui/x-data-grid": "^5.12.3",
+		"@mui/icons-material": "^5.10.3",
+		"@mui/material": "^5.10.5",
+		"@mui/styled-engine-sc": "^5.10.3",
+		"@mui/x-data-grid": "^5.17.3",
 		"asc-assets-beta": "npm:@amsterdam/asc-assets@^1.0.0-alpha.0",
 		"asc-ui-beta": "npm:@amsterdam/asc-ui@^1.0.0-alpha.0",
 		"react": ">=17.0.2",
@@ -122,12 +122,12 @@
 		"react-dropzone": "^11.3.5",
 		"react-loading-skeleton": "^3.0.3",
 		"react-select": "5.2.2",
-		"styled-components": ">=5.2.3"
+		"styled-components": ">=5.3.5"
 	},
 	"peerDependencies": {
 		"react": ">=17.0.2",
 		"react-dom": ">=17.0.2",
-		"styled-components": ">=5.2.3"
+		"styled-components": ">=5.3.5"
 	},
 	"lint-staged": {
 		"*.{ts,tsx}": [

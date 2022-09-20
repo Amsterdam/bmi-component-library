@@ -1,60 +1,121 @@
 import { StylesConfig } from 'react-select';
 import { themeColor as themeColorAsc, themeSpacing as themeSpacingAsc, calculateFluidStyle } from 'asc-ui-beta';
-import { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { Props } from './AsyncSelect';
+
+export const DropdownIndicatorStyle = styled.span`
+	border-right: 3px solid;
+	border-bottom: 3px solid;
+	height: ${calculateFluidStyle(16, 24)};
+	width: ${calculateFluidStyle(16, 24)};
+	transform: rotate(45deg) translateY(-7px);
+	border-color: inherit;
+`;
 
 // @see https://designsystem.amsterdam.nl/7awj1hc9f/p/6561a5-selection-dropdown
 // @see https://react-select.com/styles
 // @see https://github.com/Amsterdam/amsterdam-styled-components/blob/main/packages/asc-ui/src/components/Select/SelectStyle.ts
-const getReactSelectStyles = ({ error = false, zIndexMenu }: Props) => {
+export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
+	// Proxy to add the used theme
 	function themeColor(type: string, variant?: string) {
 		//@ts-ignore
 		return themeColorAsc(type, variant)({ theme: useTheme() });
 	}
-
+	// Proxy to add the used theme
 	function themeSpacing(top: Number, right?: Number, bottom?: Number, left?: Number) {
 		//@ts-ignore
 		return themeSpacingAsc(top, right, bottom, left)({ theme: useTheme() });
 	}
-	// const colorInvalid = themeColor('support', 'invalid');
-	// const colorPrimary = themeColor('primary');
 
 	return {
 		control: (styles, { isFocused }) => ({
 			...styles,
-			borderWidth: '1px',
+			borderWidth: '2px',
 			borderColor: `${error ? themeColor('support', 'invalid') : themeColor('primary')}`,
 			borderRadius: 0,
 			boxShadow: `${isFocused ? `inset 0 0 0 1px ${themeColor('primary')}` : 'none'}`,
 			'&:hover': {
 				boxShadow: error
-					? `${isFocused ? `inset 0 0 0 1px ${themeColor('support', 'invalid')}` : 'none'}`
-					: `${isFocused ? `inset 0 0 0 1px ${themeColor('primary')}` : 'none'}`,
+					? `inset 0 0 0 1px ${themeColor('support', 'invalid')}`
+					: `inset 0 0 0 1px ${themeColor('primary')}`,
 			},
+			color: `${isFocused ? themeColor('primary', 'dark') : themeColor('primary')}`,
+			height: `${calculateFluidStyle(48, 56)}`,
 		}),
-		valueContainer: (styles) => ({
+		input: (styles, { isDisabled }) => ({
 			...styles,
-			padding: `${themeSpacing(2, 4)}`,
+			color: `${isDisabled ? themeColor('primary', 'dark') : themeColor('primary')}`,
+		}),
+		menuList: (styles) => ({
+			...styles,
+			padding: '0',
+			maxHeight: `calc( 8 * ${calculateFluidStyle(
+				48,
+				56,
+			)})` /* 8 is the max number of options to show before adding a scrollbar */,
+		}),
+		valueContainer: (styles, { isDisabled }) => ({
+			...styles,
+			padding: `${themeSpacing(2, 6)}`,
 			fontSize: `${calculateFluidStyle(18, 24)}`,
+		}),
+		dropdownIndicator: (styles, { isFocused }) => ({
+			...styles,
+			color: themeColor('primary'),
+			'&:hover': {
+				color: `${isFocused ? themeColor('primary', 'dark') : themeColor('primary')}`,
+			},
 		}),
 		indicatorsContainer: (styles) => ({
 			...styles,
-			svg: {
-				width: '28px',
-				height: '28px',
-			},
-			path: {
-				fill: `${themeColor('primary')}`,
-			},
+			paddingRight: `${themeSpacing(6)}`,
+			color: themeColor('primary'),
 		}),
 		indicatorSeparator: () => ({ display: 'none' }),
+		noOptionsMessage: (styles) => ({
+			...styles,
+			padding: `${themeSpacing(2, 6)}`,
+			height: `${calculateFluidStyle(48, 56)}`,
+			fontSize: `${calculateFluidStyle(18, 24)}`,
+			backgroundColor: `${themeColor('tint', 'level1')}`,
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'spaceEvenly',
+		}),
 		option: (styles, { isFocused, isDisabled, isSelected }) => ({
 			...styles,
-			backgroundColor: isDisabled ? undefined : isSelected ? '#E6E6E6' : isFocused ? '#E6E6E6' : undefined,
-			color: '#000000',
+			padding: `${themeSpacing(2, 6)}`,
+			justifyContent: 'space-between',
+			display: 'flex',
+			alignItems: 'center',
+			color: isDisabled
+				? `${themeColor('primary')}`
+				: isSelected
+				? `${themeColor('tint', 'level1')}`
+				: isFocused
+				? `${themeColor('tint', 'level1')}`
+				: `${themeColor('primary')}`,
+			height: `${calculateFluidStyle(48, 56)}`,
+			fontSize: `${calculateFluidStyle(18, 24)}`,
+			backgroundColor: isDisabled
+				? `${themeColor('tint', 'level1')}`
+				: isSelected
+				? `${themeColor('primary')}`
+				: isFocused
+				? `${themeColor('primary')}`
+				: `${themeColor('tint', 'level1')}`,
 			':active': {
-				backgroundColor: '#E6E6E6',
+				backgroundColor: `${themeColor('primary')}`,
+			},
+			'::after': {
+				content: isSelected ? '""' : undefined,
+				float: 'right',
+				border: `solid ${themeColor('tint', 'level1')}`,
+				borderWidth: '0 3px 3px 0',
+				transform: 'rotate(45deg) translate(-7px, 0)',
+				width: '16px',
+				height: '24px',
 			},
 		}),
 		singleValue: (styles) => ({
@@ -63,15 +124,16 @@ const getReactSelectStyles = ({ error = false, zIndexMenu }: Props) => {
 		}),
 		placeholder: (styles) => ({
 			...styles,
-			color: '#000000',
+			color: `${themeColor('tint', 'level4')}`,
 		}),
 		menu: (styles) => ({
 			...styles,
 			borderRadius: '0',
+			margin: '0',
 			zIndex: zIndexMenu ? zIndexMenu : styles.zIndex,
+			padding: '0 3px 3px 3px',
+			boxShadow: `inset 0 0 0 3px ${themeColor('primary')}`,
 		}),
 		menuPortal: (styles) => (zIndexMenu ? { ...styles, zIndex: zIndexMenu } : styles),
 	} as StylesConfig;
 };
-
-export default getReactSelectStyles;
