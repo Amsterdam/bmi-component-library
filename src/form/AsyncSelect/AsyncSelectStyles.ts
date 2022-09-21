@@ -1,19 +1,21 @@
 import { StylesConfig } from 'react-select';
-import { themeColor as themeColorAsc, themeSpacing as themeSpacingAsc, calculateFluidStyle } from 'asc-ui-beta';
+import {
+	ascDefaultTheme,
+	themeColor as themeColorAsc,
+	themeSpacing as themeSpacingAsc,
+	calculateFluidStyle,
+} from 'asc-ui-beta';
 import styled from 'styled-components';
 import { Props } from './AsyncSelect';
-import { ascDefaultTheme } from 'asc-ui-beta';
+import { Theme } from '@amsterdam/asc-ui';
 
 // Proxy to add the used theme
-function themeColor(type: string, variant?: string) {
-	//@ts-ignore
-	return themeColorAsc(type, variant)({ theme: ascDefaultTheme });
-}
+const themeColor = (type?: Theme.ColorType, colorSubtype?: string, override?: string) =>
+	themeColorAsc(type, colorSubtype, override)({ theme: ascDefaultTheme });
+
 // Proxy to add the used theme
-function themeSpacing(top: Number, right?: Number, bottom?: Number, left?: Number) {
-	//@ts-ignore
-	return themeSpacingAsc(top, right, bottom, left)({ theme: ascDefaultTheme });
-}
+const themeSpacing = (top: number, right?: number, bottom?: number, left?: number) =>
+	themeSpacingAsc(top, right, bottom, left)({ theme: ascDefaultTheme });
 
 export const DropdownIndicatorStyle = styled.span`
 	border-right: 3px solid;
@@ -25,56 +27,72 @@ export const DropdownIndicatorStyle = styled.span`
 `;
 
 // @see https://designsystem.amsterdam.nl/7awj1hc9f/p/6561a5-selection-dropdown
-// @see https://react-select.com/styles
+// @see https://react-select.com/provided
 // @see https://github.com/Amsterdam/amsterdam-styled-components/blob/main/packages/asc-ui/src/components/Select/SelectStyle.ts
-export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
+export function getAsyncSelectStyle({ error = false, zIndexMenu }: Props): StylesConfig {
 	return {
-		control: (styles, { isFocused }) => ({
-			...styles,
+		control: (provided, { isFocused, isDisabled }) => ({
+			...provided,
+			pointerEvents: isDisabled ? 'none' : 'auto',
 			borderWidth: '2px',
-			borderColor: `${error ? themeColor('support', 'invalid') : themeColor('primary')}`,
+			borderColor: `${
+				isDisabled
+					? themeColor('tint', 'level3')
+					: error
+					? themeColor('support', 'invalid')
+					: themeColor('primary')
+			}`,
+			backgroundColor: `${themeColor('tint', 'level1')}`,
 			borderRadius: 0,
-			boxShadow: `${isFocused ? `inset 0 0 0 1px ${themeColor('primary')}` : 'none'}`,
+			boxShadow: `${isDisabled ? 'none' : isFocused ? `inset 0 0 0 1px ${themeColor('primary')}` : 'none'}`,
 			'&:hover': {
 				boxShadow: error
 					? `inset 0 0 0 1px ${themeColor('support', 'invalid')}`
 					: `inset 0 0 0 1px ${themeColor('primary')}`,
 			},
-			color: `${isFocused ? themeColor('primary', 'dark') : themeColor('primary')}`,
+			color: `${
+				isDisabled
+					? themeColor('tint', 'level3')
+					: isFocused
+					? themeColor('primary', 'dark')
+					: themeColor('primary')
+			}`,
 			height: `${calculateFluidStyle(48, 56)}`,
 		}),
-		input: (styles, { isDisabled }) => ({
-			...styles,
-			color: `${isDisabled ? themeColor('primary', 'dark') : themeColor('primary')}`,
-		}),
-		menuList: (styles) => ({
-			...styles,
+		menuList: (provided) => ({
+			...provided,
 			padding: '0',
 			maxHeight: `calc( 8 * ${calculateFluidStyle(
 				48,
 				56,
 			)})` /* 8 is the max number of options to show before adding a scrollbar */,
 		}),
-		valueContainer: (styles, { isDisabled }) => ({
-			...styles,
+		valueContainer: (provided) => ({
+			...provided,
 			padding: `${themeSpacing(0, 3)}`,
 			fontSize: `${calculateFluidStyle(18, 24)}`,
 		}),
-		dropdownIndicator: (styles, { isFocused }) => ({
-			...styles,
-			color: themeColor('primary'),
+		dropdownIndicator: (provided, { isFocused, isDisabled }) => ({
+			...provided,
+			color: `${
+				isDisabled
+					? themeColor('tint', 'level3')
+					: isFocused
+					? themeColor('primary', 'dark')
+					: themeColor('primary')
+			}`,
 			'&:hover': {
-				color: `${isFocused ? themeColor('primary', 'dark') : themeColor('primary')}`,
+				color: `${themeColor('primary', 'dark')}`,
 			},
 		}),
-		indicatorsContainer: (styles) => ({
-			...styles,
+		indicatorsContainer: (provided) => ({
+			...provided,
 			paddingRight: `${themeSpacing(3)}`,
-			color: themeColor('primary'),
+			color: `${themeColor('primary')}`,
 		}),
 		indicatorSeparator: () => ({ display: 'none' }),
-		noOptionsMessage: (styles) => ({
-			...styles,
+		noOptionsMessage: (provided) => ({
+			...provided,
 			padding: `${themeSpacing(0, 3)}`,
 			height: `${calculateFluidStyle(48, 56)}`,
 			fontSize: `${calculateFluidStyle(18, 24)}`,
@@ -83,14 +101,14 @@ export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
 			alignItems: 'center',
 			justifyContent: 'spaceEvenly',
 		}),
-		option: (styles, { isFocused, isDisabled, isSelected }) => ({
-			...styles,
+		option: (provided, { isFocused, isDisabled, isSelected }) => ({
+			...provided,
 			padding: `${themeSpacing(0, 3)}`,
 			justifyContent: 'space-between',
 			display: 'flex',
 			alignItems: 'center',
 			color: isDisabled
-				? `${themeColor('primary')}`
+				? `${themeColor('tint', 'level3')}`
 				: isSelected
 				? `${themeColor('tint', 'level1')}`
 				: isFocused
@@ -118,22 +136,22 @@ export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
 				height: '24px',
 			},
 		}),
-		singleValue: (styles) => ({
-			...styles,
-			color: `${themeColor('level', 'level6')}`,
+		singleValue: (provided) => ({
+			...provided,
+			color: `${themeColor('tint', 'level6')}`,
 		}),
-		placeholder: (styles) => ({
-			...styles,
+		placeholder: (provided) => ({
+			...provided,
 			color: `${themeColor('tint', 'level4')}`,
 		}),
-		menu: (styles) => ({
-			...styles,
+		menu: (provided) => ({
+			...provided,
 			borderRadius: '0',
 			margin: '0',
-			zIndex: zIndexMenu ? zIndexMenu : styles.zIndex,
+			zIndex: zIndexMenu ? zIndexMenu : provided.zIndex,
 			padding: '0 3px 3px 3px',
 			boxShadow: `inset 0 0 0 3px ${themeColor('primary')}`,
 		}),
-		menuPortal: (styles) => (zIndexMenu ? { ...styles, zIndex: zIndexMenu } : styles),
-	} as StylesConfig;
-};
+		menuPortal: (provided) => (zIndexMenu ? { ...provided, zIndex: zIndexMenu } : provided),
+	};
+}
