@@ -1,8 +1,19 @@
 import { StylesConfig } from 'react-select';
 import { themeColor as themeColorAsc, themeSpacing as themeSpacingAsc, calculateFluidStyle } from 'asc-ui-beta';
-import styled, { useTheme } from 'styled-components';
-
+import styled from 'styled-components';
 import { Props } from './AsyncSelect';
+import { ascDefaultTheme } from 'asc-ui-beta';
+
+// Proxy to add the used theme
+function themeColor(type: string, variant?: string) {
+	//@ts-ignore
+	return themeColorAsc(type, variant)({ theme: ascDefaultTheme });
+}
+// Proxy to add the used theme
+function themeSpacing(top: Number, right?: Number, bottom?: Number, left?: Number) {
+	//@ts-ignore
+	return themeSpacingAsc(top, right, bottom, left)({ theme: ascDefaultTheme });
+}
 
 export const DropdownIndicatorStyle = styled.span`
 	border-right: 3px solid;
@@ -17,17 +28,6 @@ export const DropdownIndicatorStyle = styled.span`
 // @see https://react-select.com/styles
 // @see https://github.com/Amsterdam/amsterdam-styled-components/blob/main/packages/asc-ui/src/components/Select/SelectStyle.ts
 export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
-	// Proxy to add the used theme
-	function themeColor(type: string, variant?: string) {
-		//@ts-ignore
-		return themeColorAsc(type, variant)({ theme: useTheme() });
-	}
-	// Proxy to add the used theme
-	function themeSpacing(top: Number, right?: Number, bottom?: Number, left?: Number) {
-		//@ts-ignore
-		return themeSpacingAsc(top, right, bottom, left)({ theme: useTheme() });
-	}
-
 	return {
 		control: (styles, { isFocused }) => ({
 			...styles,
@@ -57,7 +57,7 @@ export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
 		}),
 		valueContainer: (styles, { isDisabled }) => ({
 			...styles,
-			padding: `${themeSpacing(2, 6)}`,
+			padding: `${themeSpacing(0, 3)}`,
 			fontSize: `${calculateFluidStyle(18, 24)}`,
 		}),
 		dropdownIndicator: (styles, { isFocused }) => ({
@@ -69,13 +69,13 @@ export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
 		}),
 		indicatorsContainer: (styles) => ({
 			...styles,
-			paddingRight: `${themeSpacing(6)}`,
+			paddingRight: `${themeSpacing(3)}`,
 			color: themeColor('primary'),
 		}),
 		indicatorSeparator: () => ({ display: 'none' }),
 		noOptionsMessage: (styles) => ({
 			...styles,
-			padding: `${themeSpacing(2, 6)}`,
+			padding: `${themeSpacing(0, 3)}`,
 			height: `${calculateFluidStyle(48, 56)}`,
 			fontSize: `${calculateFluidStyle(18, 24)}`,
 			backgroundColor: `${themeColor('tint', 'level1')}`,
@@ -85,7 +85,7 @@ export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
 		}),
 		option: (styles, { isFocused, isDisabled, isSelected }) => ({
 			...styles,
-			padding: `${themeSpacing(2, 6)}`,
+			padding: `${themeSpacing(0, 3)}`,
 			justifyContent: 'space-between',
 			display: 'flex',
 			alignItems: 'center',
@@ -120,7 +120,7 @@ export const getAsyncSelectStyle = ({ error = false, zIndexMenu }: Props) => {
 		}),
 		singleValue: (styles) => ({
 			...styles,
-			color: '#000000',
+			color: `${themeColor('level', 'level6')}`,
 		}),
 		placeholder: (styles) => ({
 			...styles,

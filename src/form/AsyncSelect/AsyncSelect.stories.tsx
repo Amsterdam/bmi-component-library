@@ -42,14 +42,22 @@ export default {
 	component: AsyncSelect,
 	args: {
 		inputId: 'asyncSelect',
+		noOptionsMessage: () => 'Geen resultaten',
+		placeholder: 'Zoek een straatnaam',
 	},
 	argTypes: { onChange: { action: 'change' } },
 } as ComponentMeta<typeof AsyncSelect>;
 
 const Template: ComponentStory<typeof AsyncSelect> = (props) => <AsyncSelect loadOptions={typeAhead} {...props} />;
 
+const TemplateWithPrefilledValue: ComponentStory<typeof AsyncSelect> = (props) => (
+	<AsyncSelect
+		loadOptions={typeAhead}
+		defaultValue={{ label: 'Korte Leidsedwarsstraat', value: 'Korte Leidsedwarsstraat' }}
+		{...props}
+	/>
+);
+
 export const Default = Template.bind({});
-Default.args = {
-	noOptionsMessage: () => 'Geen resultaten',
-	placeholder: 'Zoek een straatnaam',
-};
+
+export const DefaultValue = TemplateWithPrefilledValue.bind({});
