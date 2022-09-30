@@ -23,9 +23,9 @@ const themeSpacing = (top: number, right?: number, bottom?: number, left?: numbe
 export const DropdownIndicatorStyle = styled.span`
 	border-right: 3px solid;
 	border-bottom: 3px solid;
-	height: 18px;
-	width: 18px;
-	transform: rotate(45deg) translateY(-7px);
+	height: 11px;
+	width: 11px;
+	transform: rotate(45deg) translateY(-4px);
 	border-color: inherit;
 `;
 
@@ -40,7 +40,7 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 			borderWidth: '2px',
 			borderColor: `${
 				isDisabled
-					? themeColor('tint', 'level3')
+					? themeColor('tint', 'level4')
 					: error
 					? themeColor('support', 'invalid')
 					: themeColor('primary')
@@ -55,7 +55,7 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 			},
 			color: `${
 				isDisabled
-					? themeColor('tint', 'level3')
+					? themeColor('tint', 'level5')
 					: isFocused
 					? themeColor('primary', 'dark')
 					: themeColor('primary')
@@ -67,8 +67,9 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 			padding: '0',
 			maxHeight: `calc( 8 * 48px})` /* 8 is the max number of options to show before adding a scrollbar */,
 		}),
-		valueContainer: (provided) => ({
+		valueContainer: (provided, { isDisabled }) => ({
 			...provided,
+			color: `${isDisabled ? themeColor('tint', 'level4') : themeColor('primary')}`,
 			padding: `${themeSpacing(0, 3)}`,
 			fontSize: '18px',
 		}),
@@ -131,9 +132,9 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 				float: 'right',
 				border: `solid ${themeColor('tint', 'level1')}`,
 				borderWidth: '0 3px 3px 0',
-				transform: 'rotate(45deg) translate(-7px, 0)',
-				width: '16px',
-				height: '24px',
+				transform: 'rotate(45deg) translate(-5px, 0)',
+				width: '10px',
+				height: '18px',
 			},
 		}),
 		singleValue: (provided) => ({
