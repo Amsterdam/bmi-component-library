@@ -13,7 +13,7 @@
 		"build:ts:es": "tsc -b src/tsconfig.build.es.json",
 		"build:ts:es:watch": "tsc -b src/tsconfig.build.es.json --watch",
 		"build:storybook": "build-storybook",
-		"test": "jest",
+		"test": "jest --silent",
 		"test:watch": "jest --watch",
 		"lint": "npm-run-all --parallel lint:js lint:css lint:types",
 		"lint:js": "eslint --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
