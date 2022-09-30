@@ -127,7 +127,7 @@ module.exports = {
 	snapshotSerializers: [],
 
 	// The test environment that will be used for testing
-	// testEnvironment: '',
+	testEnvironment: 'jsdom',
 
 	// Options that will be passed to the testEnvironment
 	// testEnvironmentOptions: {},
@@ -169,7 +169,7 @@ module.exports = {
 	// },
 	transform: {
 		'^.+\\.[t|j]sx?$': 'babel-jest',
-		'^.+\\.svg$': 'jest-svg-transformer',
+		'^.+\\.svg$': '<rootDir>/jest-svg-transformer.js',
 		// '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
 	},
 

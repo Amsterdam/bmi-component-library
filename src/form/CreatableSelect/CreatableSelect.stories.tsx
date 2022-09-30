@@ -1,14 +1,22 @@
 import React from 'react';
-import { Story } from '@storybook/react';
-import CreatableSelect, { Props } from './CreatableSelect';
+import { Story, ComponentStory, ComponentMeta } from '@storybook/react';
+import CreatableSelect from './CreatableSelect';
 import { options } from './__stubs__/options';
 
 export default {
 	title: 'form/CreatableSelect',
 	component: CreatableSelect,
-};
+	argTypes: {
+		isClearable: { control: 'boolean' },
+		isDisabled: { control: 'boolean' },
+		isMulti: { control: 'boolean' },
+		isSearchable: { control: 'boolean' },
+		isLoading: { control: 'boolean' },
+		onChange: { action: 'change' },
+	},
+} as ComponentMeta<typeof CreatableSelect>;
 
-const Template: Story<Props> = ({ id = 'creatable-demo', ...props }) => {
+const Template: ComponentStory<typeof CreatableSelect> = ({ id = 'creatable-demo', ...props }) => {
 	return (
 		<CreatableSelect
 			inputId={id}
