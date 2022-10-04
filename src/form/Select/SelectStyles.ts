@@ -143,7 +143,7 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 		}),
 		placeholder: (provided) => ({
 			...provided,
-			color: `${themeColor('tint', 'level4')}`,
+			color: `${themeColor('tint', 'level5')}`,
 		}),
 		menu: (provided) => ({
 			...provided,
