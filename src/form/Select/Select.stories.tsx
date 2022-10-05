@@ -13,6 +13,7 @@ export default {
 		placeholder: 'Zoek een type',
 	},
 	argTypes: {
+		menuIsOpen: { control: 'boolean' },
 		isClearable: { control: 'boolean' },
 		isDisabled: { control: 'boolean' },
 		isMulti: { control: 'boolean' },
