@@ -37,7 +37,7 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 		control: (provided, { isFocused, isDisabled }) => ({
 			...provided,
 			pointerEvents: isDisabled ? 'none' : 'auto',
-			borderWidth: '2px',
+			borderWidth: '1px',
 			borderColor: `${
 				isDisabled
 					? themeColor('tint', 'level4')
@@ -65,7 +65,7 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 		menuList: (provided) => ({
 			...provided,
 			padding: '0',
-			maxHeight: `calc( 8 * 48px})` /* 8 is the max number of options to show before adding a scrollbar */,
+			maxHeight: `calc(8 * 48px)` /* 8 is the max number of options to show before adding a scrollbar */,
 		}),
 		valueContainer: (provided, { isDisabled }) => ({
 			...provided,
@@ -143,15 +143,15 @@ export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConf
 		}),
 		placeholder: (provided) => ({
 			...provided,
-			color: `${themeColor('tint', 'level4')}`,
+			color: `${themeColor('tint', 'level5')}`,
 		}),
 		menu: (provided) => ({
 			...provided,
 			borderRadius: '0',
 			margin: '0',
 			zIndex: zIndexMenu ? zIndexMenu : provided.zIndex,
-			padding: '0 3px 3px 3px',
-			boxShadow: `inset 0 0 0 3px ${themeColor('primary')}`,
+			padding: '0 2px 2px 2px',
+			boxShadow: `inset 0 0 0 2px ${themeColor('primary')}`,
 		}),
 		menuPortal: (provided) => (zIndexMenu ? { ...provided, zIndex: zIndexMenu } : provided),
 	};
