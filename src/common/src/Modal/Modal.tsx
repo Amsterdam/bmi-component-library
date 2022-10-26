@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import { Modal as ASCModal } from '@amsterdam/asc-ui';
 
 import { ModalStyle } from './ModalStyles';
-import ModalTopBar, { Props as IModalTopBarProps } from './ModalTopBar/ModalTopBar';
-import ModalContent, { Props as IModalContentProps } from './ModalContent/ModalContent';
-import ModalActions, { Props as IModalActionsProps } from './ModalActions/ModalActions';
+import ModalTopBar, { ModalTopBarProps } from './ModalTopBar/ModalTopBar';
+import ModalContent, { ModalContentProps } from './ModalContent/ModalContent';
+import ModalActions, { IModalActions } from './ModalActions/ModalActions';
 
-type Props = {
+export type ModalProps = {
 	id: string;
 	children?: React.ReactNode | React.ReactNode[] | any;
 	closeOnBackdropClick?: boolean;
@@ -15,13 +15,14 @@ type Props = {
 	disablePortal?: boolean;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 } & React.ComponentProps<typeof ASCModal>;
-export interface IModal extends React.FunctionComponent<Props> {
-	TopBar: React.FunctionComponent<IModalTopBarProps>;
-	Content: React.FunctionComponent<IModalContentProps>;
-	Actions: React.FunctionComponent<IModalActionsProps> | any;
+
+export interface IModal extends React.FunctionComponent<ModalProps> {
+	TopBar: React.FunctionComponent<ModalTopBarProps>;
+	Content: React.FunctionComponent<ModalContentProps>;
+	Actions: React.FunctionComponent<IModalActions> | any;
 }
 
-const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, ...rest }: Props) => {
+const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, open, ...rest }) => {
 	const handleClose = () => {
 		if (onClose) {
 			onClose();
@@ -56,6 +57,7 @@ const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disable
 			aria-labelledby="modal"
 			className={classes}
 			onClose={handleClose}
+			open={open}
 			disablePortal={disablePortal}
 		>
 			{childrenWithProps}
@@ -66,6 +68,5 @@ const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disable
 Modal.TopBar = ModalTopBar;
 Modal.Content = ModalContent;
 Modal.Actions = ModalActions;
-Modal.displayName = 'Modal';
 
 export default Modal;

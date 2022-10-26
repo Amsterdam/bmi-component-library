@@ -1,6 +1,11 @@
 module.exports = {
-	processors: ['stylelint-processor-styled-components'],
 	extends: ['stylelint-config-recommended', 'stylelint-config-styled-components'],
+	overrides: [
+		{
+			files: ['**/*.{ts,tsx}'],
+			customSyntax: '@stylelint/postcss-css-in-js',
+		},
+	],
 	rules: {
 		'block-closing-brace-empty-line-before': 'never',
 		'block-closing-brace-newline-after': [
@@ -49,6 +54,7 @@ module.exports = {
 		'declaration-colon-space-after': 'always-single-line',
 		'declaration-colon-space-before': 'never',
 		'declaration-empty-line-before': null,
+		'function-no-unknown': null,
 		indentation: 'tab',
 		'keyframe-declaration-no-important': true,
 		'length-zero-no-unit': true,

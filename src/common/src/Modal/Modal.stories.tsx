@@ -1,31 +1,38 @@
 import React from 'react';
 import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
-import { Story } from '@storybook/react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Modal, { IModal } from './Modal';
 import { ModalBlockStyle } from './ModalStyles';
+import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils/storybook';
+
+const disabledControls = generateDisabledControls(['blurredNodeSelector', 'element', 'children', 'blurredNode']);
 
 export default {
 	title: 'common/Modal',
 	component: Modal as IModal,
 	argTypes: {
-		size: {
-			options: ['sm', 'md', 'lg', 'xl'],
-			control: { type: 'radio' },
-		},
+		backdropOpacity: { control: { type: 'range', min: 0, max: 1, step: 0.1 } },
+		...disabledControls,
 	},
-};
+} as ComponentMeta<typeof Modal>;
 
-const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
-	const [isModalVisible, setModalVisibility] = React.useState<boolean>(false);
+const Template: ComponentStory<typeof Modal> = (args) => {
+	const [isModalVisible, setModalVisibility] = React.useState<boolean>(true);
 
-	const renderModal = () => {
-		return (
-			<Modal {...args} id="asset-view" open={isModalVisible}>
-				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setModalVisibility(false)}>
-					<Heading styleAs="h4" as="h2">
-						Afgerond - Assetnaam
-					</Heading>
-				</Modal.TopBar>
+	return (
+		<>
+			<Button onClick={() => setModalVisibility(true)}>Open modal</Button>
+			<Modal
+				{...args}
+				open={isModalVisible}
+				onClose={() => {
+					if (args.closeOnBackdropClick) {
+						setModalVisibility(false);
+					}
+				}}
+				id="asset-view"
+			>
+				<Modal.TopBar onCloseButton={() => setModalVisibility(false)}>Afgerond - Assetnaam</Modal.TopBar>
 				<Modal.Content>
 					<ModalBlockStyle>
 						<Heading forwardedAs="h4">Onjuiste of ontbrekende gegevens?</Heading>
@@ -50,25 +57,16 @@ const Template: Story<React.ComponentProps<typeof Modal>> = (args) => {
 						</Button>
 					</Modal.Actions.Left>
 					<Modal.Actions.Right>
-						<Button variant="primaryInverted" style={{ marginRight: '8px' }}>
-							Vorige
-						</Button>
-						<Button variant="secondary" taskflow>
-							Volgende
-						</Button>
+						<Button variant="primaryInverted">Vorige</Button>
+						<Button variant="secondary">Volgende</Button>
 					</Modal.Actions.Right>
 				</Modal.Actions>
 			</Modal>
-		);
-	};
-
-	return (
-		<>
-			<Button onClick={() => setModalVisibility(true)}>Open modal</Button>
-			{isModalVisible && renderModal()}
 		</>
 	);
 };
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.argTypes = {
+	open: DISABLED_CONTROL,
+};

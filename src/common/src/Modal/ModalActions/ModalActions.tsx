@@ -1,4 +1,5 @@
 import React from 'react';
+import { Divider } from '@amsterdam/asc-ui';
 import {
 	ModalActionsStyle,
 	ModalActionsLeftStyle,
@@ -6,27 +7,35 @@ import {
 	ModalActionsSplitStyle,
 } from './ModalActionsStyles';
 
-export interface Props {
+export type ModalActionsProps = {
 	children?: React.ReactNode | React.ReactNode[] | any;
-}
-export interface IModalActions extends React.FunctionComponent<Props> {
-	Left: React.FunctionComponent<Props>;
-	Right: React.FunctionComponent<Props>;
+	hideDivider?: boolean;
+};
+export interface IModalActions extends React.FunctionComponent<ModalActionsProps> {
+	Left: React.FunctionComponent<ModalActionsProps>;
+	Right: React.FunctionComponent<ModalActionsProps>;
 }
 
-const ModalActions = ({ children }: Props) => {
+const ModalActions: IModalActions = ({ children, hideDivider = true }) => {
 	return React.Children.count(children) > 1 ? (
-		<ModalActionsSplitStyle data-testid="modal-actions">{children}</ModalActionsSplitStyle>
+		<ModalActionsSplitStyle data-testid="modal-actions" hideDivider={hideDivider}>
+			<Divider />
+			{children}
+		</ModalActionsSplitStyle>
 	) : (
-		<ModalActionsStyle data-testid="modal-actions">{children}</ModalActionsStyle>
+		<ModalActionsStyle data-testid="modal-actions" hideDivider={hideDivider}>
+			<Divider />
+			{children}
+		</ModalActionsStyle>
 	);
 };
 
-const ModalActionsLeft = ({ children }: Props) => <ModalActionsLeftStyle>{children}</ModalActionsLeftStyle>;
-const ModalActionsRight = ({ children }: Props) => <ModalActionsRightStyle>{children}</ModalActionsRightStyle>;
+const ModalActionsLeft = ({ children }: ModalActionsProps) => <ModalActionsLeftStyle>{children}</ModalActionsLeftStyle>;
+const ModalActionsRight = ({ children }: ModalActionsProps) => (
+	<ModalActionsRightStyle>{children}</ModalActionsRightStyle>
+);
 
 ModalActions.Left = ModalActionsLeft;
 ModalActions.Right = ModalActionsRight;
-ModalActions.displayName = 'ModalActions';
 
 export default ModalActions;
