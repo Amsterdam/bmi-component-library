@@ -1,28 +1,39 @@
 import styled, { css } from 'styled-components';
-import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
+import { Divider, themeSpacing } from '@amsterdam/asc-ui';
 
-export const ModalActionsCss = css`
-	display: flex;
-	padding: ${themeSpacing(4)} ${themeSpacing(4)};
-	border-top: 2px solid ${themeColor('tint', 'level6')};
-	background-color: ${themeColor('tint', 'level1')};
+export const ModalActionsCss = css<{ hideDivider: boolean }>`
+	display: grid;
+	grid-template-rows: ${themeSpacing(6)} auto;
+
+	padding: 0;
 	text-align: right;
+
+	${Divider} {
+		grid-column: 1 / span 2;
+		grid-row: 1;
+		background-color: ${({ hideDivider }) => (hideDivider ? 'transparent' : '#000')};
+	}
 `;
 
 export const ModalActionsStyle = styled.footer`
 	${ModalActionsCss}
-	justify-content: flex-end;
+	grid-template-columns: 1fr;
 `;
 
 export const ModalActionsSplitStyle = styled.footer`
 	${ModalActionsCss}
-	justify-content: space-between;
+	grid-template-columns: 1fr 1fr;
 `;
 
 export const ModalActionsLeftStyle = styled.div`
 	display: flex;
+	grid-column: 1;
+	gap: ${themeSpacing(2)}; /* > Safari 14.1 */
 `;
 
 export const ModalActionsRightStyle = styled.div`
 	display: flex;
+	grid-column: 2;
+	justify-content: end;
+	gap: ${themeSpacing(2)}; /* > Safari 14.1 */
 `;
