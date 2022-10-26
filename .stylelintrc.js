@@ -54,12 +54,7 @@ module.exports = {
 		'declaration-colon-space-after': 'always-single-line',
 		'declaration-colon-space-before': 'never',
 		'declaration-empty-line-before': null,
-		'function-no-unknown': [
-			true,
-			{
-				ignoreFunctions: ['/\\$\\{[^\\}]*/', '\\$\\{([^\\}]*)\\}'],
-			},
-		],
+		'function-no-unknown': null,
 		indentation: 'tab',
 		'keyframe-declaration-no-important': true,
 		'length-zero-no-unit': true,
