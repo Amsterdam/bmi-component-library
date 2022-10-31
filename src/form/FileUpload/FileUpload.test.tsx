@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import FileUpload, { Props } from './FileUpload';
+import FileUpload, { FileUploadProps } from './FileUpload';
 import userEvent from '@testing-library/user-event';
 import { CustomFileOrRejection } from './hooks';
 
-const defaultProps: Props = {
+const defaultProps: FileUploadProps = {
 	getPostUrl: () => Promise.resolve('api/endpoint'),
 	getHeaders: () => Promise.resolve({}),
 	placeholder: 'Sleep de bestanden in dit vlak of',
@@ -17,7 +17,7 @@ const defaultProps: Props = {
 	options: {
 		noClick: true,
 		noKeyboard: true,
-		accept: 'image/png',
+		accept: { 'image/png': ['.png'] },
 	},
 };
 

@@ -1,34 +1,50 @@
 import styled from 'styled-components';
-import { Button, Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
+import { Button, themeColor, themeSpacing } from '@amsterdam/asc-ui';
+
+export const FileListTitleStyle = styled.h6`
+	align-self: baseline;
+	font-weight: 800;
+	font-size: 18px;
+	line-height: 130%;
+	color: ${themeColor('tint', 'level7')};
+	margin: 0;
+	padding: 0;
+`;
 
 export const FileListStyle = styled.ul`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 	padding: 0;
 	margin: 0;
 `;
 
 export const FileListItemStyle = styled.li`
 	display: flex;
+	gap: ${themeSpacing(10)};
 	position: relative;
 	align-items: center;
 	color: ${themeColor('tint', 'level7')};
-	padding: ${themeSpacing(4)} 0;
 	width: 100%;
-	border-bottom: 1px solid ${themeColor('tint', 'level5')};
-
-	&.file-list-item--is-uploading {
-		border-bottom: none;
-	}
+	min-height: 48px;
+	padding: 0;
+	margin: 0;
 `;
 
-export const FileIconStyle = styled(Icon)`
-	margin-right: ${themeSpacing(1)};
+export const FileListItemPreviewWrapperStyle = styled.div`
+	flex-basis: 50px;
+`;
+
+export const FileListItemImagePreviewStyle = styled.img`
+	max-height: 32px;
+	display: block;
 `;
 
 export const FileNameStyle = styled.span`
-	font-weight: 700;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 160%;
 `;
 
 export const FileNameErrorStyle = styled.span`
@@ -36,11 +52,11 @@ export const FileNameErrorStyle = styled.span`
 	color: ${themeColor('support', 'invalid')};
 `;
 
-export const FileRemoveStyle = styled(Button)`
-	margin-left: auto;
-`;
-
-export const FileCancelStyle = styled(Button)`
+export const FileListItemButtonStyle = styled(Button)`
+	align-self: center;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 160%;
 	margin-left: auto;
 `;
 
@@ -48,24 +64,7 @@ export const FileProgressBarStyle = styled.progress`
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	height: ${themeSpacing(0.5)};
+	height: 10px;
 	width: 100%;
-
-	&[value] {
-		appearance: none;
-
-		::-webkit-progress-bar {
-			height: ${themeSpacing(0.5)};
-			background-color: ${themeColor('tint', 'level2')};
-		}
-
-		::-webkit-progress-value {
-			background-color: ${themeColor('tint', 'level4')};
-		}
-
-		::-moz-progress-bar {
-			height: ${themeSpacing(0.5)};
-			background-color: ${themeColor('tint', 'level4')};
-		}
-	}
+	accent-color: ${themeColor('primary')}; /* https://caniuse.com/mdn-css_properties_accent-color */
 `;

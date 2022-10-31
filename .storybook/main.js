@@ -1,6 +1,6 @@
 module.exports = {
 	stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
-	addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+	addons: ['@storybook/addon-links', '@storybook/addon-essentials', 'storybook-addon-mock'],
 	staticDirs: [{ from: '../src/assets', to: '/assets' }],
 	typescript: {
 		reactDocgen: 'react-docgen-typescript',

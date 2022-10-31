@@ -1,8 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import { DropzoneOptions, FileRejection, useDropzone } from 'react-dropzone';
-import { Icon } from '@amsterdam/asc-ui';
-import { Download } from '@amsterdam/asc-assets';
-import useDetectTouchscreen from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
+
 import {
 	FileUploadStyle,
 	FileUploadContentStyle,
@@ -11,9 +9,12 @@ import {
 	FileUploadContainerStyle,
 } from './FileUploadStyles';
 import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
+
 import FileList from './FileList/FileList';
 
-export type Props = {
+const detectIsTouchScreenOnly = () => (window?.matchMedia('(pointer: coarse)').matches ? true : false);
+
+export type FileUploadProps = {
 	getPostUrl: (file: CustomFile) => Promise<string>;
 	getHeaders: () => Promise<{ [key: string]: string }>;
 	placeholder: string;
@@ -23,6 +24,7 @@ export type Props = {
 	selectFilesLabel: string;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel: string;
+	fileListTitle?: string;
 	removeCompletedFromList?: boolean;
 	onFileRemove?: (file: CustomFile & FileRejection) => void;
 	onFileSuccess?: (file: CustomFile) => void;
@@ -31,7 +33,7 @@ export type Props = {
 	httpMethod?: 'POST' | 'PUT';
 } & HTMLAttributes<HTMLDivElement>;
 
-const FileUpload: React.FC<Props> = ({
+const FileUpload: React.FC<FileUploadProps> = ({
 	getPostUrl,
 	getHeaders,
 	droppingLabel,
@@ -41,6 +43,7 @@ const FileUpload: React.FC<Props> = ({
 	selectFilesLabel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
+	fileListTitle,
 	onFileRemove,
 	onFileSuccess,
 	removeCompletedFromList,
@@ -49,7 +52,8 @@ const FileUpload: React.FC<Props> = ({
 	httpMethod = 'POST',
 	...otherProps
 }) => {
-	const isTouchScreen = useDetectTouchscreen();
+	const [numberOfDraggedFiles, setNumberOfDraggedFiles] = React.useState(0);
+	const isTouchScreen = detectIsTouchScreenOnly();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
 		getPostUrl,
 		getHeaders,
@@ -58,9 +62,12 @@ const FileUpload: React.FC<Props> = ({
 		Math.max(...[...(storedFiles.length ? storedFiles.map((file) => file.tmpId) : [0])]),
 		onFileSuccess,
 	);
-	const { open, getRootProps, getInputProps, isDragActive, draggedFiles } = useDropzone({
+	const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
 		...options,
 		onDrop: handleOnDrop,
+		onDragEnter: (event) => {
+			setNumberOfDraggedFiles(event.dataTransfer.items.length);
+		},
 		noDrag: isTouchScreen,
 	});
 
@@ -71,40 +78,36 @@ const FileUpload: React.FC<Props> = ({
 				<FileUploadContentStyle>
 					{isDragActive ? (
 						<FileUploadPlaceholderStyle>
-							{draggedFiles.length} {droppingLabel}
+							{numberOfDraggedFiles} {droppingLabel}
 						</FileUploadPlaceholderStyle>
 					) : (
 						<>
+							<FileList
+								files={
+									removeCompletedFromList
+										? files.filter((file) => file.progress !== 100 || file?.uploadXhrError === true)
+										: files
+								}
+								removeLabel={removeLabel}
+								cancelLabel={cancelLabel}
+								onCancel={handleOnCancel}
+								onFileRemove={(file: CustomFile & FileRejection) => {
+									handleOnFileRemove(file);
+									// Let application track file removal
+									onFileRemove && onFileRemove(file);
+								}}
+								fileUploadErrorLabel={fileUploadErrorLabel}
+								fileUploadInProgressLabel={fileUploadInProgressLabel}
+								title={fileListTitle}
+							/>
 							<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
 							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
 								{selectFilesLabel}
 							</FileUploadSelectFilesButtonStyle>
-							<Icon size={16} color="#004799">
-								<Download />
-							</Icon>
 						</>
 					)}
 				</FileUploadContentStyle>
 			</FileUploadStyle>
-			{files?.length > 0 && (
-				<FileList
-					files={
-						removeCompletedFromList
-							? files.filter((file) => file.progress !== 100 || file?.uploadXhrError === true)
-							: files
-					}
-					removeLabel={removeLabel}
-					cancelLabel={cancelLabel}
-					onCancel={handleOnCancel}
-					onFileRemove={(file: CustomFile & FileRejection) => {
-						handleOnFileRemove(file);
-						// Let application track file removal
-						onFileRemove && onFileRemove(file);
-					}}
-					fileUploadErrorLabel={fileUploadErrorLabel}
-					fileUploadInProgressLabel={fileUploadInProgressLabel}
-				/>
-			)}
 		</FileUploadContainerStyle>
 	);
 };

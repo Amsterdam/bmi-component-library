@@ -1,46 +1,61 @@
-import React from 'react';
-import { Close, Document } from '@amsterdam/asc-assets';
-import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
+import { Document } from '@amsterdam/asc-assets';
+import { Icon } from '@amsterdam/asc-ui';
 
 import {
-	FileRemoveStyle,
-	FileIconStyle,
+	FileListItemButtonStyle,
+	FileListItemImagePreviewStyle,
+	FileListItemPreviewWrapperStyle,
 	FileListStyle,
 	FileListItemStyle,
 	FileNameStyle,
 	FileNameErrorStyle,
 	FileProgressBarStyle,
+	FileListTitleStyle,
 } from './FileListStyles';
-import { CustomFile, Files } from '../hooks';
-import { FileRejection } from 'react-dropzone';
+import type { CustomFile, CustomFileOrRejection, Files } from '../hooks';
 
-export type Props = {
+export type FileListProps = {
 	files: Files;
 	removeLabel: string;
 	cancelLabel: string;
-	onFileRemove: (file: CustomFile & FileRejection) => void;
-	onCancel: (file: CustomFile & FileRejection) => void;
+	onFileRemove: (file: CustomFileOrRejection) => void;
+	onCancel: (file: CustomFileOrRejection) => void;
 	fileUploadErrorLabel: string;
-	fileUploadInProgressLabel: string;
+	fileUploadInProgressLabel?: string;
 	isUploading?: boolean;
 	progress?: number;
+	title?: string;
 };
 
 type FileListItemProps = {
-	file: CustomFile & FileRejection;
+	file: CustomFileOrRejection;
 	removeLabel: string;
 	cancelLabel: string;
 	onFileRemove: (file: CustomFile) => void;
 	onCancel: (file: CustomFile) => void;
 	fileUploadErrorLabel: string;
-	fileUploadInProgressLabel: string;
+	fileUploadInProgressLabel?: string;
 };
 
-function isFileUploading(file: CustomFile & FileRejection) {
-	return file && file.progress && file.progress > 0 && file.progress < 100;
-}
+const isBase64UrlImage = async (base64String: string) => {
+	const image = new Image();
+	image.src = base64String;
+	return await new Promise((resolve) => {
+		image.onload = function () {
+			resolve([image.height, image.width].includes(0) ? false : true);
+		};
+		image.onerror = () => {
+			resolve(false);
+		};
+	});
+};
 
-const FileList: React.FC<Props> = ({
+const isFileUploading = (file: CustomFileOrRejection) => (file && file.progress && file.progress < 100 ? true : false);
+
+const isFileUploadingIndeterminate = (file: CustomFileOrRejection) => (file && file.progress === 0 ? true : false);
+
+const FileList: React.FC<FileListProps> = ({
 	files,
 	cancelLabel,
 	removeLabel,
@@ -48,23 +63,31 @@ const FileList: React.FC<Props> = ({
 	onCancel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
+	title,
 	...otherProps
-}: Props) => (
-	<FileListStyle data-testid="file-list" {...otherProps}>
-		{files.map((file, index) => (
-			<FileListItem
-				key={file.tmpId || index}
-				onCancel={() => onCancel(file)}
-				onFileRemove={() => onFileRemove(file)}
-				cancelLabel={cancelLabel}
-				removeLabel={removeLabel}
-				file={file}
-				fileUploadErrorLabel={fileUploadErrorLabel}
-				fileUploadInProgressLabel={fileUploadInProgressLabel}
-			/>
-		))}
-	</FileListStyle>
-);
+}) => {
+	if (files?.length === 0) {
+		return null;
+	}
+
+	return (
+		<FileListStyle data-testid="file-list" {...otherProps}>
+			{title && <FileListTitleStyle>{title}</FileListTitleStyle>}
+			{files.map((file, index) => (
+				<FileListItem
+					key={file.tmpId || index}
+					onCancel={() => onCancel(file)}
+					onFileRemove={() => onFileRemove(file)}
+					cancelLabel={cancelLabel}
+					removeLabel={removeLabel}
+					file={file}
+					fileUploadErrorLabel={fileUploadErrorLabel}
+					fileUploadInProgressLabel={fileUploadInProgressLabel}
+				/>
+			))}
+		</FileListStyle>
+	);
+};
 
 const FileListItem: React.FC<FileListItemProps> = ({
 	file,
@@ -74,49 +97,78 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	onCancel,
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
-}: FileListItemProps) => {
+}) => {
 	const isUploading = isFileUploading(file);
-	const classes = classNames({
-		'file-list-item--is-uploading': isUploading,
-	});
+	const isIndeterminate = isFileUploadingIndeterminate(file);
+	const [preview, setPreview] = useState<string>(file.preview || '');
+
+	useEffect(() => {
+		if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
+			const reader = new FileReader();
+			reader.onload = async () => {
+				const base64String = reader.result as string;
+				const isImage = await isBase64UrlImage(base64String);
+				setPreview(isImage ? base64String : '');
+			};
+			reader.onerror = (e) => {
+				setPreview('');
+			};
+			try {
+				reader.readAsDataURL(file);
+			} catch (e) {
+				setPreview('');
+			}
+		}
+	}, [file]);
 
 	return (
-		<FileListItemStyle className={classes} data-testid="file-list-item">
+		<FileListItemStyle data-testid="file-list-item">
 			<>
-				<FileIconStyle size={16} color={file?.errors || file?.uploadXhrError ? '#EC0000' : '#000000'}>
-					<Document />
-				</FileIconStyle>
+				{!isUploading && !isIndeterminate && (
+					<FileListItemPreviewWrapperStyle data-testid="file-list-item-preview">
+						{preview ? (
+							<FileListItemImagePreviewStyle src={preview} alt={file.name} />
+						) : (
+							<Icon size={32} inline>
+								<Document />
+							</Icon>
+						)}
+					</FileListItemPreviewWrapperStyle>
+				)}
+
 				{file?.errors || file?.uploadXhrError ? (
-					<FileNameErrorStyle>
+					<FileNameErrorStyle data-testid="file-list-item-error">
 						{file?.file?.name || file.name} {fileUploadErrorLabel}
 					</FileNameErrorStyle>
 				) : (
-					<FileNameStyle>
+					<FileNameStyle data-testid="file-list-item-name">
 						{file.name} {isUploading && fileUploadInProgressLabel}
 					</FileNameStyle>
 				)}
 			</>
-			{isUploading ? (
+			{isUploading || isIndeterminate ? (
 				<>
-					<FileRemoveStyle
+					<FileListItemButtonStyle
 						onClick={() => onCancel(file)}
 						variant="textButton"
-						iconSize={14}
-						iconLeft={<Close />}
+						data-testid="file-list-item-cancel"
 					>
 						{cancelLabel}
-					</FileRemoveStyle>
-					<FileProgressBarStyle max="100" value={file.progress} />
+					</FileListItemButtonStyle>
+					<FileProgressBarStyle
+						max="100"
+						{...(isUploading ? { value: file.progress } : {})}
+						data-testid="file-list-item-progress"
+					/>
 				</>
 			) : (
-				<FileRemoveStyle
+				<FileListItemButtonStyle
 					onClick={() => onFileRemove(file)}
 					variant="textButton"
-					iconSize={14}
-					iconLeft={<Close />}
+					data-testid="file-list-item-remove"
 				>
 					{removeLabel}
-				</FileRemoveStyle>
+				</FileListItemButtonStyle>
 			)}
 		</FileListItemStyle>
 	);

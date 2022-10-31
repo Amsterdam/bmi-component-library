@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Modal, { IModal } from './Modal';
+import Modal from './Modal';
 import { ModalBlockStyle } from './ModalStyles';
 import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils/storybook';
 
@@ -9,7 +9,7 @@ const disabledControls = generateDisabledControls(['blurredNodeSelector', 'eleme
 
 export default {
 	title: 'common/Modal',
-	component: Modal as IModal,
+	component: Modal,
 	argTypes: {
 		backdropOpacity: { control: { type: 'range', min: 0, max: 1, step: 0.1 } },
 		...disabledControls,
