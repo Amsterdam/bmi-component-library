@@ -30,11 +30,19 @@ describe('<FileList />', () => {
 		render(<FileList {...defaultProps} />);
 		expect(screen.getByText(filesWithRejection[0].name)).toBeInTheDocument();
 		expect(screen.getByText(filesWithRejection[1].name)).toBeInTheDocument();
-		expect(screen.getAllByTestId('file-list-item')).toHaveLength(3);
+		expect(screen.getByText(filesWithRejection[2].name)).toBeInTheDocument();
+		expect(screen.getAllByTestId('file-list-item')).toHaveLength(filesWithRejection.length);
 		const error = screen.getByTestId('file-list-item-error');
 		expect(error).toBeInTheDocument();
 		expect(error.textContent).toContain(defaultProps.fileUploadErrorLabel);
-		expect(error.textContent).toContain(filesWithRejection[2].file.name);
+		expect(error.textContent).toContain(filesWithRejection[3].file.name);
+	});
+
+	it('should render the expected preview when available in the file object', () => {
+		render(<FileList {...defaultProps} />);
+		const image = screen.getByAltText(filesWithRejection[2].name);
+		expect(image).toBeInTheDocument;
+		expect(image.getAttribute('src')).toEqual(filesWithRejection[2].preview);
 	});
 
 	it('should render cancel button and handle event when file uploading is in progress', async () => {

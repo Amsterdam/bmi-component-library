@@ -17,6 +17,15 @@ export const files = [
 		type: 'application/pdf',
 		webkitRelativePath: '',
 	},
+	{
+		lastModified: 1623407907204,
+		name: '1px.png',
+		size: 119660,
+		type: 'image/png',
+		webkitRelativePath: '',
+		preview:
+			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=',
+	},
 ] as Files;
 
 export const rejectedFile = {
