@@ -4,6 +4,8 @@ import FileUpload, { FileUploadProps } from './FileUpload';
 import userEvent from '@testing-library/user-event';
 import { CustomFileOrRejection } from './hooks';
 
+jest.mock('../../utils/isBase64UrlImage');
+
 const defaultProps: FileUploadProps = {
 	getPostUrl: () => Promise.resolve('api/endpoint'),
 	getHeaders: () => Promise.resolve({}),

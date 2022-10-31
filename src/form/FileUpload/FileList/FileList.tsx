@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Document } from '@amsterdam/asc-assets';
 import { Icon } from '@amsterdam/asc-ui';
 
+import { isBase64UrlImage } from '../../../utils/isBase64UrlImage';
+
 import {
 	FileListItemButtonStyle,
 	FileListItemImagePreviewStyle,
@@ -36,19 +38,6 @@ type FileListItemProps = {
 	onCancel: (file: CustomFile) => void;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel?: string;
-};
-
-const isBase64UrlImage = async (base64String: string) => {
-	const image = new Image();
-	image.src = base64String;
-	return await new Promise((resolve) => {
-		image.onload = function () {
-			resolve([image.height, image.width].includes(0) ? false : true);
-		};
-		image.onerror = () => {
-			resolve(false);
-		};
-	});
 };
 
 const isFileUploading = (file: CustomFileOrRejection) => (file && file.progress && file.progress < 100 ? true : false);

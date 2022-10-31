@@ -5,6 +5,8 @@ import FileList, { FileListProps } from './FileList';
 import { CustomFile } from '../hooks';
 import { filesWithRejection } from './__stubs__/files';
 
+jest.mock('../../../utils/isBase64UrlImage');
+
 const defaultProps: FileListProps = {
 	// Combined list of accepted and rejected file records
 	files: filesWithRejection,
