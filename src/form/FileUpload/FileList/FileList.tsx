@@ -92,8 +92,9 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	const [preview, setPreview] = useState<string>(file.preview || '');
 
 	useEffect(() => {
+		let reader: FileReader;
 		if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
-			const reader = new FileReader();
+			reader = new FileReader();
 			reader.onload = async () => {
 				const base64String = reader.result as string;
 				const isImage = await isBase64UrlImage(base64String);
@@ -108,6 +109,11 @@ const FileListItem: React.FC<FileListItemProps> = ({
 				setPreview('');
 			}
 		}
+		return () => {
+			if (reader) {
+				reader.abort();
+			}
+		};
 	}, [file]);
 
 	return (
