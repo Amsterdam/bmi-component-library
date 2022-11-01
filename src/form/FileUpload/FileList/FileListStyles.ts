@@ -34,6 +34,7 @@ export const FileListItemStyle = styled.li`
 
 export const FileListItemPreviewWrapperStyle = styled.div`
 	flex-basis: 50px;
+	max-width: 50px;
 `;
 
 export const FileListItemImagePreviewStyle = styled.img`
