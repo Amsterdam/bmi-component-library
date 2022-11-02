@@ -78,30 +78,32 @@ const FileList: React.FC<FileListProps> = ({
 	);
 };
 
-const useFileReader = (setPreview: (val: string) => void, file: CustomFileOrRejection) => {
+const useFileReader = (setPreview: (val: string) => void) => {
 	const reader = new FileReader();
 
 	const readerCleanup = () => {
 		reader && reader.abort();
 	};
 
-	if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
-		reader.onload = async () => {
-			const base64String = reader.result as string;
-			const isImage = await isBase64UrlImage(base64String);
-			setPreview(isImage ? base64String : '');
-		};
-		reader.onerror = (e) => {
-			setPreview('');
-		};
-		try {
-			reader.readAsDataURL(file);
-		} catch (e) {
-			setPreview('');
+	const read = (file: CustomFileOrRejection) => {
+		if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
+			reader.onload = async () => {
+				const base64String = reader.result as string;
+				const isImage = await isBase64UrlImage(base64String);
+				setPreview(isImage ? base64String : '');
+			};
+			reader.onerror = (e) => {
+				setPreview('');
+			};
+			try {
+				reader.readAsDataURL(file);
+			} catch (e) {
+				setPreview('');
+			}
 		}
-	}
+	};
 
-	return readerCleanup;
+	return { read, readerCleanup };
 };
 
 const FileListItem: React.FC<FileListItemProps> = ({
@@ -113,17 +115,21 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
 }) => {
-	const isUploading = isFileUploading(file);
-	const isIndeterminate = isFileUploadingIndeterminate(file);
 	const [preview, setPreview] = useState<string>(file.preview || '');
 
-	const readerCleanup = useFileReader(setPreview, file);
+	const isUploading = isFileUploading(file);
+	const isIndeterminate = isFileUploadingIndeterminate(file);
+	const { read, readerCleanup } = useFileReader(setPreview);
 
 	useEffect(() => {
 		return () => {
 			readerCleanup();
 		};
 	}, []);
+
+	useEffect(() => {
+		read(file);
+	}, [file]);
 
 	return (
 		<FileListItemStyle data-testid="file-list-item">
