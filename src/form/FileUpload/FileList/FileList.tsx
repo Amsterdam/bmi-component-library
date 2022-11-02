@@ -78,6 +78,32 @@ const FileList: React.FC<FileListProps> = ({
 	);
 };
 
+const useFileReader = (setPreview: (val: string) => void, file: CustomFileOrRejection) => {
+	const reader = new FileReader();
+
+	const readerCleanup = () => {
+		reader && reader.abort();
+	};
+
+	if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
+		reader.onload = async () => {
+			const base64String = reader.result as string;
+			const isImage = await isBase64UrlImage(base64String);
+			setPreview(isImage ? base64String : '');
+		};
+		reader.onerror = (e) => {
+			setPreview('');
+		};
+		try {
+			reader.readAsDataURL(file);
+		} catch (e) {
+			setPreview('');
+		}
+	}
+
+	return readerCleanup;
+};
+
 const FileListItem: React.FC<FileListItemProps> = ({
 	file,
 	cancelLabel,
@@ -91,30 +117,13 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	const isIndeterminate = isFileUploadingIndeterminate(file);
 	const [preview, setPreview] = useState<string>(file.preview || '');
 
+	const readerCleanup = useFileReader(setPreview, file);
+
 	useEffect(() => {
-		let reader: FileReader;
-		if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
-			reader = new FileReader();
-			reader.onload = async () => {
-				const base64String = reader.result as string;
-				const isImage = await isBase64UrlImage(base64String);
-				setPreview(isImage ? base64String : '');
-			};
-			reader.onerror = (e) => {
-				setPreview('');
-			};
-			try {
-				reader.readAsDataURL(file);
-			} catch (e) {
-				setPreview('');
-			}
-		}
 		return () => {
-			if (reader) {
-				reader.abort();
-			}
+			readerCleanup();
 		};
-	}, [file]);
+	}, []);
 
 	return (
 		<FileListItemStyle data-testid="file-list-item">

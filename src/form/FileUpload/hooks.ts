@@ -69,19 +69,21 @@ export const useFileUpload = (
 
 				xhr.onreadystatechange = () => {
 					if (xhr.readyState !== XMLHttpRequest.DONE) return;
-					const status = xhr.status;
 
-					if (status === 0 || (status >= 200 && status < 400)) {
+					const status = xhr.status;
+					const response = xhr.responseText;
+
+					if (status >= 200 && status < 400) {
 						// The request has been completed successfully
 						customFile.progress = 100;
-						customFile.response = xhr.responseText;
+						customFile.response = response;
 						customFile.uploadXhrError = undefined;
 						// Let application track uploaded files
 						onFileSuccess && onFileSuccess(customFile);
 					} else {
 						// Something went wrong with the request
 						customFile.progress = 100;
-						customFile.response = xhr.responseText;
+						customFile.response = response;
 						customFile.uploadXhrError = true;
 					}
 
