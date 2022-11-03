@@ -58,6 +58,7 @@ export const FileUploadContentStyle = styled.div`
 		max-width: ${themeSpacing(4)};
 	}
 
+	/* Only show the placeholder and select files button when there are no files */
 	${FileListStyle}:not(:empty) ~ ${FileUploadPlaceholderStyle},
 	${FileListStyle}:not(:empty) ~ ${FileUploadSelectFilesButtonStyle} {
 		display: none;

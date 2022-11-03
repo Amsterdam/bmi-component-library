@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Document } from '@amsterdam/asc-assets';
 import { Icon } from '@amsterdam/asc-ui';
 
-import { isBase64UrlImage } from '../../../utils/isBase64UrlImage';
+import { generateBase64FromImageFile } from '../../../utils/';
 
 import {
 	FileListItemButtonStyle,
@@ -78,34 +78,6 @@ const FileList: React.FC<FileListProps> = ({
 	);
 };
 
-const useFileReader = (setPreview: (val: string) => void) => {
-	const reader = new FileReader();
-
-	const readerCleanup = () => {
-		reader && reader.abort();
-	};
-
-	const read = (file: CustomFileOrRejection) => {
-		if (file && !file.errors && 'undefined' === typeof file.preview && file.type.startsWith('image')) {
-			reader.onload = async () => {
-				const base64String = reader.result as string;
-				const isImage = await isBase64UrlImage(base64String);
-				setPreview(isImage ? base64String : '');
-			};
-			reader.onerror = (e) => {
-				setPreview('');
-			};
-			try {
-				reader.readAsDataURL(file);
-			} catch (e) {
-				setPreview('');
-			}
-		}
-	};
-
-	return { read, readerCleanup };
-};
-
 const FileListItem: React.FC<FileListItemProps> = ({
 	file,
 	cancelLabel,
@@ -115,21 +87,27 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
 }) => {
-	const [preview, setPreview] = useState<string>(file.preview || '');
-
+	const [preview, setPreview] = React.useState<string | undefined>(file.preview);
+	const mountedRef = useRef(true);
 	const isUploading = isFileUploading(file);
 	const isIndeterminate = isFileUploadingIndeterminate(file);
-	const { read, readerCleanup } = useFileReader(setPreview);
+
+	let houseKeeping = () => {};
 
 	useEffect(() => {
+		if (file && !file.errors && 'undefined' === typeof preview) {
+			generateBase64FromImageFile(file).then(({ result, readerCleanup }) => {
+				if (!mountedRef.current) return null;
+				setPreview(result);
+				houseKeeping = readerCleanup;
+			});
+		}
+
 		return () => {
-			readerCleanup();
+			mountedRef.current = false;
+			houseKeeping();
 		};
 	}, []);
-
-	useEffect(() => {
-		read(file);
-	}, [file]);
 
 	return (
 		<FileListItemStyle data-testid="file-list-item">

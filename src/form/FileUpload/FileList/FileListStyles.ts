@@ -5,7 +5,7 @@ export const FileListTitleStyle = styled.h6`
 	align-self: baseline;
 	font-weight: 800;
 	font-size: 18px;
-	line-height: 130%;
+	line-height: 23px;
 	color: ${themeColor('tint', 'level7')};
 	margin: 0;
 	padding: 0;
@@ -57,7 +57,7 @@ export const FileListItemButtonStyle = styled(Button)`
 	align-self: center;
 	font-weight: 400;
 	font-size: 18px;
-	line-height: 160%;
+	line-height: 29px;
 	margin-left: auto;
 `;
 
