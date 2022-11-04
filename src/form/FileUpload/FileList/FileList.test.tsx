@@ -1,44 +1,15 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import FileList, { Props } from './FileList';
+import { screen, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import FileList, { FileListProps } from './FileList';
 import { CustomFile } from '../hooks';
+import { filesWithRejection } from './__stubs__/files';
 
-const defaultProps: Props = {
+jest.mock('../../../utils/isBase64UrlImage');
+
+const defaultProps: FileListProps = {
 	// Combined list of accepted and rejected file records
-	files: [
-		// Accepted files (only these will be uploaded)
-		{
-			lastModified: 1623407907404,
-			name: 'Stakeholderanalyse.pdf',
-			path: 'Stakeholderanalyse.pdf',
-			size: 119660,
-			type: 'image/png',
-			webkitRelativePath: '',
-			tmpId: 1,
-		},
-		{
-			lastModified: 1623407907304,
-			name: 'Migratierapport.pdf',
-			path: 'Migratierapport.pdf',
-			size: 129654,
-			type: 'image/png',
-			webkitRelativePath: '',
-			tmpId: 2,
-		},
-		// Rejected files
-		{
-			errors: { message: '__ERROR__', code: 'file-too-large' },
-			file: {
-				lastModified: 1623407907404,
-				name: 'Faalrapport.pdf',
-				path: 'Faalrapport.pdf',
-				size: 119660,
-				type: 'image/png',
-				webkitRelativePath: '',
-			},
-			tmpId: 3,
-		},
-	] as any,
+	files: filesWithRejection,
 	removeLabel: 'Wissen',
 	cancelLabel: 'Annuleren',
 	fileUploadErrorLabel: 'dit bestand kan niet worden geüpload',
@@ -48,19 +19,33 @@ const defaultProps: Props = {
 };
 
 describe('<FileList />', () => {
+	const user = userEvent.setup();
+
 	it('should render correctly', () => {
-		const { getByTestId } = render(<FileList {...defaultProps} />);
-		expect(getByTestId('file-list')).toBeDefined();
+		render(<FileList {...defaultProps} />);
+		expect(screen.getByTestId('file-list')).toBeDefined();
 	});
 
 	it('should list the correct files', () => {
-		const { getByText } = render(<FileList {...defaultProps} />);
-		expect(getByText('Stakeholderanalyse.pdf')).toBeInTheDocument();
-		expect(getByText('Migratierapport.pdf')).toBeInTheDocument();
-		expect(getByText('Faalrapport.pdf dit bestand kan niet worden geüpload')).toBeInTheDocument();
+		render(<FileList {...defaultProps} />);
+		expect(screen.getByText(filesWithRejection[0].name)).toBeInTheDocument();
+		expect(screen.getByText(filesWithRejection[1].name)).toBeInTheDocument();
+		expect(screen.getByText(filesWithRejection[2].name)).toBeInTheDocument();
+		expect(screen.getAllByTestId('file-list-item')).toHaveLength(filesWithRejection.length);
+		const error = screen.getByTestId('file-list-item-error');
+		expect(error).toBeInTheDocument();
+		expect(error.textContent).toContain(defaultProps.fileUploadErrorLabel);
+		expect(error.textContent).toContain(filesWithRejection[3].file.name);
 	});
 
-	it('should render cancel button and handle event when file uploading is in progress', () => {
+	it('should render the expected preview when available in the file object', () => {
+		render(<FileList {...defaultProps} />);
+		const image = screen.getByAltText(filesWithRejection[2].name);
+		expect(image).toBeInTheDocument;
+		expect(image.getAttribute('src')).toEqual(filesWithRejection[2].preview);
+	});
+
+	it('should render cancel button and handle event when file uploading is in progress', async () => {
 		const onCancelMock = jest.fn();
 		const filesWithProgress = [
 			{
@@ -74,36 +59,30 @@ describe('<FileList />', () => {
 				tmpId: 4,
 			},
 		];
-		const { getAllByText } = render(
-			<FileList {...defaultProps} files={filesWithProgress as any} onCancel={onCancelMock} />,
-		);
-		const cancelButton = getAllByText('Annuleren')[0];
+		render(<FileList {...defaultProps} files={filesWithProgress as any} onCancel={onCancelMock} />);
+
+		const cancelButton = screen.getByText(defaultProps.cancelLabel);
 
 		expect(cancelButton).toBeInTheDocument();
 
-		fireEvent.click(cancelButton);
+		await user.click(cancelButton);
 
 		expect(onCancelMock).toHaveBeenCalled();
 	});
 
-	it('should render file remove button and handle event', () => {
+	it('should render file remove button and handle event', async () => {
 		const onFileRemoveMock = jest.fn();
-		const { getAllByText } = render(<FileList {...defaultProps} onFileRemove={onFileRemoveMock} />);
-		const removeFileButton = getAllByText('Wissen')[0];
+
+		render(<FileList {...defaultProps} onFileRemove={onFileRemoveMock} />);
+
+		const removeFileButton = screen.getAllByText('Wissen')[0];
 
 		expect(removeFileButton).toBeInTheDocument();
 
-		fireEvent.click(removeFileButton);
+		await user.click(removeFileButton);
 
-		expect(onFileRemoveMock).toHaveBeenCalledWith({
-			lastModified: 1623407907404,
-			name: 'Stakeholderanalyse.pdf',
-			path: 'Stakeholderanalyse.pdf',
-			size: 119660,
-			type: 'image/png',
-			webkitRelativePath: '',
-			tmpId: 1,
-		});
+		expect(onFileRemoveMock).toHaveBeenCalledWith(filesWithRejection[0]);
+
 		expect(onFileRemoveMock).toHaveBeenCalledTimes(1);
 	});
 });

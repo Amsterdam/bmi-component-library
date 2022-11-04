@@ -1,62 +1,60 @@
 import React from 'react';
-import { Story } from '@storybook/react';
-import FileUpload, { Props } from './FileUpload';
-import { CustomFileOrRejection } from './hooks';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import { files } from './FileList/__stubs__/files';
+import FileUpload from './FileUpload';
+
+const url = 'http://localhost:6006/upload';
 
 export default {
 	title: 'form/FileUpload',
 	component: FileUpload,
-};
-
-const defaultProps: Props = {
-	getPostUrl: () => Promise.resolve('https://v2.convertapi.com/upload'), //fakeapi
-	placeholder: 'Sleep de bestanden in dit vlak of',
-	droppingLabel: 'bestanden geselecteerd',
-	selectFilesLabel: 'selecteer bestanden',
-	removeLabel: 'Wissen',
-	cancelLabel: 'Annuleren',
-	fileUploadErrorLabel: 'dit bestand kan niet worden geüpload',
-	fileUploadInProgressLabel: 'wordt geupload',
-	options: { noClick: true, noKeyboard: true },
-	getHeaders: async () => {
-		return Promise.resolve({});
+	args: {
+		getPostUrl: async () => url, // fakeapi
+		placeholder: 'Sleep de bestanden in dit vlak. U kunt ook ',
+		droppingLabel: 'bestanden geselecteerd',
+		selectFilesLabel: 'bestanden of foto’s selecteren of een foto maken',
+		removeLabel: 'Wissen',
+		cancelLabel: 'Annuleren',
+		fileUploadErrorLabel: 'dit bestand kan niet worden geüpload',
+		fileUploadInProgressLabel: '',
+		fileListTitle: 'Bestand',
+		options: { noClick: true, noKeyboard: true },
+		getHeaders: async () => ({}),
 	},
-	onFileSuccess: (file) => {
-		console.log(file);
+	parameters: {
+		mockData: [
+			{
+				url: url,
+				method: 'POST',
+				status: 200,
+				response: {},
+			},
+		],
 	},
-	onFileRemove: (file) => console.log('remove file from redux store of database', file),
-};
+} as ComponentMeta<typeof FileUpload>;
 
-const Template: Story<Props> = (args) => {
+const Template: ComponentStory<typeof FileUpload> = (args) => {
 	return <FileUpload {...args} />;
 };
 
 export const Default = Template.bind({});
-Default.args = defaultProps;
 
-const storedFiles = [
-	new File(['hello'], 'hello.png', { type: 'image/png' }),
-	new File(['there'], 'there.png', { type: 'image/png' }),
-].map((file, idx) => Object.assign(file, { tmpId: idx })) as CustomFileOrRejection[];
+export const SingleFile = Template.bind({});
+SingleFile.args = {
+	options: { noClick: true, noKeyboard: true, maxFiles: 1 },
+	placeholder: 'Sleep een bestand in dit vlak of',
+	selectFilesLabel: 'een bestand of foto selecteren of een foto maken',
+};
 
-export const SingleFile: Story = () => (
-	<FileUpload
-		{...defaultProps}
-		options={{ noClick: true, noKeyboard: true, maxFiles: 1 }}
-		placeholder="Sleep een bestand in dit vlak of"
-	/>
-);
-SingleFile.storyName = 'Single file';
+export const Prepopulated = Template.bind({});
+Prepopulated.args = {
+	options: { noClick: true, noKeyboard: true, accept: { 'plain/txt': ['.txt'] } },
+	placeholder: 'Sleep een .txt bestand in dit vlak of',
+	storedFiles: files.map((file, idX) => ({ ...file, tmpId: idX })),
+};
 
-export const Prepopulated: Story = () => (
-	<FileUpload
-		{...defaultProps}
-		options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
-		placeholder="Sleep de PNG bestanden in dit vlak of"
-		storedFiles={storedFiles}
-	/>
-);
-Prepopulated.storyName = 'Pre-populated FileList';
-
-export const RemoveCompleted: Story = () => <FileUpload {...defaultProps} removeCompletedFromList />;
-RemoveCompleted.storyName = 'Remove completed from FileList';
+export const RemoveCompleted = Template.bind({});
+RemoveCompleted.args = {
+	removeCompletedFromList: true,
+};

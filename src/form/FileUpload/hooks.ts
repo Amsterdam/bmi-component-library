@@ -6,9 +6,11 @@ export interface CustomFile extends File {
 	progress?: number;
 	uploadXhrError?: boolean;
 	response?: string;
+	preview?: string;
 }
 
 export type CustomFileOrRejection = CustomFile & FileRejection;
+
 export type Files = CustomFileOrRejection[];
 
 let tmpId = 0;
@@ -43,10 +45,13 @@ export const useFileUpload = (
 				const xhr = new XMLHttpRequest();
 
 				xhr.upload.onprogress = (event) => {
-					const percentage = parseInt(String((event.loaded / event.total) * 100), 10);
-					// Avoid file being re-rendered as removed from list prior to onreadystatechange having
-					// done its thing
+					const percentage = event.lengthComputable
+						? parseInt(String((event.loaded / event.total) * 100), 10)
+						: 100;
+
+					// Avoid file being re-rendered as removed from list prior to onreadystatechange having done its thing
 					if (percentage === 100) return;
+
 					setFiles(
 						(previousFiles) =>
 							[
@@ -64,19 +69,21 @@ export const useFileUpload = (
 
 				xhr.onreadystatechange = () => {
 					if (xhr.readyState !== XMLHttpRequest.DONE) return;
-					const status = xhr.status;
 
-					if (status === 0 || (status >= 200 && status < 400)) {
+					const status = xhr.status;
+					const response = xhr.responseText;
+
+					if (status >= 200 && status < 400) {
 						// The request has been completed successfully
 						customFile.progress = 100;
-						customFile.response = xhr.responseText;
+						customFile.response = response;
 						customFile.uploadXhrError = undefined;
 						// Let application track uploaded files
 						onFileSuccess && onFileSuccess(customFile);
 					} else {
 						// Something went wrong with the request
 						customFile.progress = 100;
-						customFile.response = xhr.responseText;
+						customFile.response = response;
 						customFile.uploadXhrError = true;
 					}
 
@@ -105,7 +112,7 @@ export const useFileUpload = (
 	);
 
 	const handleOnCancel = React.useCallback(
-		(file: CustomFile & FileRejection) => {
+		(file: CustomFileOrRejection) => {
 			// Cancel network uploading activity
 			stateXhr?.[`xhr_${file.tmpId}`]?.abort();
 			// Remove file from file list
@@ -115,7 +122,7 @@ export const useFileUpload = (
 	);
 
 	const handleOnFileRemove = React.useCallback(
-		(file: CustomFile & FileRejection) => {
+		(file: CustomFileOrRejection) => {
 			// Remove file from file list
 			setFiles(files.filter((f) => f.tmpId !== file.tmpId));
 		},

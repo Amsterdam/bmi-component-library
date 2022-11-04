@@ -1,18 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { breakpoint, Button, themeColor, themeSpacing } from '@amsterdam/asc-ui';
-
-type DragStyleProps = {
-	isDragActive?: boolean;
-	isDragAccept?: boolean;
-	isDragReject?: boolean;
-};
-
-const getColor = ({ isDragActive }: DragStyleProps) => {
-	if (isDragActive) {
-		return themeColor('tint', 'level3');
-	}
-	return themeColor('tint', 'level2');
-};
+import { FileListStyle } from './FileList/FileListStyles';
 
 export const FileUploadContainerStyle = styled.div``;
 
@@ -21,15 +9,36 @@ export const FileUploadStyle = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-width: 70px;
-	padding: ${themeSpacing(8)};
-	border-width: 2px;
-	border-radius: 2px;
-	background-color: ${(props) => getColor(props as DragStyleProps)};
-	border-color: ${(props) => getColor(props as DragStyleProps)};
-	color: ${themeColor('tint', 'level7')};
-	transition: border 0.24s ease-in-out;
+	padding: ${themeSpacing(6)};
+	border: 1px dashed ${themeColor('tint', 'level6')};
+	border-radius: 0;
 	outline: none;
 	cursor: pointer;
+`;
+
+export const FileUploadPlaceholderTextCss = css`
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 160%;
+	color: ${themeColor('tint', 'level7')};
+`;
+
+export const FileUploadPlaceholderStyle = styled.span`
+	${FileUploadPlaceholderTextCss}
+
+	display: none;
+
+	@media screen and ${breakpoint('min-width', 'laptop')} {
+		display: inline;
+	}
+`;
+
+export const FileUploadSelectFilesButtonStyle = styled(Button)`
+	${FileUploadPlaceholderTextCss}
+
+	display: inline-block;
+	color: ${themeColor('primary')};
+	text-decoration: underline;
 `;
 
 export const FileUploadContentStyle = styled.div`
@@ -37,29 +46,8 @@ export const FileUploadContentStyle = styled.div`
 	justify-content: center;
 	align-items: center;
 
-	& > span {
-		margin-left: ${themeSpacing(2)};
-		padding-right: 0;
-		max-width: ${themeSpacing(4)};
-	}
-`;
-
-export const FileUploadPlaceholderStyle = styled.p`
-	display: none;
-	margin: 0;
-
-	@media screen and ${breakpoint('min-width', 'laptop')} {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-`;
-
-export const FileUploadSelectFilesButtonStyle = styled(Button)`
-	text-decoration: underline;
-	font-weight: 500;
-
-	@media screen and ${breakpoint('min-width', 'laptop')} {
-		margin-left: ${themeSpacing(2)};
+	/* Only show the placeholder and select files button when there are no files */
+	${FileListStyle}:not(:empty) ~ div {
+		display: none;
 	}
 `;
