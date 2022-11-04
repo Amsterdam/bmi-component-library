@@ -1,10 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Document } from '@amsterdam/asc-assets';
 import { Icon } from '@amsterdam/asc-ui';
-
-import type { MutableRefObject } from 'react';
-
-import { generateBase64FromImageFile } from '../../../utils/';
 
 import {
 	FileListItemButtonStyle,
@@ -18,6 +14,7 @@ import {
 	FileListTitleStyle,
 } from './FileListStyles';
 
+import { useBase64PreviewValue } from './hooks';
 import type { CustomFile, CustomFileOrRejection, Files } from '../hooks';
 
 export type FileListProps = {
@@ -46,29 +43,6 @@ type FileListItemProps = {
 const isFileUploading = (file: CustomFileOrRejection) => (file && file.progress && file.progress < 100 ? true : false);
 
 const isFileUploadingIndeterminate = (file: CustomFileOrRejection) => (file && file.progress === 0 ? true : false);
-
-const useBase64PreviewValue = (
-	file: CustomFileOrRejection,
-	setPreview: (value: string) => void,
-	mountedRef: MutableRefObject<boolean>,
-) => {
-	useEffect(() => {
-		let houseKeeping: Function | null = null;
-
-		if (file && !file.errors && 'undefined' === typeof file.preview) {
-			generateBase64FromImageFile(file).then(({ result, readerCleanup }) => {
-				if (!mountedRef.current) return null;
-				setPreview(result);
-				houseKeeping = readerCleanup;
-			});
-		}
-
-		return () => {
-			mountedRef.current = false;
-			if (houseKeeping) houseKeeping();
-		};
-	}, []);
-};
 
 const FileList: React.FC<FileListProps> = ({
 	files,
@@ -113,12 +87,11 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	fileUploadErrorLabel,
 	fileUploadInProgressLabel,
 }) => {
-	const [preview, setPreview] = React.useState<string | undefined>(file.preview);
 	const mountedRef = useRef(true);
 	const isUploading = isFileUploading(file);
 	const isIndeterminate = isFileUploadingIndeterminate(file);
 
-	useBase64PreviewValue(file, setPreview, mountedRef);
+	const preview = useBase64PreviewValue(file, mountedRef);
 
 	return (
 		<FileListItemStyle data-testid="file-list-item">

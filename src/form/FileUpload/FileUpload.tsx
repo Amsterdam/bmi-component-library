@@ -100,10 +100,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
 								fileUploadInProgressLabel={fileUploadInProgressLabel}
 								title={fileListTitle}
 							/>
-							<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
-							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
-								{selectFilesLabel}
-							</FileUploadSelectFilesButtonStyle>
+							<div>
+								<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
+								<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
+									{selectFilesLabel}
+								</FileUploadSelectFilesButtonStyle>
+							</div>
 						</>
 					)}
 				</FileUploadContentStyle>
