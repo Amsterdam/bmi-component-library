@@ -7,6 +7,7 @@ import {
 	FileUploadPlaceholderStyle,
 	FileUploadSelectFilesButtonStyle,
 	FileUploadContainerStyle,
+	FileUploadPlaceholderWrapper,
 } from './FileUploadStyles';
 import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
 
@@ -77,7 +78,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
 					<>
-						<div>
+						<FileUploadPlaceholderWrapper>
 							{isDragActive ? (
 								<FileUploadPlaceholderStyle>
 									{numberOfDraggedFiles} {droppingLabel}
@@ -88,7 +89,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
 								{selectFilesLabel}
 							</FileUploadSelectFilesButtonStyle>
-						</div>
+						</FileUploadPlaceholderWrapper>
 
 						<FileList
 							files={

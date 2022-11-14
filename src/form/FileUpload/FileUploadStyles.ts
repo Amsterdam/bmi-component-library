@@ -16,6 +16,11 @@ export const FileUploadStyle = styled.div`
 	cursor: pointer;
 `;
 
+export const FileUploadPlaceholderWrapper = styled.div`
+	display: flex;
+	gap: ${themeSpacing(2)};
+`;
+
 export const FileUploadPlaceholderTextCss = css`
 	font-weight: 400;
 	font-size: 18px;
