@@ -78,19 +78,18 @@ const FileUpload: React.FC<FileUploadProps> = ({
 				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
 					<>
-						<FileUploadPlaceholderWrapper>
+						<div>
 							{isDragActive ? (
 								<FileUploadPlaceholderStyle>
 									{numberOfDraggedFiles} {droppingLabel}
 								</FileUploadPlaceholderStyle>
 							) : (
-								<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
+								<FileUploadPlaceholderStyle>{placeholder} </FileUploadPlaceholderStyle>
 							)}
 							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
 								{selectFilesLabel}
 							</FileUploadSelectFilesButtonStyle>
-						</FileUploadPlaceholderWrapper>
-
+						</div>
 						<FileList
 							files={
 								removeCompletedFromList
