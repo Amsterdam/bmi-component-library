@@ -7,6 +7,7 @@ import {
 	FileUploadPlaceholderStyle,
 	FileUploadSelectFilesButtonStyle,
 	FileUploadContainerStyle,
+	FileUploadPlaceholderWrapper,
 } from './FileUploadStyles';
 import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
 
@@ -76,38 +77,39 @@ const FileUpload: React.FC<FileUploadProps> = ({
 			<FileUploadStyle data-testid="file-upload" {...getRootProps({ isDragActive })}>
 				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
-					{isDragActive ? (
-						<FileUploadPlaceholderStyle>
-							{numberOfDraggedFiles} {droppingLabel}
-						</FileUploadPlaceholderStyle>
-					) : (
-						<>
-							<FileList
-								files={
-									removeCompletedFromList
-										? files.filter((file) => file.progress !== 100 || file?.uploadXhrError === true)
-										: files
-								}
-								removeLabel={removeLabel}
-								cancelLabel={cancelLabel}
-								onCancel={handleOnCancel}
-								onFileRemove={(file: CustomFile & FileRejection) => {
-									handleOnFileRemove(file);
-									// Let application track file removal
-									onFileRemove && onFileRemove(file);
-								}}
-								fileUploadErrorLabel={fileUploadErrorLabel}
-								fileUploadInProgressLabel={fileUploadInProgressLabel}
-								title={fileListTitle}
-							/>
-							<div>
+					<>
+						<FileUploadPlaceholderWrapper>
+							{isDragActive ? (
+								<FileUploadPlaceholderStyle>
+									{numberOfDraggedFiles} {droppingLabel}
+								</FileUploadPlaceholderStyle>
+							) : (
 								<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
-								<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
-									{selectFilesLabel}
-								</FileUploadSelectFilesButtonStyle>
-							</div>
-						</>
-					)}
+							)}
+							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
+								{selectFilesLabel}
+							</FileUploadSelectFilesButtonStyle>
+						</FileUploadPlaceholderWrapper>
+
+						<FileList
+							files={
+								removeCompletedFromList
+									? files.filter((file) => file.progress !== 100 || file?.uploadXhrError === true)
+									: files
+							}
+							removeLabel={removeLabel}
+							cancelLabel={cancelLabel}
+							onCancel={handleOnCancel}
+							onFileRemove={(file: CustomFile & FileRejection) => {
+								handleOnFileRemove(file);
+								// Let application track file removal
+								onFileRemove && onFileRemove(file);
+							}}
+							fileUploadErrorLabel={fileUploadErrorLabel}
+							fileUploadInProgressLabel={fileUploadInProgressLabel}
+							title={fileListTitle}
+						/>
+					</>
 				</FileUploadContentStyle>
 			</FileUploadStyle>
 		</FileUploadContainerStyle>

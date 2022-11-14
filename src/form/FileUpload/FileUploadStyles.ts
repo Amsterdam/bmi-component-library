@@ -16,9 +16,14 @@ export const FileUploadStyle = styled.div`
 	cursor: pointer;
 `;
 
+export const FileUploadPlaceholderWrapper = styled.div`
+	display: flex;
+	gap: ${themeSpacing(2)};
+`;
+
 export const FileUploadPlaceholderTextCss = css`
 	font-weight: 400;
-	font-size: 24px;
+	font-size: 18px;
 	line-height: 160%;
 	color: ${themeColor('tint', 'level7')};
 `;
@@ -45,9 +50,14 @@ export const FileUploadContentStyle = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 
-	/* Only show the placeholder and select files button when there are no files */
-	${FileListStyle}:not(:empty) ~ div {
+	${FileListStyle} {
 		display: none;
+	}
+
+	${FileListStyle}:not(:empty) {
+		display: block;
+		margin-top: ${themeSpacing(6)};
 	}
 `;
