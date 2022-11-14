@@ -39,6 +39,7 @@ export const FileListItemPreviewWrapperStyle = styled.div`
 
 export const FileListItemImagePreviewStyle = styled.img`
 	max-height: 32px;
+	max-width: 50px;
 	display: block;
 `;
 
