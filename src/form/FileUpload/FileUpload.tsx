@@ -7,7 +7,6 @@ import {
 	FileUploadPlaceholderStyle,
 	FileUploadSelectFilesButtonStyle,
 	FileUploadContainerStyle,
-	FileUploadPlaceholderWrapper,
 } from './FileUploadStyles';
 import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
 
@@ -90,6 +89,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 								{selectFilesLabel}
 							</FileUploadSelectFilesButtonStyle>
 						</div>
+
 						<FileList
 							files={
 								removeCompletedFromList
