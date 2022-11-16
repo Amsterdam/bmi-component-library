@@ -26,7 +26,8 @@ export type FileUploadProps = {
 	fileUploadInProgressLabel: string;
 	fileListTitle?: string;
 	removeCompletedFromList?: boolean;
-	onFileRemove?: (file: CustomFile & FileRejection) => void;
+	onFileNameClick?: (file: CustomFileOrRejection) => void;
+	onFileRemove?: (file: CustomFileOrRejection) => void;
 	onFileSuccess?: (file: CustomFile) => void;
 	options?: DropzoneOptions;
 	storedFiles?: CustomFileOrRejection[];
@@ -46,6 +47,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 	fileListTitle,
 	onFileRemove,
 	onFileSuccess,
+	onFileNameClick,
 	removeCompletedFromList,
 	options,
 	storedFiles = [],
@@ -80,14 +82,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
 						<div>
 							{isDragActive ? (
 								<FileUploadPlaceholderStyle>
-									{numberOfDraggedFiles} {droppingLabel}
+									{numberOfDraggedFiles}&nbsp;{droppingLabel}
 								</FileUploadPlaceholderStyle>
 							) : (
-								<FileUploadPlaceholderStyle>{placeholder} </FileUploadPlaceholderStyle>
+								<>
+									<FileUploadPlaceholderStyle>{placeholder}</FileUploadPlaceholderStyle>
+									<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
+										{selectFilesLabel}
+									</FileUploadSelectFilesButtonStyle>
+								</>
 							)}
-							<FileUploadSelectFilesButtonStyle variant="textButton" onClick={open} type="button">
-								{selectFilesLabel}
-							</FileUploadSelectFilesButtonStyle>
 						</div>
 
 						<FileList
@@ -96,6 +100,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 									? files.filter((file) => file.progress !== 100 || file?.uploadXhrError === true)
 									: files
 							}
+							onFileNameClick={onFileNameClick}
 							removeLabel={removeLabel}
 							cancelLabel={cancelLabel}
 							onCancel={handleOnCancel}

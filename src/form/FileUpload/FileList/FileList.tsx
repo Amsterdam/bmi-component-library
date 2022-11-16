@@ -28,6 +28,7 @@ export type FileListProps = {
 	isUploading?: boolean;
 	progress?: number;
 	title?: string;
+	onFileNameClick?: (file: CustomFileOrRejection) => void;
 };
 
 type FileListItemProps = {
@@ -38,6 +39,7 @@ type FileListItemProps = {
 	onCancel: (file: CustomFile) => void;
 	fileUploadErrorLabel: string;
 	fileUploadInProgressLabel?: string;
+	onFileNameClick?: (file: CustomFile) => void;
 };
 
 const isFileUploading = (file: CustomFileOrRejection) => (file && file.progress && file.progress < 100 ? true : false);
@@ -48,6 +50,7 @@ const FileList: React.FC<FileListProps> = ({
 	files,
 	cancelLabel,
 	removeLabel,
+	onFileNameClick,
 	onFileRemove,
 	onCancel,
 	fileUploadErrorLabel,
@@ -67,6 +70,7 @@ const FileList: React.FC<FileListProps> = ({
 					key={file.tmpId || index}
 					onCancel={() => onCancel(file)}
 					onFileRemove={() => onFileRemove(file)}
+					{...(onFileNameClick ? { onFileNameClick: () => onFileNameClick && onFileNameClick(file) } : {})}
 					cancelLabel={cancelLabel}
 					removeLabel={removeLabel}
 					file={file}
@@ -82,6 +86,7 @@ const FileListItem: React.FC<FileListItemProps> = ({
 	file,
 	cancelLabel,
 	removeLabel,
+	onFileNameClick,
 	onFileRemove,
 	onCancel,
 	fileUploadErrorLabel,
@@ -113,7 +118,11 @@ const FileListItem: React.FC<FileListItemProps> = ({
 						{file?.file?.name || file.name} {fileUploadErrorLabel}
 					</FileNameErrorStyle>
 				) : (
-					<FileNameStyle data-testid="file-list-item-name">
+					<FileNameStyle
+						data-testid="file-list-item-name"
+						{...(isUploading ? {} : { onClick: () => onFileNameClick && onFileNameClick(file) })}
+						hasClickListener={onFileNameClick ? true : false}
+					>
 						{file.name} {isUploading && fileUploadInProgressLabel}
 					</FileNameStyle>
 				)}

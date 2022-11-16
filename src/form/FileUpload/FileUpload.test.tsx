@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import FileUpload, { FileUploadProps } from './FileUpload';
 import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
+import FileUpload, { FileUploadProps } from './FileUpload';
 import { CustomFileOrRejection } from './hooks';
 
 jest.mock('../../utils/isBase64UrlImage');
@@ -43,6 +43,8 @@ function mockXHR(responseText: string = '[]', status: number = 200) {
 }
 
 describe('<FileUpload />', () => {
+	const user = userEvent.setup();
+
 	beforeAll(() => {
 		Object.defineProperty(window, 'matchMedia', {
 			writable: true,
@@ -87,7 +89,7 @@ describe('<FileUpload />', () => {
 			const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 			// file.tmpId = 1;
 
-			await userEvent.upload(input, file);
+			await user.upload(input, file);
 
 			expect(xhrMock.open).toBeCalledWith(httpMethod, 'api/endpoint', true);
 			expect(input.files[0]).toStrictEqual(file);
@@ -105,7 +107,7 @@ describe('<FileUpload />', () => {
 			new File(['there'], 'there.png', { type: 'image/png' }),
 		];
 
-		await userEvent.upload(input, files);
+		await user.upload(input, files);
 
 		expect(xhrMock.open).toBeCalledWith('POST', 'api/endpoint', true);
 		expect(input.files).toHaveLength(2);
@@ -124,5 +126,24 @@ describe('<FileUpload />', () => {
 
 		expect(fileList).toHaveTextContent('hello');
 		expect(fileList).toHaveTextContent('there');
+	});
+
+	it('Should handle a click on a filename ', async () => {
+		const onFileNameClick = jest.fn();
+
+		const storedFiles = [
+			new File(['hello'], 'hello.png', { type: 'image/png' }),
+			new File(['there'], 'there.png', { type: 'image/png' }),
+		].map((file, idx) => Object.assign(file, { tmpId: idx })) as CustomFileOrRejection[];
+
+		render(<FileUpload storedFiles={storedFiles} {...defaultProps} onFileNameClick={onFileNameClick} />);
+
+		const fileName = screen.getByText(storedFiles[0].name);
+
+		expect(fileName).toBeInTheDocument();
+
+		await user.click(fileName);
+
+		expect(onFileNameClick).toHaveBeenCalledWith(storedFiles[0]);
 	});
 });
