@@ -18,7 +18,6 @@ export default {
 		fileUploadErrorLabel: 'dit bestand kan niet worden geüpload',
 		fileUploadInProgressLabel: '',
 		files: files,
-		onFileNameClick: undefined /* prevent the default action handler of Storybook to be added */,
 	},
 	argTypes: {
 		...disabledControls,
@@ -37,9 +36,4 @@ WithFilesInProgress.args = {
 export const WithRejectedFiles = Template.bind({});
 WithRejectedFiles.args = {
 	files: filesWithRejection,
-};
-
-export const WithFileNameClickListener = Template.bind({});
-WithFileNameClickListener.args = {
-	onFileNameClick: (file) => console.log(`You clicked on ${file.name}`),
 };
