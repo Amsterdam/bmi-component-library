@@ -26,7 +26,7 @@ export type FileUploadProps = {
 	fileUploadInProgressLabel: string;
 	fileListTitle?: string;
 	removeCompletedFromList?: boolean;
-	onFileNameClick?: (file: CustomFileOrRejection) => void;
+	onFileNameClick?: (file: CustomFile) => void;
 	onFileRemove?: (file: CustomFileOrRejection) => void;
 	onFileSuccess?: (file: CustomFile) => void;
 	options?: DropzoneOptions;

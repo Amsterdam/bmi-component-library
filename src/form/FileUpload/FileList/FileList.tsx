@@ -28,7 +28,7 @@ export type FileListProps = {
 	isUploading?: boolean;
 	progress?: number;
 	title?: string;
-	onFileNameClick?: (file: CustomFileOrRejection) => void;
+	onFileNameClick?: (file: CustomFile) => void;
 };
 
 type FileListItemProps = {
