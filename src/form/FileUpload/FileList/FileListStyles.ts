@@ -43,10 +43,11 @@ export const FileListItemImagePreviewStyle = styled.img`
 	display: block;
 `;
 
-export const FileNameStyle = styled.span`
+export const FileNameStyle = styled.span<{ hasClickListener: boolean }>`
 	font-weight: 400;
 	font-size: 18px;
 	line-height: 160%;
+	${({ hasClickListener }) => hasClickListener && 'cursor: pointer;'}
 `;
 
 export const FileNameErrorStyle = styled.span`

@@ -85,4 +85,18 @@ describe('<FileList />', () => {
 
 		expect(onFileRemoveMock).toHaveBeenCalledTimes(1);
 	});
+
+	it('Should handle on filename click', async () => {
+		const onFileNameClick = jest.fn();
+
+		render(<FileList {...defaultProps} onFileNameClick={onFileNameClick} />);
+
+		const fileName = screen.getByText(filesWithRejection[0].name);
+
+		expect(fileName).toBeInTheDocument();
+
+		await user.click(fileName);
+
+		expect(onFileNameClick).toHaveBeenCalledWith(filesWithRejection[0]);
+	});
 });

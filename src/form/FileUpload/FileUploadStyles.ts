@@ -13,7 +13,6 @@ export const FileUploadStyle = styled.div`
 	border: 1px dashed ${themeColor('tint', 'level6')};
 	border-radius: 0;
 	outline: none;
-	cursor: pointer;
 `;
 
 export const FileUploadPlaceholderWrapper = styled.div`
@@ -30,7 +29,7 @@ export const FileUploadPlaceholderTextCss = css`
 
 export const FileUploadPlaceholderStyle = styled.span`
 	${FileUploadPlaceholderTextCss}
-
+	padding-right: ${themeSpacing(1)};
 	display: none;
 
 	@media screen and ${breakpoint('min-width', 'laptop')} {
