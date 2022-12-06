@@ -1,12 +1,11 @@
 import { Heading } from '@amsterdam/asc-ui';
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { BehaviorSubject } from 'rxjs';
 import Modal from '../Modal/Modal';
-import { ModalBlockStyle } from '../Modal/ModalStyles';
-import { ButtonStyles } from './ConfirmDialogStyles';
+import { ButtonStyles, MessageStyle } from './ConfirmDialogStyles';
 
 export interface IState {
-	message: string;
+	message: ReactNode;
 	onConfirm: () => void;
 	title?: string;
 	textCancelButton?: string;
@@ -64,7 +63,7 @@ const ConfirmDialog: IConfirmDialog = ({
 	useEffect(() => {
 		store.subscribe((props) => {
 			setState({ ...props });
-			if (props.message.length > 0) {
+			if (props.message) {
 				setIsVisible(true);
 			}
 		});
@@ -91,10 +90,10 @@ const ConfirmDialog: IConfirmDialog = ({
 				}}
 				hideCloseButton={hideCloseButton}
 			>
-				<Heading forwardedAs="h4">{state.title}</Heading>
+				<Heading forwardedAs="h1">{state.title}</Heading>
 			</Modal.TopBar>
 			<Modal.Content>
-				<ModalBlockStyle>{state.message}</ModalBlockStyle>
+				<MessageStyle message={state.message}>{state.message}</MessageStyle>
 			</Modal.Content>
 			<Modal.Actions>
 				<Modal.Actions.Left>
