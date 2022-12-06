@@ -4,7 +4,7 @@ import { TopBar, Divider, breakpoint, themeSpacing } from '@amsterdam/asc-ui';
 export const ModalTopBarStyle = styled(TopBar)<{ hideDivider: boolean }>`
 	display: grid;
 	grid-template-columns: 1fr auto;
-	grid-template-rows: 44px ${themeSpacing(6)};
+	grid-template-rows: 44px ${({ hideDivider }) => (hideDivider ? 0 : themeSpacing(6))};
 	padding: 0;
 	margin-bottom: ${({ hideDivider }) => (hideDivider ? 0 : '12px')};
 

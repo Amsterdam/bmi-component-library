@@ -148,4 +148,24 @@ describe('<ConfirmDialog />', () => {
 		});
 	});
 	*/
+
+	test('Renders a ReactNode for a confirmation message', () => {
+		jest.isolateModules(async () => {
+			await clickAndRenderDialog(
+				{
+					title: 'Element verwijderen',
+					message: <p data-testid="react-node-message">Weet u zeker dat u dit element wilt verwijderen?</p>,
+					textCancelButton: 'Annuleer',
+					textConfirmButton: 'Verwijder',
+					...callbackMocks,
+				},
+				{},
+			);
+
+			await waitFor(() => {
+				expect(screen.queryByTestId('modal')).toBeInTheDocument();
+				expect(screen.getByText('Weet u zeker dat u dit element wilt verwijderen?')).toBeInTheDocument();
+			});
+		});
+	});
 });
