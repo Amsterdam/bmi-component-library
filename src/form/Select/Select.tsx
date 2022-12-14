@@ -6,6 +6,7 @@ import { DropdownIndicatorStyle, getSelectStyle } from './SelectStyles';
 export type Props = {
 	error?: boolean;
 	zIndexMenu?: number;
+	maxWidth?: string;
 } & ComponentProps<typeof ReactSelect>;
 
 export const DropdownIndicator = (props: DropdownIndicatorProps) => {
