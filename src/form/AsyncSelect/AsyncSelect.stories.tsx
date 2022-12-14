@@ -7,6 +7,7 @@ export default {
 	title: 'form/AsyncSelect',
 	component: AsyncSelect,
 	args: {
+		maxWidth: '100%',
 		isDisabled: false,
 		inputId: 'asyncSelect',
 		noOptionsMessage: () => 'Geen resultaten',

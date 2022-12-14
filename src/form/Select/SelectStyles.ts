@@ -32,8 +32,12 @@ export const DropdownIndicatorStyle = styled.span`
 // @see https://designsystem.amsterdam.nl/7awj1hc9f/p/6561a5-selection-dropdown
 // @see https://react-select.com/provided
 // @see https://github.com/Amsterdam/amsterdam-styled-components/blob/main/packages/asc-ui/src/components/Select/SelectStyle.ts
-export function getSelectStyle({ error = false, zIndexMenu }: Props): StylesConfig {
+export function getSelectStyle({ error = false, maxWidth = '100%', zIndexMenu }: Props): StylesConfig {
 	return {
+		container: (provided) => ({
+			...provided,
+			maxWidth: maxWidth || '100%',
+		}),
 		control: (provided, { isFocused, isDisabled }) => ({
 			...provided,
 			pointerEvents: isDisabled ? 'none' : 'auto',

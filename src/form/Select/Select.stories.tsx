@@ -7,6 +7,7 @@ export default {
 	title: 'form/Select',
 	component: Select,
 	args: {
+		maxWidth: '100%',
 		isDisabled: false,
 		inputId: 'select',
 		noOptionsMessage: () => 'Geen resultaten',
