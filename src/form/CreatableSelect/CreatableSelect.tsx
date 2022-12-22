@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentProps } from 'react';
 import Creatable from 'react-select/creatable';
 import { getSelectStyle, StyledLabel } from './ReactSelectStyles';
+import { SelectContainer } from '../Select';
 
 type CreatableProps = ComponentProps<typeof Creatable>;
 export type Props = {
@@ -9,6 +10,7 @@ export type Props = {
 	createLabel?: string;
 	error?: boolean;
 	zIndexMenu?: number;
+	['data-testid']?: string;
 } & CreatableProps;
 
 const CreatableSelect: React.FC<Props> = ({
@@ -30,6 +32,7 @@ const CreatableSelect: React.FC<Props> = ({
 				openMenuOnFocus
 				formatCreateLabel={(value: string) => `${createLabel} "${value}"`}
 				options={options}
+				components={{ SelectContainer }}
 				{...props}
 			/>
 		</>
