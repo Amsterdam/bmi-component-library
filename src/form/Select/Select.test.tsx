@@ -12,6 +12,11 @@ describe('<Select />', () => {
 		});
 	});
 
+	it('should render with data-testid', async () => {
+		render(<Select placeholder="Selecteer een optie" options={options} data-testid="x"></Select>);
+		expect(screen.getByTestId('x')).toBeInTheDocument();
+	});
+
 	it('should render with a default value', async () => {
 		render(
 			<Select

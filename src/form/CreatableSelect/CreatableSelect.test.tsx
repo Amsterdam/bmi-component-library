@@ -21,6 +21,14 @@ describe('<CreatableSelect />', () => {
 		return { ...result, form: getByRole('form'), input: getByLabelText(label ?? '') };
 	};
 
+	test('Renders data testid attribute', () => {
+		const { getByTestId } = renderCreatableSelect({
+			label: 'Documentomschrijving',
+			['data-testid']: 'x',
+		});
+		expect(getByTestId('x')).toBeInTheDocument();
+	});
+
 	test('Renders optional label', () => {
 		const { getByLabelText } = renderCreatableSelect({
 			label: 'Documentomschrijving',

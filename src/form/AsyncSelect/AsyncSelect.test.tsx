@@ -12,6 +12,13 @@ describe('<AsyncSelect />', () => {
 		});
 	});
 
+	it('should render with data-testid', async () => {
+		render(
+			<AsyncSelect placeholder="Selecteer een optie" loadOptions={asyncOptions} data-testid="x"></AsyncSelect>,
+		);
+		expect(screen.getByTestId('x')).toBeInTheDocument();
+	});
+
 	it('should render with a default value', async () => {
 		render(
 			<AsyncSelect
