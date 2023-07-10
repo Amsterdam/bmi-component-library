@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FileRejection } from 'react-dropzone';
 
 export interface CustomFile extends File {
@@ -23,16 +23,21 @@ export const useFileUpload = (
 	lastTmpId = 0,
 	onFileSuccess?: (file: CustomFile) => void,
 ) => {
-	const [files, setFiles] = React.useState<CustomFileOrRejection[]>(storedFiles);
-	const [stateXhr, setStateXhr] = React.useState<{ [key: string]: XMLHttpRequest }>({});
+	const [files, setFiles] = useState<CustomFileOrRejection[]>(storedFiles);
+	const [stateXhr, setStateXhr] = useState<{ [key: string]: XMLHttpRequest }>({});
+
+	let isMounted = true;
 
 	useEffect(() => {
 		tmpId = lastTmpId;
+		return () => {
+			isMounted = false;
+		}
 	}, []);
 
-	const handleOnDrop = React.useCallback(
+	const handleOnDrop = useCallback(
 		(acceptedFiles: File[], fileRejections: FileRejection[]) => {
-			if (fileRejections.length) {
+			if (fileRejections.length && isMounted) {
 				setFiles((previousFiles) => [...previousFiles, ...fileRejections] as Files);
 			}
 
@@ -40,7 +45,10 @@ export const useFileUpload = (
 				const customFile: CustomFile = Object.assign(rawFile, { tmpId: nextTmpId, progress: 0 });
 				const postUrl = await getPostUrl(customFile);
 				const headers = await getHeaders();
-				setFiles((previousFiles) => [...previousFiles, customFile] as Files);
+				
+				if(isMounted){
+					setFiles((previousFiles) => [...previousFiles, customFile] as Files);
+				}
 
 				const xhr = new XMLHttpRequest();
 
@@ -51,20 +59,21 @@ export const useFileUpload = (
 
 					// Avoid file being re-rendered as removed from list prior to onreadystatechange having done its thing
 					if (percentage === 100) return;
-
-					setFiles(
-						(previousFiles) =>
-							[
-								...previousFiles.map((file) => {
-									if (file.tmpId === customFile.tmpId) {
-										return Object.assign(file, {
-											progress: percentage,
-										});
-									}
-									return file;
-								}),
-							] as Files,
-					);
+					if (isMounted) {
+						setFiles(
+							(previousFiles) =>
+								[
+									...previousFiles.map((file) => {
+										if (file.tmpId === customFile.tmpId) {
+											return Object.assign(file, {
+												progress: percentage,
+											});
+										}
+										return file;
+									}),
+								] as Files,
+						);
+					}
 				};
 
 				xhr.onreadystatechange = () => {
@@ -86,21 +95,24 @@ export const useFileUpload = (
 						customFile.response = response;
 						customFile.uploadXhrError = true;
 					}
-
-					setFiles(
-						(previousFiles) =>
-							previousFiles.map((file) => (file.tmpId === customFile.tmpId ? customFile : file)) as Files,
-					);
+					if (isMounted) {
+						setFiles(
+							(previousFiles) =>
+								previousFiles.map((file) => (file.tmpId === customFile.tmpId ? customFile : file)) as Files,
+						);
+					}
 				};
 
 				xhr.open(httpMethod, postUrl, true);
 				Object.keys(headers).forEach((name) => xhr.setRequestHeader(name, headers[name]));
 				xhr.send(rawFile);
 
-				setStateXhr({
-					...stateXhr,
-					[`xhr_${customFile.tmpId}`]: xhr,
-				});
+				if (isMounted) {
+					setStateXhr({
+						...stateXhr,
+						[`xhr_${customFile.tmpId}`]: xhr,
+					});
+				}
 			};
 
 			for (const file of acceptedFiles) {
@@ -111,26 +123,30 @@ export const useFileUpload = (
 		[getPostUrl],
 	);
 
-	const handleOnCancel = React.useCallback(
+	const handleOnCancel = useCallback(
 		(file: CustomFileOrRejection) => {
 			// Cancel network uploading activity
 			stateXhr?.[`xhr_${file.tmpId}`]?.abort();
 			// Remove file from file list
-			setFiles(files.filter((f) => f.tmpId !== file.tmpId));
+			if (isMounted) {
+				setFiles(files.filter((f) => f.tmpId !== file.tmpId));
+			}
 		},
 		[files],
 	);
 
-	const handleOnFileRemove = React.useCallback(
+	const handleOnFileRemove = useCallback(
 		(file: CustomFileOrRejection) => {
 			// Remove file from file list
-			setFiles(files.filter((f) => f.tmpId !== file.tmpId));
+			if (isMounted) {
+				setFiles(files.filter((f) => f.tmpId !== file.tmpId));
+			}
 		},
 		[files],
 	);
 
 	const handleOnRemoveAllFiles = () => {
-		setFiles([]);
+		if (isMounted) setFiles([]);
 	};
 
 	return {
