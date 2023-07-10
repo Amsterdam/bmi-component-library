@@ -32,7 +32,7 @@ export const FileUploadPlaceholderStyle = styled.span`
 	padding-right: ${themeSpacing(1)};
 	display: none;
 
-	@media screen and ${breakpoint('min-width', 'laptop')} {
+	@media screen and (${breakpoint('min-width', 'laptop')}) {
 		display: inline;
 	}
 `;

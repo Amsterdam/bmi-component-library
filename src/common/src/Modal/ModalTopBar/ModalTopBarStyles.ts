@@ -8,7 +8,7 @@ export const ModalTopBarStyle = styled(TopBar)<{ hideDivider: boolean }>`
 	padding: 0;
 	margin-bottom: ${({ hideDivider }) => (hideDivider ? 0 : '12px')};
 
-	@media screen and ${breakpoint('min-width', 'tabletS')} {
+	@media screen and (${breakpoint('min-width', 'tabletS')}) {
 		padding: 0;
 	}
 

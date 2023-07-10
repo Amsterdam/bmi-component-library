@@ -10,6 +10,7 @@ export const StyledPagination = styled(Pagination)<ComponentProps<typeof Paginat
 	}
 `;
 
+
 const DataGridStyles = styled.div`
 	.MuiDataGrid-root {
 		border: none;

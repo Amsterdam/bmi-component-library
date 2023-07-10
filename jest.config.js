@@ -168,7 +168,7 @@ module.exports = {
 	//     // '^.+\\.(ts|tsx)?$': `<rootDir>/tests/jest-preprocess.js`
 	// },
 	transform: {
-		'^.+\\.[t|j]sx?$': 'babel-jest',
+		'^.+\\.[t|j]sx?$': '@swc/jest',
 		'^.+\\.svg$': '<rootDir>/jest-svg-transformer.js',
 		// '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
 	},

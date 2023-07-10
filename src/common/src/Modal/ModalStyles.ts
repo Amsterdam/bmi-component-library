@@ -39,7 +39,7 @@ export const ModalBlockStyle = styled.div`
 	padding: 0;
 	margin: ${themeSpacing(3)} 0;
 
-	@media screen and ${breakpoint('min-width', 'tabletM')} {
+	@media screen and (${breakpoint('min-width', 'tabletM')}) {
 		margin: ${themeSpacing(7)} 0;
 	}
 `;

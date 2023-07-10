@@ -1,12 +1,16 @@
 module.exports = {
-	extends: ['stylelint-config-recommended', 'stylelint-config-styled-components'],
+	extends: ['stylelint-config-standard', 'stylelint-config-recommended', 'stylelint-config-styled-components'],
 	overrides: [
 		{
 			files: ['**/*.{ts,tsx}'],
 			customSyntax: '@stylelint/postcss-css-in-js',
 		},
 	],
+	/* 76 rules deprecated in stylelint v13.0.0 */
+	/* see: https://github.com/stylelint/stylelint/blob/main/docs/user-guide/rules.md#deprecated */
 	rules: {
+		'selector-class-pattern': null,
+		'media-query-no-invalid': null,
 		'block-closing-brace-empty-line-before': 'never',
 		'block-closing-brace-newline-after': [
 			'always',

@@ -30,7 +30,7 @@ const ReactNodeExample = styled.div`
 	}
 
 	dl {
-		background-color: rgba(0, 70, 153, 0.2);
+		background-color: rgba(0 70 153 20%);
 		padding: 8px 32px 8px 8px;
 
 		dt,
@@ -38,7 +38,7 @@ const ReactNodeExample = styled.div`
 			display: table-cell;
 			vertical-align: middle;
 			padding: 0 24px 0 0;
-			color: #000000;
+			color: #000;
 		}
 	}
 `;
