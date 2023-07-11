@@ -144,7 +144,7 @@ const DocumentTable: React.FC<Props> = ({
 							if (col.renderCell !== undefined) return col.renderCell(params);
 							return <>{params.formattedValue}</>;
 						},
-					} as GridColDef),
+					}) as GridColDef,
 			);
 		} else {
 			cols = cols.map(
@@ -156,7 +156,7 @@ const DocumentTable: React.FC<Props> = ({
 							if (col.renderCell !== undefined) return col.renderCell(params);
 							return <>{params.formattedValue}</>;
 						},
-					} as GridColDef),
+					}) as GridColDef,
 			);
 		}
 
@@ -265,9 +265,9 @@ const DocumentTable: React.FC<Props> = ({
 				autoHeight
 				hideFooter
 				hideFooterPagination
-				disableSelectionOnClick
+				disableRowSelectionOnClick
 				rowHeight={42}
-				headerHeight={42}
+				columnHeaderHeight={42}
 				columnBuffer={tableColumns.length}
 				getRowHeight={() => 'auto'}
 			/>
