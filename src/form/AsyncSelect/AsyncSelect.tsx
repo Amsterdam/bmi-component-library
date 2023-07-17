@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 import ReactSelectAsyncSelect from 'react-select/async';
 import { getSelectStyle } from './AsyncSelectStyles';
 import { DropdownIndicator } from '../Select/Select';
@@ -9,7 +8,7 @@ export type Props = {
 	zIndexMenu?: number;
 } & ComponentProps<typeof ReactSelectAsyncSelect>;
 
-export const AsyncSelect: React.FC<Props> = ({ inputId, options, value, error, ...props }) => {
+export const AsyncSelect: FC<Props> = ({ inputId, options, value, error, ...props }) => {
 	return (
 		<ReactSelectAsyncSelect
 			styles={getSelectStyle({ error, ...props })}
@@ -19,6 +18,7 @@ export const AsyncSelect: React.FC<Props> = ({ inputId, options, value, error, .
 			openMenuOnFocus
 			cacheOptions
 			defaultOptions
+			menuPlacement="auto"
 			{...props}
 		/>
 	);

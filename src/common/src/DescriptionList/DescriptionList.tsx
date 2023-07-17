@@ -1,4 +1,5 @@
-import React, { HTMLAttributes } from 'react';
+import type { FC, HTMLAttributes } from 'react';
+
 import {
 	DescriptionStyle,
 	DescriptionListStyle,
@@ -22,7 +23,7 @@ export type Props = {
 	footer?: React.ReactNode;
 } & HTMLAttributes<HTMLDivElement>;
 
-const DescriptionList: React.FC<Props> = ({ heading, list, footer, ...otherProps }: Props) => (
+const DescriptionList: FC<Props> = ({ heading, list, footer, ...otherProps }: Props) => (
 	<DescriptionStyle data-testid="description" {...otherProps}>
 		{heading && <DescriptionHeadingStyle>{heading}</DescriptionHeadingStyle>}
 		<DescriptionListStyle data-testid="description-list">

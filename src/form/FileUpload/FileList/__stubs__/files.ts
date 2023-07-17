@@ -1,4 +1,4 @@
-import { Files } from '../../hooks';
+import { Files, CustomFile } from '../../hooks';
 import { FileError, FileRejection } from 'react-dropzone';
 
 export const files = [
@@ -26,9 +26,9 @@ export const files = [
 		preview:
 			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=',
 	},
-] as Files;
+] as CustomFile[];
 
-export const rejectedFile = {
+export const rejectedFile: FileRejection = {
 	errors: [{ message: '__ERROR__', code: 'file-too-large' }] as FileError[],
 	file: {
 		lastModified: 1623407907404,
@@ -37,6 +37,6 @@ export const rejectedFile = {
 		type: 'plain.txt',
 		webkitRelativePath: '',
 	} as File,
-} as FileRejection;
+};
 
 export const filesWithRejection = [...files, rejectedFile] as Files;

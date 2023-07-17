@@ -1,4 +1,6 @@
-import React from 'react';
+import { Children } from 'react';
+import type { FC, ReactNode } from 'react';
+
 import { Divider } from '@amsterdam/asc-ui';
 import {
 	ModalActionsStyle,
@@ -8,16 +10,16 @@ import {
 } from './ModalActionsStyles';
 
 export type ModalActionsProps = {
-	children?: React.ReactNode | React.ReactNode[] | any;
+	children?: ReactNode | ReactNode[] | any;
 	hideDivider?: boolean;
 };
-export interface IModalActions extends React.FunctionComponent<ModalActionsProps> {
-	Left: React.FunctionComponent<ModalActionsProps>;
-	Right: React.FunctionComponent<ModalActionsProps>;
+export interface IModalActions extends FC<ModalActionsProps> {
+	Left: FC<ModalActionsProps>;
+	Right: FC<ModalActionsProps>;
 }
 
 const ModalActions: IModalActions = ({ children, hideDivider = true }) => {
-	return React.Children.count(children) > 1 ? (
+	return Children.count(children) > 1 ? (
 		<ModalActionsSplitStyle data-testid="modal-actions" hideDivider={hideDivider}>
 			<Divider />
 			{children}

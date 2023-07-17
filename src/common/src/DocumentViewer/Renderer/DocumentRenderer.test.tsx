@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import { screen } from '@testing-library/react';
 import DocumentRenderer, { ImageContentTypes, PDFContentTypes } from './DocumentRenderer';
 import { render } from '~/tests/helpers/customRender';

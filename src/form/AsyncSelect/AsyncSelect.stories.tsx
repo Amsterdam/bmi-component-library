@@ -1,4 +1,3 @@
-import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { AsyncSelect } from './AsyncSelect';
 import { asyncOptions } from './__stubs__/options';

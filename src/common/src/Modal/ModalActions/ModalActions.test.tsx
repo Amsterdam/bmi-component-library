@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, getByTestId } from '@testing-library/react';
 import ModalActions from './ModalActions';
 

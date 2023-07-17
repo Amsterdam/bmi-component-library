@@ -4,7 +4,6 @@ import { Divider, themeSpacing } from '@amsterdam/asc-ui';
 export const ModalActionsCss = css<{ hideDivider: boolean }>`
 	display: grid;
 	grid-template-rows: ${themeSpacing(6)} auto;
-
 	padding: 0;
 	text-align: right;
 

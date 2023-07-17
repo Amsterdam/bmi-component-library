@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, themeColor } from '@amsterdam/asc-ui';
+import { themeColor, Input } from '@amsterdam/asc-ui';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ComponentProps } from 'react';
 

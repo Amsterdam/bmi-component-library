@@ -1,5 +1,7 @@
 import { Heading } from '@amsterdam/asc-ui';
-import React, { ReactNode, useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import type { ReactNode, FC } from 'react';
+
 import { BehaviorSubject } from 'rxjs';
 import Modal from '../Modal/Modal';
 import { ButtonStyles, MessageStyle } from './ConfirmDialogStyles';
@@ -46,7 +48,7 @@ export const confirm = (
 	store.next({ title, message, textConfirmButton, textCancelButton, onCancel, onConfirm });
 };
 
-export interface IConfirmDialog extends React.FC<Props> {}
+export interface IConfirmDialog extends FC<Props> {}
 
 const ConfirmDialog: IConfirmDialog = ({
 	size = 'sm',
@@ -57,17 +59,21 @@ const ConfirmDialog: IConfirmDialog = ({
 	open = false,
 	store = subject,
 }: Props) => {
-	const [state, setState] = React.useState<IState>(initialState);
-	const [isVisible, setIsVisible] = React.useState<boolean>(open);
+	const mounted = useRef(false);
+	const [state, setState] = useState<IState>(initialState);
+	const [isVisible, setIsVisible] = useState<boolean>(open);
 
 	useEffect(() => {
+		mounted.current = true;
 		store.subscribe((props) => {
+			if (mounted.current === false) return;
 			setState({ ...props });
 			if (props.message) {
 				setIsVisible(true);
 			}
 		});
 		return () => {
+			mounted.current = false;
 			setIsVisible(false);
 			store.next(initialState);
 		};

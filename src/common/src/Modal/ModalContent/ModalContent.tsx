@@ -1,11 +1,11 @@
-import React from 'react';
+import type { FC, ReactNode } from 'react';
 import ModalContentStyle from './ModalContentStyles';
 
 export interface ModalContentProps {
-	children?: React.ReactNode | React.ReactNode[];
+	children?: ReactNode | ReactNode[];
 }
 
-const ModalContent: React.FC<ModalContentProps> = ({ children }) => {
+const ModalContent: FC<ModalContentProps> = ({ children }) => {
 	return <ModalContentStyle>{children}</ModalContentStyle>;
 };
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import DocumentTable from './DocumentTable';
 import { documents } from '../DocumentTable/__stubs__/documents';
 
@@ -8,7 +7,7 @@ export default {
 	component: DocumentTable,
 };
 
-const Template: Story<React.ComponentProps<typeof DocumentTable>> = (args) => {
+const Template: StoryFn<React.ComponentProps<typeof DocumentTable>> = (args) => {
 	return <DocumentTable {...args} />;
 };
 

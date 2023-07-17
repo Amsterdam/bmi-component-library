@@ -1,4 +1,3 @@
-import React from 'react';
 import Modal from './Modal';
 import { fireEvent } from '@testing-library/react';
 import { render } from '~/tests/helpers/customRender';

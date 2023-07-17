@@ -1,5 +1,4 @@
-import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import DocumentViewer from './DocumentViewer';
 
 export default {
@@ -7,18 +6,18 @@ export default {
 	component: DocumentViewer,
 };
 
-export const NotFound: Story = () => {
+export const NotFound: StoryFn = () => {
 	return <DocumentViewer currentFilename="notfound.txt" uri="assets/notfound.txt" />;
 };
 
-export const NoViewerAvailable: Story = () => {
+export const NoViewerAvailable: StoryFn = () => {
 	return <DocumentViewer currentFilename="example.xlsx" uri="assets/example.xlsx" />;
 };
 
-export const Image: Story = () => {
+export const Image: StoryFn = () => {
 	return <DocumentViewer currentFilename="example.png" uri="assets/example.png" />;
 };
 
-export const PDF: Story = () => {
+export const PDF: StoryFn = () => {
 	return <DocumentViewer currentFilename="example.pdf" uri="assets/example.pdf" />;
 };

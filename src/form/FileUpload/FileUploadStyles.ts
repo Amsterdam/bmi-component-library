@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components';
+import type { StyledComponent } from 'styled-components';
 import { breakpoint, Button, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { FileListStyle } from './FileList/FileListStyles';
 
-export const FileUploadContainerStyle = styled.div``;
-
-export const FileUploadStyle = styled.div`
+export const FileUploadStyle: StyledComponent<'div', any, React.HTMLProps<HTMLDivElement>> = styled.div`
 	flex: 1;
 	display: flex;
 	flex-direction: column;

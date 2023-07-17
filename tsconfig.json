@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"types": ["jest", "node", "styled-components", "@testing-library/jest-dom", "jest-fetch-mock"],
+		"types": ["jest", "node", "@testing-library/jest-dom"],
 		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,

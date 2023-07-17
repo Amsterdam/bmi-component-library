@@ -1,4 +1,5 @@
-import React, { ChangeEvent, InputHTMLAttributes, useEffect } from 'react';
+import type { ChangeEvent, FC, InputHTMLAttributes, KeyboardEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { GridCellParams } from '@mui/x-data-grid';
 import ColumnFilterStyle, { InputStyle, CancelIconStyle } from './ColumnFilterStyle';
 
@@ -10,11 +11,11 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 	onClear: () => void;
 };
 
-const ColumnFilter: React.FC<Props> = ({ params, onFilter, onClear, ...props }: Props) => {
+const ColumnFilter: FC<Props> = ({ params, onFilter, onClear, ...props }: Props) => {
 	const { field } = params;
-	const [value, setValue] = React.useState<Value>(props?.value ?? '');
+	const [value, setValue] = useState<Value>(props?.value ?? '');
 
-	const handleOnKeyUp = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleOnKeyUp = (evt: KeyboardEvent<HTMLInputElement>) => {
 		const input = evt.target as HTMLInputElement;
 		setValue(input.value);
 	};

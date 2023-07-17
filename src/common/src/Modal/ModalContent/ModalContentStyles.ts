@@ -5,7 +5,7 @@ const ModalContentStyle = styled.div`
 	overflow-x: hidden;
 	max-height: calc(90vh - 128px);
 
-	> *:last-child {
+	> *:last-child:not(:only-child) {
 		margin-bottom: 0;
 	}
 `;

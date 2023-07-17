@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect, ChangeEvent } from 'react';
+import { useRef, useState, useEffect, ChangeEvent } from 'react';
+import type { FC } from 'react';
 import {
 	EditableInputStyle,
 	ClearIconStyle,
@@ -12,7 +13,7 @@ type Props = {
 	id: string;
 };
 
-const EditableInput: React.FC<Props> = ({ data, id, ...props }: Props) => {
+const EditableInput: FC<Props> = ({ data, id, ...props }: Props) => {
 	const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 	const [value, setValue] = useState<string | undefined>(data || 'Vul hier iets in');
 
@@ -26,7 +27,7 @@ const EditableInput: React.FC<Props> = ({ data, id, ...props }: Props) => {
 		return () => {
 			document.removeEventListener('mousedown', checkIfClickedOutside);
 		};
-	},[]);
+	}, []);
 
 	return (
 		<EditableInputStyle

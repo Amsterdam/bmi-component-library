@@ -1,12 +1,12 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 
 import { files } from './FileList/__stubs__/files';
 import FileUpload from './FileUpload';
+import { CustomFileOrRejection } from './hooks';
 
 const url = 'http://localhost:6006/upload';
 
-export default {
+const meta: Meta<typeof FileUpload> = {
 	title: 'form/FileUpload',
 	component: FileUpload,
 	args: {
@@ -32,9 +32,9 @@ export default {
 			},
 		],
 	},
-} as ComponentMeta<typeof FileUpload>;
+};
 
-const Template: ComponentStory<typeof FileUpload> = (args) => {
+const Template: StoryFn<typeof FileUpload> = (args) => {
 	return <FileUpload {...args} />;
 };
 
@@ -51,10 +51,12 @@ export const Prepopulated = Template.bind({});
 Prepopulated.args = {
 	options: { noClick: true, noKeyboard: true, accept: { 'plain/txt': ['.txt'] } },
 	placeholder: 'Sleep een .txt bestand in dit vlak of',
-	storedFiles: files.map((file, idX) => ({ ...file, tmpId: idX })),
+	storedFiles: files.map((file, idX) => ({ ...file, tmpId: idX })) as unknown as CustomFileOrRejection[],
 };
 
 export const RemoveCompleted = Template.bind({});
 RemoveCompleted.args = {
 	removeCompletedFromList: true,
 };
+
+export default meta;

@@ -1,7 +1,6 @@
 //@ts-nocheck
 
-import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import EditableInput from './EditableInput';
 
 export default {
@@ -9,7 +8,7 @@ export default {
 	component: EditableInput,
 };
 
-const Template: Story<React.ComponentProps<typeof EditableInput>> = (args) => <EditableInput {...args} />;
+const Template: StoryFn<React.ComponentProps<typeof EditableInput>> = (args) => <EditableInput {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

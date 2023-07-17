@@ -1,4 +1,3 @@
-import React from 'react';
 import { Story, ComponentStory, ComponentMeta } from '@storybook/react';
 import CreatableSelect from './CreatableSelect';
 import { options } from './__stubs__/options';
