@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json.schemastore.org/swcrc",
+	"jsc": {
+		"target": "es2020",
+		"parser": {
+			"syntax": "typescript",
+			"tsx": true,
+			"dynamicImport": true,
+			"decorators": true
+		},
+		"transform": {
+			"react": {
+				"throwIfNamespace": true,
+				"development": false,
+				"runtime": "automatic"
+			}
+		}
+	},
+	"module": {
+		"type": "commonjs"
+	},
+	"sourceMaps": true,
+	"env": {
+		"targets": "last 2 versions"
+	},
+	"exclude": ["__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$", ".*\\.d.ts"],
+	"minify": true
+}
