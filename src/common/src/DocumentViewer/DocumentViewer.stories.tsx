@@ -1,7 +1,7 @@
-import { StoryFn } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import DocumentViewer from './DocumentViewer';
 
-export default {
+const meta: Meta<typeof DocumentViewer> = {
 	title: 'common/DocumentViewer',
 	component: DocumentViewer,
 };
@@ -21,3 +21,5 @@ export const Image: StoryFn = () => {
 export const PDF: StoryFn = () => {
 	return <DocumentViewer currentFilename="example.pdf" uri="assets/example.pdf" />;
 };
+
+export default meta;

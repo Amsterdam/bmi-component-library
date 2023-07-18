@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import { Select } from './Select';
 import { options } from './__stubs__/options';
 
-export default {
+const meta: Meta<typeof Select> = {
 	title: 'form/Select',
 	component: Select,
 	args: {
@@ -21,11 +21,11 @@ export default {
 		isLoading: { control: 'boolean' },
 		onChange: { action: 'change' },
 	},
-} as ComponentMeta<typeof Select>;
+};
 
-const Template: ComponentStory<typeof Select> = (props) => <Select options={options} {...props} />;
+const Template: StoryFn<typeof Select> = (props) => <Select options={options} {...props} />;
 
-const TemplateWithPrefilledValue: ComponentStory<typeof Select> = (props) => (
+const TemplateWithPrefilledValue: StoryFn<typeof Select> = (props) => (
 	<Select
 		options={options}
 		defaultValue={{ label: 'Milieutechnisch onderzoek', value: 'Milieutechnisch onderzoek' }}
@@ -36,3 +36,5 @@ const TemplateWithPrefilledValue: ComponentStory<typeof Select> = (props) => (
 export const Default = Template.bind({});
 
 export const DefaultValue = TemplateWithPrefilledValue.bind({});
+
+export default meta;

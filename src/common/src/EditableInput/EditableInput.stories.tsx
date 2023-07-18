@@ -1,9 +1,7 @@
-//@ts-nocheck
-
-import { StoryFn } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import EditableInput from './EditableInput';
 
-export default {
+const meta: Meta<typeof EditableInput> = {
 	title: 'common/EditableInput',
 	component: EditableInput,
 };
@@ -15,3 +13,5 @@ Default.args = {
 	id: 'Document omschrijving',
 	data: 'Brug Centrum',
 };
+
+export default meta;

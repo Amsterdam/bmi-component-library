@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import { Button, Paragraph } from '@amsterdam/asc-ui';
 import ModalActions from './ModalActions';
 import { generateDisabledControls } from '../../../../utils/storybook';

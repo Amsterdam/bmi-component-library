@@ -1,8 +1,8 @@
 import { Link, Tag } from '@amsterdam/asc-ui';
-import { StoryFn } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import DescriptionList from './DescriptionList';
 
-export default {
+const meta: Meta<typeof DescriptionList> = {
 	title: 'common/DescriptionList',
 	component: DescriptionList,
 };
@@ -69,3 +69,5 @@ WithLinks.args = {
 		</Link>
 	),
 };
+
+export default meta;

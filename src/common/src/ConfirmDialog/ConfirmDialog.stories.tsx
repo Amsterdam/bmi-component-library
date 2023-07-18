@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { BehaviorSubject } from 'rxjs';
 import styled from 'styled-components';
 

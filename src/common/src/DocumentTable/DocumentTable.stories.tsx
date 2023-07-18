@@ -1,8 +1,8 @@
-import { StoryFn } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import DocumentTable from './DocumentTable';
 import { documents } from '../DocumentTable/__stubs__/documents';
 
-export default {
+const meta: Meta<typeof DocumentTable> = {
 	title: 'common/DocumentTable',
 	component: DocumentTable,
 };
@@ -35,3 +35,5 @@ Loading.args = {
 	loading: true,
 	pageSize: 3,
 };
+
+export default meta;

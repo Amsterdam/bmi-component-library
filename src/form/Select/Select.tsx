@@ -25,7 +25,7 @@ export const Select: FC<Props> = ({ inputId, options, value, error, ...props }) 
 			inputId={inputId}
 			components={{ DropdownIndicator }}
 			openMenuOnFocus
-			menuPlacement="auto"
+			menuPlacement="bottom"
 			{...props}
 		/>
 	);

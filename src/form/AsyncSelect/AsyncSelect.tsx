@@ -18,7 +18,7 @@ export const AsyncSelect: FC<Props> = ({ inputId, options, value, error, ...prop
 			openMenuOnFocus
 			cacheOptions
 			defaultOptions
-			menuPlacement="auto"
+			menuPlacement="bottom"
 			{...props}
 		/>
 	);
