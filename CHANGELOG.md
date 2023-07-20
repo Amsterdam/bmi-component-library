@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v1.1.6...v2.0.0-alpha.0) (2023-07-20)
+
 ### [1.1.6](https://github.com/Amsterdam/bmi-component-library/compare/v1.1.5...v1.1.6) (2022-12-14)
 
 ### [1.1.5](https://github.com/Amsterdam/bmi-component-library/compare/v1.1.4...v1.1.5) (2022-12-14)
