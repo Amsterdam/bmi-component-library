@@ -3,6 +3,11 @@
 	"version": "2.0.0-alpha.0",
 	"description": "A React component library based on ASC and Material-UI aimed at repurposing and sharing components across BMI projects",
 	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
+	"files": [
+		"lib",
+		"es"
+	],
 	"module": "es/index.js",
 	"scripts": {
 		"prepare": "npm run build:ts:es && npm run build:ts && husky install",
