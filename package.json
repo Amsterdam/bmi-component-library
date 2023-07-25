@@ -6,7 +6,11 @@
 	"types": "lib/index.d.ts",
 	"files": [
 		"lib",
-		"es"
+		"lib/**/*",
+		"es",
+		"es/**/*",
+		"!**/__mocks__",
+		"!**/__stubs__"
 	],
 	"module": "es/index.js",
 	"scripts": {

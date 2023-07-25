@@ -7,8 +7,6 @@ tests/
 certificates/
 reports/
 src/
-.babelrc.js
-.browserlistrc
 .editorconfig
 .gitignore
 .nvmrc
@@ -23,3 +21,5 @@ README.md
 tsconfig.json
 docker-compose.yml
 Dockerfile
+**/__mocks__/
+**/__stubs__/
