@@ -23,6 +23,6 @@
 	"env": {
 		"targets": "last 2 versions"
 	},
-	"exclude": ["__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$", ".*\\.d.ts"],
+	"exclude": [".__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$"],
 	"minify": true
 }

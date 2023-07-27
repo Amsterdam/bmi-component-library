@@ -30,6 +30,6 @@
 		"declarationMap": true
 	},
 	"files": ["src/index.ts"],
-	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/,**/*.ts", "tests/**/*.tsx"],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }
