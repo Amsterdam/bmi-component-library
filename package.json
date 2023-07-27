@@ -20,7 +20,7 @@
 		"build:ts": "swc ./src --out-dir $PWD/lib --config-file ./swc.config.build.json",
 		"build:ts:watch": "swc ./src --out-dir $PWD/lib --config-file ./swc.config.build.json -w",
 		"build:ts:es:watch": "swc ./src --out-dir $PWD/es --config-file ./swc.config.build.es.json -w",
-		"build:types": "npx -p typescript tsc --project tsconfig.types.json",
+		"build:types": "npx -p typescript tsc --project tsconfig.build.types.json && npx -p typescript tsc --project tsconfig.build.es.types.json",
 		"build:storybook": "storybook build",
 		"test": "jest --silent",
 		"test:watch": "jest --watch",

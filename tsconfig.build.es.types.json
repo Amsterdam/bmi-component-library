@@ -1,0 +1,11 @@
+// tsconfig.types.json
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"outDir": "./es",
+		"rootDir": "./src"
+	},
+	"exclude": ["tests/**/*", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__mocks__/**/*"]
+}
