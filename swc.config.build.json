@@ -1,7 +1,7 @@
 {
 	"$schema": "http://json.schemastore.org/swcrc",
 	"jsc": {
-		"target": "es2020",
+		"target": "es5",
 		"parser": {
 			"syntax": "typescript",
 			"tsx": true,
@@ -20,9 +20,6 @@
 		"type": "commonjs"
 	},
 	"sourceMaps": true,
-	"env": {
-		"targets": "last 2 versions"
-	},
 	"exclude": [".__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$"],
 	"minify": true
 }

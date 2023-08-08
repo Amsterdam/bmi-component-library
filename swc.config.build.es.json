@@ -1,7 +1,7 @@
 {
 	"$schema": "http://json.schemastore.org/swcrc",
 	"jsc": {
-		"target": "es2020",
+		"target": "es2015",
 		"parser": {
 			"syntax": "typescript",
 			"tsx": true,
@@ -20,9 +20,5 @@
 		"type": "es6"
 	},
 	"sourceMaps": true,
-	"env": {
-		"targets": "last 2 versions"
-	},
-
 	"minify": true
 }

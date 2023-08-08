@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { act, waitFor } from '@testing-library/react';
 import { useFileUpload } from './hooks';
 import { CustomFileOrRejection } from './hooks';
@@ -23,7 +23,12 @@ describe('useFileUpload', () => {
 	});
 
 	it('should return the correct entries', () => {
-		const { result } = renderHook(() => useFileUpload(() => Promise.resolve('__url__'), () => Promise.resolve(headers)));
+		const { result } = renderHook(() =>
+			useFileUpload(
+				() => Promise.resolve('__url__'),
+				() => Promise.resolve(headers),
+			),
+		);
 
 		const expectedResult = {
 			handleOnDrop: () => console.log('handleOnDrop'),
@@ -41,7 +46,14 @@ describe('useFileUpload', () => {
 		const getPostUrlMock = jest.fn().mockResolvedValue('__url__');
 
 		const { result } = renderHook(() =>
-			useFileUpload(getPostUrlMock, () => Promise.resolve(headers), 'POST', storedFiles, 1, () => Promise.resolve(null)),
+			useFileUpload(
+				getPostUrlMock,
+				() => Promise.resolve(headers),
+				'POST',
+				storedFiles,
+				1,
+				() => Promise.resolve(null),
+			),
 		);
 
 		act(() => {

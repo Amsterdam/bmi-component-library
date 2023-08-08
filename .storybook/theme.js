@@ -33,5 +33,5 @@ export default create({
 
 	brandTitle: 'BMI Component Library',
 	brandUrl: 'https://www.npmjs.com/package/@amsterdam/bmi-component-library',
-	brandImage: 'https://aip.amsterdam.nl/assets/img/amsterdam/logos/logo-small.png',
+	brandImage: 'https://aip.amsterdam.nl/img/amsterdam/logos/logo-small.png',
 });
