@@ -1,4 +1,4 @@
-FROM node:14.16.1-alpine AS builder
+FROM node:20.5.0-alpine AS builder
 
 RUN apk --no-cache add ca-certificates git
 
