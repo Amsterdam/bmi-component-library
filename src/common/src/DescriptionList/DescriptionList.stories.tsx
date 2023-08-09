@@ -1,14 +1,13 @@
-import React from 'react';
 import { Link, Tag } from '@amsterdam/asc-ui';
-import { Story } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import DescriptionList from './DescriptionList';
 
-export default {
+const meta: Meta<typeof DescriptionList> = {
 	title: 'common/DescriptionList',
 	component: DescriptionList,
 };
 
-const Template: Story<React.ComponentProps<typeof DescriptionList>> = (args) => <DescriptionList {...args} />;
+const Template: StoryFn<React.ComponentProps<typeof DescriptionList>> = (args) => <DescriptionList {...args} />;
 
 const descriptionList: React.ComponentProps<typeof DescriptionList>['list'] = [
 	{
@@ -41,7 +40,15 @@ WithLinks.args = {
 	list: [
 		{
 			label: 'Naam',
-			value: <Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>BRU0315 Galgenbrug</Link>,
+			value: (
+				<Link
+					variant="inline"
+					href="#"
+					onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}
+				>
+					BRU0315 Galgenbrug
+				</Link>
+			),
 		},
 		{
 			label: 'Locatie',
@@ -56,5 +63,11 @@ WithLinks.args = {
 			value: '1879',
 		},
 	],
-	footer: <Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>Toon paspoortgegevens</Link>
+	footer: (
+		<Link variant="inline" href="#" onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => evt.preventDefault()}>
+			Toon paspoortgegevens
+		</Link>
+	),
 };
+
+export default meta;

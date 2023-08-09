@@ -31,12 +31,7 @@ module.exports = {
 	coveragePathIgnorePatterns: ['/node_modules/', '/src/types/'],
 
 	// A list of reporter names that Jest uses when writing coverage reports
-	coverageReporters: [
-		// "json",
-		'text',
-		'lcov',
-		// "clover"
-	],
+	coverageReporters: ['text', 'lcov'],
 
 	// An object that configures minimum threshold enforcement for coverage results
 	// coverageThreshold: null,
@@ -57,7 +52,7 @@ module.exports = {
 	// globalTeardown: null,
 
 	// A set of global variables that need to be available in all test environments
-	// globals: {},
+	//globals: { },
 
 	// The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
 	// maxWorkers: "50%",
@@ -168,7 +163,7 @@ module.exports = {
 	//     // '^.+\\.(ts|tsx)?$': `<rootDir>/tests/jest-preprocess.js`
 	// },
 	transform: {
-		'^.+\\.[t|j]sx?$': 'babel-jest',
+		'^.+\\.[t|j]sx?$': '@swc/jest',
 		'^.+\\.svg$': '<rootDir>/jest-svg-transformer.js',
 		// '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
 	},

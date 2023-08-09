@@ -4,7 +4,6 @@ import { ModalTopBarStyle } from './ModalTopBar/ModalTopBarStyles';
 
 export const ModalStyle = styled(Modal)`
 	max-width: 90%;
-
 	max-height: fit-content;
 	overflow: visible;
 	padding: ${themeSpacing(8)};
@@ -39,7 +38,7 @@ export const ModalBlockStyle = styled.div`
 	padding: 0;
 	margin: ${themeSpacing(3)} 0;
 
-	@media screen and ${breakpoint('min-width', 'tabletM')} {
+	@media screen and (${breakpoint('min-width', 'tabletM')}) {
 		margin: ${themeSpacing(7)} 0;
 	}
 `;

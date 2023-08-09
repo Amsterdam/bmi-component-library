@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent, getByTestId, queryByText, queryByTestId } from '@testing-library/react';
 import ModalTopBar from './ModalTopBar';
 

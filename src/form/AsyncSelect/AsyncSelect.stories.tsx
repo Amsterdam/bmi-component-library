@@ -1,13 +1,11 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import { AsyncSelect } from './AsyncSelect';
 import { asyncOptions } from './__stubs__/options';
 
-export default {
+const meta: Meta<typeof AsyncSelect> = {
 	title: 'form/AsyncSelect',
 	component: AsyncSelect,
 	args: {
-		maxWidth: '100%',
 		isDisabled: false,
 		inputId: 'asyncSelect',
 		noOptionsMessage: () => 'Geen resultaten',
@@ -21,11 +19,11 @@ export default {
 		isLoading: { control: 'boolean' },
 		onChange: { action: 'change' },
 	},
-} as ComponentMeta<typeof AsyncSelect>;
+};
 
-const Template: ComponentStory<typeof AsyncSelect> = (props) => <AsyncSelect loadOptions={asyncOptions} {...props} />;
+const Template: StoryFn<typeof AsyncSelect> = (props) => <AsyncSelect loadOptions={asyncOptions} {...props} />;
 
-const TemplateWithPrefilledValue: ComponentStory<typeof AsyncSelect> = (props) => (
+const TemplateWithPrefilledValue: StoryFn<typeof AsyncSelect> = (props) => (
 	<AsyncSelect
 		loadOptions={asyncOptions}
 		defaultValue={{ label: 'Milieutechnisch onderzoek', value: 'Milieutechnisch onderzoek' }}
@@ -36,3 +34,5 @@ const TemplateWithPrefilledValue: ComponentStory<typeof AsyncSelect> = (props) =
 export const Default = Template.bind({});
 
 export const DefaultValue = TemplateWithPrefilledValue.bind({});
+
+export default meta;

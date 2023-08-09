@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { FC } from 'react';
 import { GridColDef, GridRowModel } from '@mui/x-data-grid';
 import { Button } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
@@ -59,7 +60,7 @@ export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowMod
 		  });
 }
 
-const DocumentTable: React.FC<Props> = ({
+const DocumentTable: FC<Props> = ({
 	columns,
 	rows,
 	disableFilterRow = false,
@@ -144,7 +145,7 @@ const DocumentTable: React.FC<Props> = ({
 							if (col.renderCell !== undefined) return col.renderCell(params);
 							return <>{params.formattedValue}</>;
 						},
-					} as GridColDef),
+					}) as GridColDef,
 			);
 		} else {
 			cols = cols.map(
@@ -156,7 +157,7 @@ const DocumentTable: React.FC<Props> = ({
 							if (col.renderCell !== undefined) return col.renderCell(params);
 							return <>{params.formattedValue}</>;
 						},
-					} as GridColDef),
+					}) as GridColDef,
 			);
 		}
 
@@ -188,23 +189,23 @@ const DocumentTable: React.FC<Props> = ({
 	}, [columns, disableFilterRow, disableRemoval, loading]);
 
 	// Filtered rows contains all rows that were not deleted or filtered out (required for pagination)
-	const [filteredRows, setFilteredRows] = React.useState<GridRowModel[]>(rows);
+	const [filteredRows, setFilteredRows] = useState<GridRowModel[]>(rows);
 	// Paginated subset of filtered rows
-	const [tableRows, setTableRows] = React.useState<GridRowModel[]>(rows);
-	const [currentPage, setCurrentPage] = React.useState<number>(page);
-	const [filters, setFilters] = React.useState<Filters>({});
-	const [deletedRowIds, setDeletedRowIds] = React.useState<string[]>([]);
+	const [tableRows, setTableRows] = useState<GridRowModel[]>(rows);
+	const [currentPage, setCurrentPage] = useState<number>(page);
+	const [filters, setFilters] = useState<Filters>({});
+	const [deletedRowIds, setDeletedRowIds] = useState<string[]>([]);
 
-	const onFilterChange = React.useCallback((name: string, value: string) => {
+	const onFilterChange = useCallback((name: string, value: string) => {
 		setFilters((prevState) => ({ ...prevState, [name]: value }));
 	}, []);
 
-	const onClearFilter = React.useCallback((key: string) => {
+	const onClearFilter = useCallback((key: string) => {
 		delete filters[key];
 		setFilters({ ...filters });
 	}, []);
 
-	const handleRemoval = React.useCallback(async (id: string) => {
+	const handleRemoval = useCallback(async (id: string) => {
 		if (onRemove) {
 			const removed = await onRemove(id);
 			// Expect explicit false in case a confirmation dialog is used and cancelled
@@ -265,9 +266,9 @@ const DocumentTable: React.FC<Props> = ({
 				autoHeight
 				hideFooter
 				hideFooterPagination
-				disableSelectionOnClick
+				disableRowSelectionOnClick
 				rowHeight={42}
-				headerHeight={42}
+				columnHeaderHeight={42}
 				columnBuffer={tableColumns.length}
 				getRowHeight={() => 'auto'}
 			/>

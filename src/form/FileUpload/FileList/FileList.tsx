@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import type { FC } from 'react';
+
 import { Document } from '@amsterdam/asc-assets';
 import { Icon } from '@amsterdam/asc-ui';
 
@@ -46,7 +48,7 @@ const isFileUploading = (file: CustomFileOrRejection) => (file && file.progress 
 
 const isFileUploadingIndeterminate = (file: CustomFileOrRejection) => (file && file.progress === 0 ? true : false);
 
-const FileList: React.FC<FileListProps> = ({
+const FileList: FC<FileListProps> = ({
 	files,
 	cancelLabel,
 	removeLabel,
@@ -82,7 +84,7 @@ const FileList: React.FC<FileListProps> = ({
 	);
 };
 
-const FileListItem: React.FC<FileListItemProps> = ({
+const FileListItem: FC<FileListItemProps> = ({
 	file,
 	cancelLabel,
 	removeLabel,

@@ -1,18 +1,17 @@
-//@ts-nocheck
-
-import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import EditableInput from './EditableInput';
 
-export default {
+const meta: Meta<typeof EditableInput> = {
 	title: 'common/EditableInput',
 	component: EditableInput,
 };
 
-const Template: Story<React.ComponentProps<typeof EditableInput>> = (args) => <EditableInput {...args} />;
+const Template: StoryFn<React.ComponentProps<typeof EditableInput>> = (args) => <EditableInput {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
 	id: 'Document omschrijving',
 	data: 'Brug Centrum',
 };
+
+export default meta;

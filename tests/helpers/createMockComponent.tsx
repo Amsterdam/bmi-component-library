@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 export interface ComponentMockProps {
 	onClick: () => void;
@@ -7,10 +7,7 @@ export interface ComponentMockProps {
 	className?: string;
 }
 
-export function createMockComponent(
-	componentName: string,
-	defaultDataTestId: string = '',
-): React.FC<ComponentMockProps> {
+export function createMockComponent(componentName: string, defaultDataTestId: string = ''): FC<ComponentMockProps> {
 	const NamedComponentMock = ({
 		children,
 		'data-testid': dataTestId = defaultDataTestId,

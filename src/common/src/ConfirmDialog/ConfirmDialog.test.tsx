@@ -1,6 +1,6 @@
 import type { IState, Props } from './ConfirmDialog';
 
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import { screen } from '@testing-library/dom';
 import { Modal, ThemeProvider } from '@amsterdam/asc-ui';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';

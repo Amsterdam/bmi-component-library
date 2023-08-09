@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import Select from './Select';

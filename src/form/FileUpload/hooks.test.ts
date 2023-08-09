@@ -1,11 +1,7 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { act, waitFor } from '@testing-library/react';
 import { useFileUpload } from './hooks';
 import { CustomFileOrRejection } from './hooks';
-
-const getPostUrlMock = jest.fn().mockImplementation(() => Promise.resolve(true));
-const getHeadersMock = jest.fn().mockImplementation(() => Promise.resolve({}));
-const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
 
 const storedFiles = [
 	new File(['TEST_1'], 'TEST_1.png', { type: 'image/png' }),
@@ -17,6 +13,7 @@ const files = [
 	new File(['TEST_4'], 'TEST_4.png', { type: 'image/png' }),
 	new File(['TEST_5'], 'TEST_5.png', { type: 'image/png' }),
 ];
+
 const headers = {};
 
 describe('useFileUpload', () => {
@@ -26,7 +23,12 @@ describe('useFileUpload', () => {
 	});
 
 	it('should return the correct entries', () => {
-		const { result } = renderHook(() => useFileUpload(getPostUrlMock, () => Promise.resolve(headers)));
+		const { result } = renderHook(() =>
+			useFileUpload(
+				() => Promise.resolve('__url__'),
+				() => Promise.resolve(headers),
+			),
+		);
 
 		const expectedResult = {
 			handleOnDrop: () => console.log('handleOnDrop'),
@@ -41,12 +43,23 @@ describe('useFileUpload', () => {
 	});
 
 	test('handleOnDrop', async () => {
+		const getPostUrlMock = jest.fn().mockResolvedValue('__url__');
+
 		const { result } = renderHook(() =>
-			useFileUpload(getPostUrlMock, getHeadersMock, 'POST', storedFiles, 1, onFileSuccessMock),
+			useFileUpload(
+				getPostUrlMock,
+				() => Promise.resolve(headers),
+				'POST',
+				storedFiles,
+				1,
+				() => Promise.resolve(null),
+			),
 		);
+
 		act(() => {
 			result.current.handleOnDrop(files, []);
 		});
+
 		await waitFor(() => {
 			expect(getPostUrlMock).toHaveBeenCalledTimes(3);
 			expect(getPostUrlMock).nthCalledWith(1, files[0]);

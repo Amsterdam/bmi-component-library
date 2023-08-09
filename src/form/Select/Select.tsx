@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 import ReactSelect, { components, DropdownIndicatorProps } from 'react-select';
 import { DropdownIndicatorStyle, getSelectStyle } from './SelectStyles';
 
@@ -17,7 +16,7 @@ export const DropdownIndicator = (props: DropdownIndicatorProps) => {
 	);
 };
 
-export const Select: React.FC<Props> = ({ inputId, options, value, error, ...props }) => {
+export const Select: FC<Props> = ({ inputId, options, value, error, ...props }) => {
 	return (
 		<ReactSelect
 			styles={getSelectStyle({ error, ...props })}
@@ -26,6 +25,7 @@ export const Select: React.FC<Props> = ({ inputId, options, value, error, ...pro
 			inputId={inputId}
 			components={{ DropdownIndicator }}
 			openMenuOnFocus
+			menuPlacement="bottom"
 			{...props}
 		/>
 	);

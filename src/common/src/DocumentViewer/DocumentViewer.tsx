@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { FC } from 'react';
 import { Alert, Heading, themeColor } from '@amsterdam/asc-ui';
 import { DocumentViewerStyle, SpinnerStyle } from './DocumentViewerStyles';
 import DocumentRenderer from './Renderer/DocumentRenderer';
@@ -16,7 +17,7 @@ export type DocumentState = {
 	contentType?: string;
 };
 
-const DocumentViewer: React.FC<Props> = ({ uri, onFailure, currentFilename }: Props) => {
+const DocumentViewer: FC<Props> = ({ uri, onFailure, currentFilename }: Props) => {
 	const [documentState, setDocumentState] = useState<DocumentState>({ loading: true });
 	const { loading, filename, error, contentType } = documentState;
 

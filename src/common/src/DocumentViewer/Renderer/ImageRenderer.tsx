@@ -1,9 +1,9 @@
-import React from 'react';
+import type { FC } from 'react';
 
 type Props = {
 	uri: string;
 };
 
-const ImageRenderer: React.FC<Props> = ({ uri }) => <img src={uri} alt="Afbeelding" />;
+const ImageRenderer: FC<Props> = ({ uri }) => <img src={uri} alt="Afbeelding" />;
 
 export default ImageRenderer;

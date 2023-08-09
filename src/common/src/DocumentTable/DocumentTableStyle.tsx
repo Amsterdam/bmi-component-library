@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import { DataGrid } from '@mui/x-data-grid';
-import { themeColor, srOnlyStyle, Pagination, themeSpacing } from '@amsterdam/asc-ui';
+import { themeColor, themeSpacing, srOnlyStyle, Pagination } from '@amsterdam/asc-ui';
 import { ComponentProps } from 'react';
 
 export const StyledPagination = styled(Pagination)<ComponentProps<typeof Pagination>>`

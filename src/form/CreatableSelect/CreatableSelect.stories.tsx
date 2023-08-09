@@ -1,9 +1,8 @@
-import React from 'react';
-import { Story, ComponentStory, ComponentMeta } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import CreatableSelect from './CreatableSelect';
 import { options } from './__stubs__/options';
 
-export default {
+const meta: Meta<typeof CreatableSelect> = {
 	title: 'form/CreatableSelect',
 	component: CreatableSelect,
 	argTypes: {
@@ -14,15 +13,16 @@ export default {
 		isLoading: { control: 'boolean' },
 		onChange: { action: 'change' },
 	},
-} as ComponentMeta<typeof CreatableSelect>;
+};
 
-const Template: ComponentStory<typeof CreatableSelect> = ({ id = 'creatable-demo', ...props }) => {
+const Template: StoryFn<typeof CreatableSelect> = ({ id = 'creatable-demo', ...props }) => {
 	return (
 		<CreatableSelect
 			inputId={id}
 			isClearable
 			onChange={(val) => console.log('onChange', val)}
 			options={options}
+			menuPlacement="bottom"
 			{...props}
 		/>
 	);
@@ -51,7 +51,7 @@ WithError.args = {
 	error: true,
 };
 
-export const MenuPortal: Story = Template.bind({});
+export const MenuPortal = Template.bind({});
 MenuPortal.storyName = 'Menu in portal';
 MenuPortal.args = {
 	menuPortalTarget: document.body,
@@ -59,3 +59,5 @@ MenuPortal.args = {
 	label: 'Documentomschrijving',
 	value: '',
 };
+
+export default meta;

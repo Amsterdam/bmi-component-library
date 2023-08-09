@@ -1,6 +1,4 @@
-import React from 'react';
 import { act, fireEvent, getByTestId, queryByTestId, render, waitFor, screen } from '@testing-library/react';
-import 'jest-styled-components';
 import ColumnFilter from './ColumnFilter';
 
 describe('<ColumnFilter />', () => {

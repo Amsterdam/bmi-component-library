@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 import Creatable from 'react-select/creatable';
 import { getSelectStyle, StyledLabel } from './ReactSelectStyles';
 
@@ -11,15 +10,7 @@ export type Props = {
 	zIndexMenu?: number;
 } & CreatableProps;
 
-const CreatableSelect: React.FC<Props> = ({
-	inputId,
-	label,
-	options,
-	value,
-	error,
-	createLabel = 'Voeg toe',
-	...props
-}) => {
+const CreatableSelect: FC<Props> = ({ inputId, label, options, value, error, createLabel = 'Voeg toe', ...props }) => {
 	return (
 		<>
 			{label && <StyledLabel htmlFor={inputId} label={label} />}
@@ -30,6 +21,7 @@ const CreatableSelect: React.FC<Props> = ({
 				openMenuOnFocus
 				formatCreateLabel={(value: string) => `${createLabel} "${value}"`}
 				options={options}
+				menuPlacement="auto"
 				{...props}
 			/>
 		</>

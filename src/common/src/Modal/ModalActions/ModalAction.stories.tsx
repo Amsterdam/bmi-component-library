@@ -1,20 +1,19 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { StoryFn, Meta } from '@storybook/react';
 import { Button, Paragraph } from '@amsterdam/asc-ui';
 import ModalActions from './ModalActions';
 import { generateDisabledControls } from '../../../../utils/storybook';
 
 const disabledControls = generateDisabledControls(['children']);
 
-export default {
+const meta: Meta<typeof ModalActions> = {
 	title: 'common/Modal/ModalActions',
 	component: ModalActions,
 	argTypes: {
 		...disabledControls,
 	},
-} as ComponentMeta<typeof ModalActions>;
+};
 
-const TemplateSingleChild: ComponentStory<typeof ModalActions> = (args) => {
+const TemplateSingleChild: StoryFn<typeof ModalActions> = (args) => {
 	return (
 		<ModalActions {...args}>
 			<ModalActions.Right>
@@ -27,7 +26,7 @@ const TemplateSingleChild: ComponentStory<typeof ModalActions> = (args) => {
 	);
 };
 
-const TemplateSplit: ComponentStory<typeof ModalActions> = (args) => {
+const TemplateSplit: StoryFn<typeof ModalActions> = (args) => {
 	return (
 		<ModalActions {...args}>
 			<ModalActions.Left>
@@ -41,7 +40,7 @@ const TemplateSplit: ComponentStory<typeof ModalActions> = (args) => {
 	);
 };
 
-const TemplateSplitMultiRow: ComponentStory<typeof ModalActions> = (args) => {
+const TemplateSplitMultiRow: StoryFn<typeof ModalActions> = (args) => {
 	return (
 		<ModalActions {...args}>
 			<ModalActions.Right>
@@ -65,3 +64,5 @@ const TemplateSplitMultiRow: ComponentStory<typeof ModalActions> = (args) => {
 export const SingleStyle = TemplateSingleChild.bind({});
 export const SplitStyle = TemplateSplit.bind({});
 export const SplitStyleMulti = TemplateSplitMultiRow.bind({});
+
+export default meta;

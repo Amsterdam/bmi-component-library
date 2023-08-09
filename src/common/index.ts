@@ -16,7 +16,7 @@ export { default as Modal } from './src/Modal/Modal';
 export {
 	default as ConfirmDialog,
 	confirm,
-	IState as IConfirmDialogStoreState,
 	initialState as initialConfirmDialogState,
 } from './src/ConfirmDialog/ConfirmDialog';
+export type { IState as IConfirmDialogStoreState } from './src/ConfirmDialog/ConfirmDialog';
 export { default as DocumentTable } from './src/DocumentTable/DocumentTable';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Children, cloneElement, type ComponentProps, type FC, type ReactNode } from 'react';
 import classNames from 'classnames';
 import { Modal as ASCModal } from '@amsterdam/asc-ui';
 
@@ -9,17 +9,17 @@ import ModalActions, { IModalActions } from './ModalActions/ModalActions';
 
 export type ModalProps = {
 	id: string;
-	children?: React.ReactNode | React.ReactNode[] | any;
+	children?: ReactNode | ReactNode[] | any;
 	closeOnBackdropClick?: boolean;
 	classnames?: string;
 	disablePortal?: boolean;
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-} & React.ComponentProps<typeof ASCModal>;
+} & ComponentProps<typeof ASCModal>;
 
-export interface IModal extends React.FunctionComponent<ModalProps> {
-	TopBar: React.FunctionComponent<ModalTopBarProps>;
-	Content: React.FunctionComponent<ModalContentProps>;
-	Actions: React.FunctionComponent<IModalActions> | any;
+export interface IModal extends FC<ModalProps> {
+	TopBar: FC<ModalTopBarProps>;
+	Content: FC<ModalContentProps>;
+	Actions: FC<IModalActions> | any;
 }
 
 const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disablePortal, open, ...rest }) => {
@@ -31,17 +31,17 @@ const Modal: IModal = ({ id, children, classnames, onClose, size = 'md', disable
 
 	// Pass id prop on to sub-components + hook up callbacks
 	let hasActions = false;
-	let childrenWithProps: React.ReactNode | React.ReactNode[] | null = null;
+	let childrenWithProps: ReactNode | ReactNode[] | null = null;
 
 	if (children) {
-		childrenWithProps = React.Children.map(children, (child) => {
+		childrenWithProps = Children.map(children, (child) => {
 			if (child.type === (<Modal.TopBar />).type) {
-				return React.cloneElement(child, { id, onClose });
+				return cloneElement(child, { id, onClose });
 			}
 			if (child.type === (<Modal.Actions />).type) {
 				hasActions = true;
 			}
-			return React.cloneElement(child, { id });
+			return cloneElement(child, { id });
 		});
 	}
 

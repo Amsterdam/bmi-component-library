@@ -1,4 +1,3 @@
-import React from 'react';
 import DocumentViewer from './DocumentViewer';
 import { act, screen, waitFor } from '@testing-library/react';
 import { render } from '~/tests/helpers/customRender';

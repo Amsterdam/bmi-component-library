@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import CreatableSelect, { Props } from './CreatableSelect';

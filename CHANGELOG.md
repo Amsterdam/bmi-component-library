@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.7](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.6...v2.0.0-alpha.7) (2023-08-08)
+
+## [2.0.0-alpha.6](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2023-08-08)
+
+## [2.0.0-alpha.5](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2023-07-27)
+
+## [2.0.0-alpha.4](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.3...v2.0.0-alpha.4) (2023-07-27)
+
+## [2.0.0-alpha.3](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2023-07-27)
+
+## [2.0.0-alpha.2](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2023-07-25)
+
+## [2.0.0-alpha.1](https://github.com/Amsterdam/bmi-component-library/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2023-07-25)
+
+## [2.0.0-alpha.0](https://github.com/Amsterdam/bmi-component-library/compare/v1.1.6...v2.0.0-alpha.0) (2023-07-20)
+
 ### [1.1.6](https://github.com/Amsterdam/bmi-component-library/compare/v1.1.5...v1.1.6) (2022-12-14)
 
 ### [1.1.5](https://github.com/Amsterdam/bmi-component-library/compare/v1.1.4...v1.1.5) (2022-12-14)

@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import ImageRenderer from './ImageRenderer';
 import PDFRenderer from './PDFRenderer';
 import DownloadRenderer from './DownloadRenderer';
@@ -30,7 +30,7 @@ export enum PDFContentTypes {
 
 type ContentTypes = ImageContentTypes | PDFContentTypes;
 
-const DocumentRenderer: React.FC<Props> = ({ uri, contentType }) => {
+const DocumentRenderer: FC<Props> = ({ uri, contentType }) => {
 	if (contentType in ImageContentTypes) return <ImageRenderer uri={uri} />;
 
 	if (contentType in PDFContentTypes) return <PDFRenderer uri={uri} />;

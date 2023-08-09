@@ -1,0 +1,25 @@
+{
+	"$schema": "http://json.schemastore.org/swcrc",
+	"jsc": {
+		"target": "es5",
+		"parser": {
+			"syntax": "typescript",
+			"tsx": true,
+			"dynamicImport": true,
+			"decorators": true
+		},
+		"transform": {
+			"react": {
+				"throwIfNamespace": true,
+				"development": false,
+				"runtime": "automatic"
+			}
+		}
+	},
+	"module": {
+		"type": "commonjs"
+	},
+	"sourceMaps": true,
+	"exclude": [".__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$"],
+	"minify": true
+}

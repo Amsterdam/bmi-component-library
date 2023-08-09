@@ -1,4 +1,3 @@
-import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';

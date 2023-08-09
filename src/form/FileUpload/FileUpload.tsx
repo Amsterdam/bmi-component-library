@@ -1,4 +1,6 @@
-import React, { HTMLAttributes } from 'react';
+import type { FC, HTMLAttributes } from 'react';
+import { useState } from 'react';
+
 import { DropzoneOptions, FileRejection, useDropzone } from 'react-dropzone';
 
 import {
@@ -6,7 +8,6 @@ import {
 	FileUploadContentStyle,
 	FileUploadPlaceholderStyle,
 	FileUploadSelectFilesButtonStyle,
-	FileUploadContainerStyle,
 } from './FileUploadStyles';
 import { CustomFile, useFileUpload, CustomFileOrRejection } from './hooks';
 
@@ -34,7 +35,7 @@ export type FileUploadProps = {
 	httpMethod?: 'POST' | 'PUT';
 } & HTMLAttributes<HTMLDivElement>;
 
-const FileUpload: React.FC<FileUploadProps> = ({
+const FileUpload: FC<FileUploadProps> = ({
 	getPostUrl,
 	getHeaders,
 	droppingLabel,
@@ -54,7 +55,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 	httpMethod = 'POST',
 	...otherProps
 }) => {
-	const [numberOfDraggedFiles, setNumberOfDraggedFiles] = React.useState(0);
+	const [numberOfDraggedFiles, setNumberOfDraggedFiles] = useState(0);
 	const isTouchScreen = detectIsTouchScreenOnly();
 	const { files, handleOnDrop, handleOnCancel, handleOnFileRemove } = useFileUpload(
 		getPostUrl,
@@ -74,7 +75,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 	});
 
 	return (
-		<FileUploadContainerStyle {...otherProps}>
+		<div {...otherProps}>
 			<FileUploadStyle data-testid="file-upload" {...getRootProps({ isDragActive })}>
 				<input data-testid="file-upload__input" {...getInputProps()} />
 				<FileUploadContentStyle>
@@ -116,7 +117,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 					</>
 				</FileUploadContentStyle>
 			</FileUploadStyle>
-		</FileUploadContainerStyle>
+		</div>
 	);
 };
 

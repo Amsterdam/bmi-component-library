@@ -1,8 +1,8 @@
-import React from 'react';
+import type { FC, ComponentProps } from 'react';
 import { render, screen } from '@testing-library/react';
 import DescriptionList from './DescriptionList';
 
-const list: React.ComponentProps<typeof DescriptionList>['list'] = [
+const list: ComponentProps<typeof DescriptionList>['list'] = [
 	{
 		label: 'Datum',
 		value: '12-03-2021',
@@ -13,7 +13,7 @@ const list: React.ComponentProps<typeof DescriptionList>['list'] = [
 	},
 ];
 
-const DummyReactComponent: React.FC = () => <p>__REACT_COMPONENT__</p>;
+const DummyReactComponent: FC = () => <p>__REACT_COMPONENT__</p>;
 
 describe('<DescriptionList />', () => {
 	it('should render correctly', () => {
@@ -38,12 +38,16 @@ describe('<DescriptionList />', () => {
 	});
 
 	it('should render the correct list items with a React node', () => {
-		const { getByText } = render(<DescriptionList list={[...list, { label: '', value: <DummyReactComponent /> }]} />);
+		const { getByText } = render(
+			<DescriptionList list={[...list, { label: '', value: <DummyReactComponent /> }]} />,
+		);
 		expect(getByText('__REACT_COMPONENT__')).toBeInTheDocument();
 	});
 
 	it('optionally renders a footer with a React node', () => {
-		render(<DescriptionList list={[...list, { label: '', value: <DummyReactComponent /> }]} footer={<>[FOOTER]</>} />);
-		expect(screen.getByTestId('description-footer').textContent).toEqual('[FOOTER]')
+		render(
+			<DescriptionList list={[...list, { label: '', value: <DummyReactComponent /> }]} footer={<>[FOOTER]</>} />,
+		);
+		expect(screen.getByTestId('description-footer').textContent).toEqual('[FOOTER]');
 	});
 });

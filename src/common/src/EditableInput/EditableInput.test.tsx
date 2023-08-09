@@ -1,4 +1,3 @@
-import React from 'react';
 import { cleanup, render, fireEvent } from '~/tests/helpers/customRender';
 import * as isTouchModule from '@amsterdam/asc-ui/lib/utils/hooks/useDetectTouchScreen';
 import EditableInput from './EditableInput';

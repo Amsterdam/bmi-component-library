@@ -1,5 +1,4 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { BehaviorSubject } from 'rxjs';
 import styled from 'styled-components';
 
@@ -30,7 +29,7 @@ const ReactNodeExample = styled.div`
 	}
 
 	dl {
-		background-color: rgba(0, 70, 153, 0.2);
+		background-color: rgba(0 70 153 20%);
 		padding: 8px 32px 8px 8px;
 
 		dt,
@@ -38,76 +37,88 @@ const ReactNodeExample = styled.div`
 			display: table-cell;
 			vertical-align: middle;
 			padding: 0 24px 0 0;
-			color: #000000;
+			color: #000;
 		}
 	}
 `;
 
-storiesOf('Confirm Dialog', module)
-	.add('Default', () => (
-		<>
-			<button onClick={() => confirm(props)}>Verwijder</button>
-			<ConfirmDialog />
-		</>
-	))
-	.add('With Close Button', () => (
-		<>
-			<button onClick={() => confirm(props)}>Verwijder</button>
-			<ConfirmDialog hideCloseButton={false} />
-		</>
-	))
-	.add('Dialog XS', () => (
-		<>
-			<button onClick={() => confirm(props)}>Verwijder</button>
-			<ConfirmDialog size={'xs'} />
-		</>
-	))
-	.add('No Backdrop', () => (
-		<>
-			<button onClick={() => confirm(props)}>Verwijder</button>
-			<ConfirmDialog backdropOpacity={1} />
-		</>
-	))
-	.add('With custom subject', () => (
-		<>
-			<button
-				onClick={() =>
-					confirm(
-						{ ...props, message: 'This message comes from a BehaviorSubject with an isolated state' },
-						customSubject,
-					)
-				}
-			>
-				Verwijder
-			</button>
-			<ConfirmDialog store={customSubject} />
-		</>
-	))
-	.add('With React node as message', () => {
-		return (
-			<>
-				<button
-					onClick={() =>
-						confirm({
-							...props,
-							title: 'Element verwijderen',
-							message: (
-								<ReactNodeExample>
-									<p>Weet u zeker dat u dit element wilt verwijderen?</p>
-									<dl>
-										<dt>111</dt>
-										<dd>Bebording/bewegwijzering (statisch)</dd>
-									</dl>
-								</ReactNodeExample>
-							),
-							textConfirmButton: 'Verwijder',
-							textCancelButton: 'Annuleer',
-						})
-					}
-				>
-					Verwijder
-				</button>
-				<ConfirmDialog hideCloseButton={false} />
-			</>
-		);
-	});
+const meta: Meta<typeof ConfirmDialog> = {
+	title: 'Confirm Dialog',
+};
+
+const TemplateReactNodeMessage: StoryFn<typeof ConfirmDialog> = (args) => (
+	<>
+		<button
+			onClick={() =>
+				confirm({
+					...props,
+					title: 'Element verwijderen',
+					message: (
+						<ReactNodeExample>
+							<p>Weet u zeker dat u dit element wilt verwijderen?</p>
+							<dl>
+								<dt>111</dt>
+								<dd>Bebording/bewegwijzering (statisch)</dd>
+							</dl>
+						</ReactNodeExample>
+					),
+					textConfirmButton: 'Verwijder',
+					textCancelButton: 'Annuleer',
+				})
+			}
+		>
+			Verwijder
+		</button>
+		<ConfirmDialog {...args} />
+	</>
+);
+
+const Template: StoryFn<typeof ConfirmDialog> = (args) => (
+	<>
+		<button onClick={() => confirm(props)}>Verwijder</button>
+		<ConfirmDialog {...args} />
+	</>
+);
+
+const TemplateCustomSubject: StoryFn<typeof ConfirmDialog> = () => (
+	<>
+		<button
+			onClick={() =>
+				confirm(
+					{ ...props, message: 'This message comes from a BehaviorSubject with an isolated state' },
+					customSubject,
+				)
+			}
+		>
+			Verwijder
+		</button>
+		<ConfirmDialog store={customSubject} />
+	</>
+);
+
+export const Default = Template.bind({});
+
+export const WithCloseButton = Template.bind({});
+WithCloseButton.args = {
+	hideCloseButton: false,
+};
+
+export const DialogXs = Template.bind({});
+DialogXs.args = {
+	size: 'xs',
+};
+DialogXs.storyName = 'Dialog XS';
+
+export const NoBackdrop = Template.bind({});
+NoBackdrop.args = {
+	backdropOpacity: 1,
+};
+
+export const WithCustomSubject = TemplateCustomSubject.bind({});
+WithCustomSubject.storyName = 'With custom subject';
+
+export const WithReactNodeAsMessage = TemplateReactNodeMessage.bind({});
+
+WithReactNodeAsMessage.storyName = 'With React node as message';
+
+export default meta;

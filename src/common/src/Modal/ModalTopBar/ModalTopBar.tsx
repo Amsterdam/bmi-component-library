@@ -1,16 +1,16 @@
-import React from 'react';
+import type { SyntheticEvent, FC, ReactNode } from 'react';
 import { Button, Icon, Divider } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
 import { ModalTopBarStyle, ModalTopBarTruncatedStyle } from './ModalTopBarStyles';
 
 export interface ModalTopBarProps {
-	children?: React.ReactNode | React.ReactNode[];
+	children?: ReactNode | ReactNode[];
 	hideDivider?: boolean;
 	hideCloseButton?: boolean;
-	onCloseButton?: (evt: React.SyntheticEvent) => void;
+	onCloseButton?: (evt: SyntheticEvent) => void;
 }
 
-const ModalTopBar: React.FC<ModalTopBarProps> = ({
+const ModalTopBar: FC<ModalTopBarProps> = ({
 	hideCloseButton = false,
 	hideDivider = true,
 	onCloseButton,
@@ -25,7 +25,7 @@ const ModalTopBar: React.FC<ModalTopBarProps> = ({
 				type="button"
 				data-testid="modal-close-button"
 				size={26}
-				onClick={(evt: React.SyntheticEvent) => {
+				onClick={(evt: SyntheticEvent) => {
 					if (typeof onCloseButton !== 'undefined') {
 						onCloseButton(evt);
 					}

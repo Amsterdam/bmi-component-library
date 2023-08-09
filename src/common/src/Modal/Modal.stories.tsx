@@ -1,23 +1,23 @@
-import React from 'react';
+import { useState } from 'react';
 import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import Modal from './Modal';
 import { ModalBlockStyle } from './ModalStyles';
 import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils/storybook';
 
 const disabledControls = generateDisabledControls(['blurredNodeSelector', 'element', 'children', 'blurredNode']);
 
-export default {
+const meta: Meta<typeof Modal> = {
 	title: 'common/Modal',
 	component: Modal,
 	argTypes: {
 		backdropOpacity: { control: { type: 'range', min: 0, max: 1, step: 0.1 } },
 		...disabledControls,
 	},
-} as ComponentMeta<typeof Modal>;
+};
 
-const Template: ComponentStory<typeof Modal> = (args) => {
-	const [isModalVisible, setModalVisibility] = React.useState<boolean>(true);
+const Template: StoryFn<typeof Modal> = (args) => {
+	const [isModalVisible, setModalVisibility] = useState<boolean>(true);
 
 	return (
 		<>
@@ -70,3 +70,5 @@ export const Default = Template.bind({});
 Default.argTypes = {
 	open: DISABLED_CONTROL,
 };
+
+export default meta;
