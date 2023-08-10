@@ -1,6 +1,6 @@
 import 'jest-styled-components';
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 
 require('jest-fetch-mock').enableMocks();
 import { FetchMock } from 'jest-fetch-mock';

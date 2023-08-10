@@ -29,7 +29,10 @@
 		"declaration": true,
 		"declarationMap": true
 	},
-	"files": ["src/index.ts"],
-	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+	"files": [
+		"src/index.ts",
+		"node_modules/jest-fetch-mock/types/index.d.ts"
+	],
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }
