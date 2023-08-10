@@ -20,5 +20,6 @@
 		"type": "es6"
 	},
 	"sourceMaps": true,
+	"exclude": [".__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$", ".*\\.test.tsx$"],
 	"minify": true
 }

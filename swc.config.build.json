@@ -20,6 +20,6 @@
 		"type": "commonjs"
 	},
 	"sourceMaps": true,
-	"exclude": [".__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$"],
+	"exclude": [".__mocks__\\*.ts$", ".*\\.stories.tsx", ".*\\.test.ts$", ".*\\.test.tsx$"],
 	"minify": true
 }
