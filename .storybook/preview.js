@@ -26,3 +26,4 @@ export const decorators = [
 		</MUIThemeProvider>
 	),
 ];
+export const tags = ['autodocs'];
