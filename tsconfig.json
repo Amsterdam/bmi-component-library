@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"types": ["jest", "node", "@testing-library/jest-dom"],
+		"types": ["jest", "node"],
 		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
@@ -33,6 +33,6 @@
 		"src/index.ts",
 		"node_modules/jest-fetch-mock/types/index.d.ts"
 	],
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/jest-setup.ts"],
 	"exclude": ["build/**/*", "node_modules"]
 }
