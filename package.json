@@ -117,7 +117,7 @@
 		"react-dom": "^18.0.0",
 		"react-dropzone": "^14.2.3",
 		"react-loading-skeleton": "^3.3.1",
-		"react-select": "5.7.4",
+		"react-select": "5.8.0",
 		"styled-components": "^5.3.11"
 	},
 	"peerDependencies": {
