@@ -92,7 +92,7 @@
 		"postcss": "^8.4.26",
 		"postcss-scss": "^4.0.6",
 		"postcss-styled-syntax": "^0.4.0",
-		"prettier": "^3.0.0",
+		"prettier": "^3.3.2",
 		"prop-types": "^15.8.1",
 		"react-select-event": "^5.5.1",
 		"standard-version": "^9.5.0",
