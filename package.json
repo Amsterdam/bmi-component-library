@@ -74,10 +74,7 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "chokidar": "^3.5.3",
     "classnames": "^2.5.1",
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^1.0.1",
     "eslint": "^8.44.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-storybook": "^0.8.0",
@@ -95,7 +92,6 @@
     "prettier": "^3.3.2",
     "prop-types": "^15.8.1",
     "react-select-event": "^5.5.1",
-    "standard-version": "^9.5.0",
     "storybook": "^8.1.11",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "36.0.1",
@@ -131,10 +127,5 @@
       "prettier --write --parser \"typescript\" --loglevel error",
       "git add"
     ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
