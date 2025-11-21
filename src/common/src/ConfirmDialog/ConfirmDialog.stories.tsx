@@ -29,7 +29,7 @@ const ReactNodeExample = styled.div`
 	}
 
 	dl {
-		background-color: rgba(0 70 153 20%);
+		background-color: rgb(0 70 153 / 20%);
 		padding: 8px 32px 8px 8px;
 
 		dt,

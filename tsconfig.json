@@ -10,14 +10,13 @@
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "commonjs",
-		"moduleResolution": "node",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"isolatedModules": false,
 		"noEmit": false,
 		"jsx": "react-jsx",
 		"noImplicitAny": true,
-		"typeRoots": ["node_modules/@types", "/types"],
 		"baseUrl": ".",
 		"paths": {
 			"~/tests/*": ["tests/*"],
@@ -29,10 +28,7 @@
 		"declaration": true,
 		"declarationMap": true
 	},
-	"files": [
-		"src/index.ts",
-		"node_modules/jest-fetch-mock/types/index.d.ts"
-	],
+	"files": ["src/index.ts", "node_modules/jest-fetch-mock/types/index.d.ts"],
 	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }

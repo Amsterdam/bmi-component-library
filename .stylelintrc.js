@@ -5,5 +5,6 @@ module.exports = {
 	rules: {
 		'selector-class-pattern': null,
 		'media-query-no-invalid': null,
+		'nesting-selector-no-missing-scoping-root': null,
 	},
 };

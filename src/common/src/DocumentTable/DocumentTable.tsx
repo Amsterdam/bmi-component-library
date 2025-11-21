@@ -57,7 +57,7 @@ export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowMod
 				});
 				return include;
 				// eslint-disable-next-line no-mixed-spaces-and-tabs
-		  });
+			});
 }
 
 const DocumentTable: FC<Props> = ({
@@ -214,7 +214,7 @@ const DocumentTable: FC<Props> = ({
 	}, []);
 
 	const skeletonRows = useMemo(() => {
-		const skeletonRow = tableColumns.reduce((acc, col, idx) => {
+		const skeletonRow = tableColumns.reduce((acc, col, _idx) => {
 			acc[col.field] = '';
 			return acc;
 		}, {} as GridRowModel);
@@ -243,7 +243,7 @@ const DocumentTable: FC<Props> = ({
 							id: 0,
 						},
 						// eslint-disable-next-line no-mixed-spaces-and-tabs
-				  ]),
+					]),
 			...paginate(filteredRows, pageSize, currentPage),
 		]);
 
@@ -269,7 +269,6 @@ const DocumentTable: FC<Props> = ({
 				disableRowSelectionOnClick
 				rowHeight={42}
 				columnHeaderHeight={42}
-				columnBuffer={tableColumns.length}
 				getRowHeight={() => 'auto'}
 			/>
 			{!loading && (

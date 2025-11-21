@@ -62,9 +62,9 @@ describe('useFileUpload', () => {
 
 		await waitFor(() => {
 			expect(getPostUrlMock).toHaveBeenCalledTimes(3);
-			expect(getPostUrlMock).nthCalledWith(1, files[0]);
-			expect(getPostUrlMock).nthCalledWith(2, files[1]);
-			expect(getPostUrlMock).nthCalledWith(3, files[2]);
+			expect(getPostUrlMock).toHaveBeenNthCalledWith(1, files[0]);
+			expect(getPostUrlMock).toHaveBeenNthCalledWith(2, files[1]);
+			expect(getPostUrlMock).toHaveBeenNthCalledWith(3, files[2]);
 		});
 	});
 });

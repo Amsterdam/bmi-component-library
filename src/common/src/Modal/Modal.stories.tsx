@@ -3,9 +3,16 @@ import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
 import { StoryFn, Meta } from '@storybook/react';
 import Modal from './Modal';
 import { ModalBlockStyle } from './ModalStyles';
-import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils/storybook';
+import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils';
+import { InputType } from 'storybook/internal/csf';
 
-const disabledControls = generateDisabledControls(['blurredNodeSelector', 'element', 'children', 'blurredNode']);
+const disabledControls = generateDisabledControls([
+	'blurredNodeSelector',
+	'element',
+	'children',
+	'blurredNode',
+	'open',
+]);
 
 const meta: Meta<typeof Modal> = {
 	title: 'common/Modal',
@@ -68,7 +75,7 @@ const Template: StoryFn<typeof Modal> = (args) => {
 
 export const Default = Template.bind({});
 Default.argTypes = {
-	open: DISABLED_CONTROL,
+	open: DISABLED_CONTROL as InputType,
 };
 
 export default meta;
