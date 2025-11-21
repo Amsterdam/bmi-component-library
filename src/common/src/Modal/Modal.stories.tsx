@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
-import { StoryFn, Meta } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react-webpack5';
 import Modal from './Modal';
 import { ModalBlockStyle } from './ModalStyles';
 import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils';

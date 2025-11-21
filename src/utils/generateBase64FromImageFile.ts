@@ -36,7 +36,7 @@ export const generateBase64FromImageFile = (file: File) =>
 			};
 			try {
 				reader.readAsDataURL(file);
-			} catch (e) {
+			} catch {
 				return resolve({ result: '', readerCleanup });
 			}
 		}

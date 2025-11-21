@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { FC } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GridColDef, GridRowModel } from '@mui/x-data-grid';
 import { Button } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
 import Skeleton from 'react-loading-skeleton';
-import { StyledPagination, StyledDataGrid } from './DocumentTableStyle';
+import { StyledDataGrid, StyledPagination } from './DocumentTableStyle';
 import ColumnFilter from './ColumnFilter';
 
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -56,7 +56,7 @@ export function applyFilters(rows: GridRowModel[], filters: Filters): GridRowMod
 					return false;
 				});
 				return include;
-				// eslint-disable-next-line no-mixed-spaces-and-tabs
+				 
 			});
 }
 
@@ -242,7 +242,7 @@ const DocumentTable: FC<Props> = ({
 						{
 							id: 0,
 						},
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
+						 
 					]),
 			...paginate(filteredRows, pageSize, currentPage),
 		]);
