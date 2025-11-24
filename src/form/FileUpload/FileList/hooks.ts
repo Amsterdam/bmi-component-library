@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import type { MutableRefObject } from 'react';
+import type { RefObject } from 'react';
 
 import { generateBase64FromImageFile } from '../../../utils/';
 import type { CustomFileOrRejection } from '../hooks';
 
-export const useBase64PreviewValue = (file: CustomFileOrRejection, mountedRef: MutableRefObject<boolean>) => {
+export const useBase64PreviewValue = (file: CustomFileOrRejection, mountedRef: RefObject<boolean>) => {
 	const [preview, setPreview] = useState<string | undefined>(file.preview);
 
 	useEffect(() => {

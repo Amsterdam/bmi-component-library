@@ -25,7 +25,7 @@ const getRow = (el: HTMLElement) => el.closest('.MuiDataGrid-row');
  */
 describe('<DocumentTable />', () => {
 	const mockOnDownload = jest.fn();
-	const mockOnRemove = jest.fn().mockImplementation((rowId) => {
+	const mockOnRemove = jest.fn().mockImplementation((_rowId) => {
 		return Promise.resolve(true);
 	});
 	let container: HTMLElement;
@@ -48,19 +48,19 @@ describe('<DocumentTable />', () => {
 		test('Default columns', () => {
 			const header1 = getByText(container, 'Bestandsnaam') as HTMLDivElement;
 			expect(header1.className).toContain('MuiDataGrid-columnHeaderTitle');
-			expect(index(header1.closest('div.MuiDataGrid-columnHeader'))).toBe(0);
+			expect(index(header1.closest('div.MuiDataGrid-columnHeader'))).toBe(1);
 
 			const header2 = getByText(container, 'Documentomschrijving') as HTMLDivElement;
 			expect(header2.className).toContain('MuiDataGrid-columnHeaderTitle');
-			expect(index(header2.closest('div.MuiDataGrid-columnHeader'))).toBe(1);
+			expect(index(header2.closest('div.MuiDataGrid-columnHeader'))).toBe(2);
 
 			const header3 = getByText(container, 'Documenttype') as HTMLDivElement;
 			expect(header3.className).toContain('MuiDataGrid-columnHeaderTitle');
-			expect(index(header3.closest('div.MuiDataGrid-columnHeader'))).toBe(2);
+			expect(index(header3.closest('div.MuiDataGrid-columnHeader'))).toBe(3);
 
 			const header4 = getByText(container, 'Jaar') as HTMLDivElement;
 			expect(header4.className).toContain('MuiDataGrid-columnHeaderTitle');
-			expect(index(header4.closest('div.MuiDataGrid-columnHeader'))).toBe(3);
+			expect(index(header4.closest('div.MuiDataGrid-columnHeader'))).toBe(4);
 		});
 
 		test.each(documents.slice(0, 10).map((doc) => [doc.filename, doc.id]))(

@@ -42,7 +42,7 @@ describe('<ModalTopBar />', () => {
 		const { container } = render(<ModalTopBar hideDivider>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).toBe('transparent');
+		expect(style.backgroundColor).toBe('rgba(0, 0, 0, 0)');
 
 		const header = getByTestId(container, 'modal-top-bar');
 		expect(header).toHaveStyleRule('margin-bottom', '0');
@@ -52,7 +52,7 @@ describe('<ModalTopBar />', () => {
 		const { container } = render(<ModalTopBar>Foo</ModalTopBar>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).toBe('transparent');
+		expect(style.backgroundColor).toBe('rgba(0, 0, 0, 0)');
 	});
 
 	test('Clicking on close button', () => {

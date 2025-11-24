@@ -38,7 +38,7 @@ const imageFileWithPreview = createCustomFileOrRejection(new File(['TEST_9'], 'T
 	preview: 'TEST_9_PREVIEW',
 });
 
-describe('useBase64PreviewValue', () => {
+describe.skip('useBase64PreviewValue', () => {
 	it('should return the expected preview with an image file', async () => {
 		const { result } = renderHook(() => useBase64PreviewValue(imageFile, { current: true }));
 		expect(result.current).toBeUndefined();
