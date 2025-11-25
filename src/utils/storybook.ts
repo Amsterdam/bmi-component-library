@@ -1,4 +1,4 @@
-import { InputType } from 'storybook/internal/csf';
+import type { InputType } from '@storybook/types';
 
 export const DISABLED_CONTROL: InputType = { description: 'Disabled control for this story', control: false };
 

@@ -1,6 +1,6 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 import DocumentTable from './DocumentTable';
-import { documents } from '../DocumentTable/__stubs__/documents';
+import { documents } from './__stubs__/documents';
 
 const meta: Meta<typeof DocumentTable> = {
 	title: 'common/DocumentTable',

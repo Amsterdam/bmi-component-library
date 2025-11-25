@@ -1,9 +1,9 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 
 import { files, filesWithRejection } from './__stubs__/files';
 
 import FileList from './FileList';
-import { generateDisabledControls } from '../../../utils/storybook';
+import { generateDisabledControls } from '../../../utils';
 import type { CustomFileOrRejection } from '../hooks';
 
 const disabledControls = generateDisabledControls(['files']);

@@ -1,6 +1,6 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 import ModalTopBar from './ModalTopBar';
-import { generateDisabledControls } from '../../../../utils/storybook';
+import { generateDisabledControls } from '../../../../utils';
 
 const disabledControls = generateDisabledControls(['children']);
 

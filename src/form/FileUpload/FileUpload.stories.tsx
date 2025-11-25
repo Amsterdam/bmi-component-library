@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 
 import { files } from './FileList/__stubs__/files';
 import FileUpload from './FileUpload';

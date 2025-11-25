@@ -10,5 +10,9 @@ const config: StorybookConfig = {
 	docs: {
 		autodocs: true,
 	},
+	webpackFinal: (config) => {
+		config.performance = { hints: false };
+		return config;
+	},
 };
 export default config;

@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 import EditableInput from './EditableInput';
 
 const meta: Meta<typeof EditableInput> = {

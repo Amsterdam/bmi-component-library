@@ -1,7 +1,7 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Button, Paragraph } from '@amsterdam/asc-ui';
 import ModalActions from './ModalActions';
-import { generateDisabledControls } from '../../../../utils/storybook';
+import { generateDisabledControls } from '../../../../utils';
 
 const disabledControls = generateDisabledControls(['children']);
 

@@ -1,8 +1,8 @@
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react';
 import { BehaviorSubject } from 'rxjs';
 import styled from 'styled-components';
 
-import ConfirmDialog, { confirm, initialState, IState } from './ConfirmDialog';
+import ConfirmDialog, { confirm, initialState, IState, Props } from './ConfirmDialog';
 
 const props: IState = {
 	title: 'Waarschuwing',
@@ -46,7 +46,7 @@ const meta: Meta<typeof ConfirmDialog> = {
 	title: 'Confirm Dialog',
 };
 
-const TemplateReactNodeMessage: StoryFn<typeof ConfirmDialog> = (args) => (
+const TemplateReactNodeMessage: StoryFn<typeof ConfirmDialog> = (args: Props) => (
 	<>
 		<button
 			onClick={() =>
@@ -73,7 +73,7 @@ const TemplateReactNodeMessage: StoryFn<typeof ConfirmDialog> = (args) => (
 	</>
 );
 
-const Template: StoryFn<typeof ConfirmDialog> = (args) => (
+const Template: StoryFn<typeof ConfirmDialog> = (args: Props) => (
 	<>
 		<button onClick={() => confirm(props)}>Verwijder</button>
 		<ConfirmDialog {...args} />

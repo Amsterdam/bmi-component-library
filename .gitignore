@@ -75,6 +75,7 @@ fabric.properties
 
 junit.xml
 node_modules/
+storybook-static
 
 dist/
 reports/
