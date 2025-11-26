@@ -15,14 +15,14 @@ jobs:
             matrix:
                 job: [ lint, 'ci:test', 'build:storybook' ]
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v6
 
             -   name: Read .nvmrc
                 run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
                 id: nvm
 
             -   name: Use Node.js ${{ steps.nvm.outputs.NVMRC }}
-                uses: actions/setup-node@v2
+                uses: actions/setup-node@v6
                 with:
                     node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
