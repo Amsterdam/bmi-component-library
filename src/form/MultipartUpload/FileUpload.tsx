@@ -1,21 +1,29 @@
 import { useUpload } from './hooks';
 
-type FileUploadProps = {};
+type FileUploadProps = {
+	name: string;
+	limit: number;
+};
 
-const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>, limit: number) => {
 	// Early return, if target or files is null or length is 0
 	if (!event.target || !event.target.files) return;
 
 	// Initiate upload
-	// @TODO move limit into arguments
 	useUpload(event.target.files[0], {
-		limit: 2048 * 1024, // 2MByte
+		limit: limit * 1024, // 2MByte
 	});
 };
 const FileUpload = (props: FileUploadProps) => {
 	return (
 		<div>
-			<input type="file" onChange={handleChange} />
+			<input
+				id={props.name}
+				data-testid={props.name}
+				name={props.name}
+				type="file"
+				onChange={(event) => handleChange(event, props.limit)}
+			/>
 		</div>
 	);
 };

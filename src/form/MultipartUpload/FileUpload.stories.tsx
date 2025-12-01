@@ -1,10 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { FileUpload } from './FileUpload';
+import { FileUpload, FileUploadProps } from './FileUpload';
 
-const meta: Meta<typeof FileUpload> = {
+const meta: Meta<FileUploadProps> = {
 	title: 'form/MultipartUpload',
 	component: FileUpload,
-	args: {},
+	args: {
+		name: 'single',
+		limit: 2048,
+	},
 };
 
 const Template: StoryFn<typeof FileUpload> = (args) => <FileUpload {...args} />;
