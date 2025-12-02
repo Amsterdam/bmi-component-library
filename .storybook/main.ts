@@ -1,4 +1,7 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import type { Configuration as WebpackConfiguration } from 'webpack';
+
 const config: StorybookConfig = {
 	stories: ['../src/**/*.stories.@(ts|tsx)'],
 	staticDirs: [{ from: '../src/assets', to: '/assets' }],
@@ -10,8 +13,14 @@ const config: StorybookConfig = {
 	docs: {
 		autodocs: true,
 	},
-	webpackFinal: (config) => {
+	webpackFinal: (config: typeof WebpackConfiguration) => {
 		config.performance = { hints: false };
+		config.resolve.plugins = [
+			...(config.resolve.plugins || []),
+			new TsconfigPathsPlugin({
+				extensions: config.resolve.extensions,
+			}),
+		];
 		return config;
 	},
 };

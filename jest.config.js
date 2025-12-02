@@ -71,6 +71,7 @@ module.exports = {
 		'~/(.*)$': '<rootDir>/src/$1',
 		'^.+\\.(css|scss)$': '<rootDir>/tests/jest-cssstub.js',
 		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/tests/jest-imagestub.js',
+		'^@bmi-component-library/(.*)$': '<rootDir>/src/$1',
 	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
