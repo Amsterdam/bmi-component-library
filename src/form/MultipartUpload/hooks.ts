@@ -1,61 +1,37 @@
-import { md5 } from 'hash-wasm';
+import { PayloadIterator } from '@bmi-component-library/form/MultipartUpload/PayloadIterator';
+import { getHash } from '@bmi-component-library/utils/getHash';
 
 type UploadOptions = {
 	limit?: number;
 };
 
-/**
- * Calculate amount of parts to upload for the given filesize
- *
- * @param size
- * @param limit
- */
-const calculateParts = (size: number, limit: number) => Math.ceil(size / limit);
-
-/**
- * Get blob part of the file
- *
- * @param file
- * @param size
- * @param part
- */
-const getBlob = (file: File, size: number, part: number): Blob => {
-	const start = part === 0 ? 0 : size * part;
-	if (start > file.size) throw new Error('Exceeding filesize boundaries');
-
-	return file.slice(start, start + size);
-};
-
-/**
- * Calculate the md5 hash of the given blob data
- *
- * @param blob
- */
-const getHash = async (blob: Blob) => {
-	const buffer = await blob.arrayBuffer();
-
-	return md5(new Uint8Array(buffer));
-};
-
 const useUpload = async (file: File, options?: UploadOptions) => {
 	console.log(file);
 
+	// @todo no limits route
 	if (!options?.limit) {
+		console.log('There is no upload limit defined');
+		return;
+	}
+
+	// @todo fits in 1 chunk route
+	if (options.limit >= file.size) {
+		console.log('The size of the file is within limits');
 		return;
 	}
 
 	// Calculate parts
-	const parts = !options?.limit ? 1 : calculateParts(file.size, options.limit);
-	console.log(`size: ${file.size}, limit: ${options?.limit}, parts: ${parts}`);
+	const iterator = new PayloadIterator(file, options.limit);
+	console.log(`size: ${file.size}, limit: ${options?.limit}, parts: ${iterator.getParts()}`);
 
 	let total = 0;
-	for (let i = 0; i < parts; i++) {
-		const blob = getBlob(file, options.limit, i);
-		const hash = await getHash(blob);
-		total += blob.size;
-		console.log(`blob: ${i}, size: ${blob.size}, MD5: ${hash}`);
-	}
-	console.log(`Chunks total: ${total}, File: ${file.size}`);
+	await iterator.forEach((result) => {
+		total += result.blob.size;
+		console.log(`blob: ${result.index}, size: ${result.blob.size}, MD5: ${result.hash}`);
+	});
+
+	const hash = await getHash(file);
+	console.log(`Chunks total: ${total}, File: ${file.size}, Hash: ${hash}`);
 };
 
-export { useUpload, calculateParts };
+export { useUpload };
