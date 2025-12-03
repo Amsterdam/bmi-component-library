@@ -1,4 +1,4 @@
-import { PayloadIterator } from '@bmi-component-library/form/MultipartUpload/PayloadIterator';
+import { usePayloadIterator } from '@bmi-component-library/form/MultipartUpload/PayloadIterator';
 import { getHash } from '@bmi-component-library/utils/getHash';
 
 type UploadOptions = {
@@ -21,11 +21,13 @@ const useUpload = async (file: File, options?: UploadOptions) => {
 	}
 
 	// Calculate parts
-	const iterator = new PayloadIterator(file, options.limit);
-	console.log(`size: ${file.size}, limit: ${options?.limit}, parts: ${iterator.getParts()}`);
+	const { forEach } = usePayloadIterator(file, options.limit);
+	console.log(`size: ${file.size}, limit: ${options?.limit}`);
 
 	let total = 0;
-	await iterator.forEach((result) => {
+	await forEach((result) => {
+		if (result === null) return;
+
 		total += result.blob.size;
 		console.log(`blob: ${result.index}, size: ${result.blob.size}, MD5: ${result.hash}`);
 	});

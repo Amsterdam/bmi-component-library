@@ -1,4 +1,5 @@
 import { getHash } from '@bmi-component-library//utils/getHash';
+import { IteratorInterface, IteratorItem, useIterator } from '@bmi-component-library/form/MultipartUpload/Iterator';
 
 type PayloadResult = {
 	blob: Blob;
@@ -6,82 +7,50 @@ type PayloadResult = {
 	index: number;
 };
 
-type PayloadIteratorItem = {
-	value: PayloadResult | null;
-	done: boolean;
-};
+type PayloadIterator = IteratorInterface<PayloadResult> & { getBlob: (index: number) => Blob };
+
+const calculateParts = (size: number, limit: number) => Math.ceil(size / limit);
 
 /**
- * Calculate amount of parts to upload for the given filesize
- *
- * @param size
- * @param limit
+ * Returns a chunk iterator for a file, splitting it into parts of the given size.
+ * Each chunk includes the blob, MD5 hash, and its index.
  */
-const calculateParts = (size: number, limit: number): number => {
-	return Math.ceil(size / limit);
-};
+const usePayloadIterator = (file: File, limit: number): PayloadIterator => {
+	/**
+	 * Returns the next payload chunk to upload, including its Blob, MD5 hash, and index.
+	 *
+	 * If all chunks have been processed, returns { value: null, done: true }.
+	 */
+	const iterator = useIterator<PayloadResult>(
+		async (index: number, setIndex): Promise<IteratorItem<PayloadResult>> => {
+			if (index >= parts) {
+				return { value: null, done: true };
+			}
 
-class PayloadIterator {
-	private file: File;
-	private currentIndex: number;
-	private limit: number = 0;
-	private parts: number = 0;
+			const blob = getBlob(index);
+			const hash = await getHash(blob);
 
-	constructor(file: File, limit: number) {
-		this.file = file;
-		this.currentIndex = 0;
-		this.setLimit(limit);
-	}
+			const result: PayloadResult = { blob, hash, index };
 
-	public async next(): Promise<PayloadIteratorItem> {
-		if (this.currentIndex >= this.parts) {
-			return { value: null, done: true };
-		}
-
-		const blob = this.getBlob();
-		const hash = await getHash(blob);
-
-		// Increase index position
-		this.currentIndex++;
-
-		return { value: { blob, hash, index: this.currentIndex }, done: false };
-	}
-
-	public setLimit(limit: number) {
-		this.limit = limit;
-
-		// Define the amount of parts we need to upload this file
-		this.parts = calculateParts(this.file.size, limit);
-	}
-
-	public getParts(): number {
-		return this.parts;
-	}
+			// Increase index position
+			setIndex(index + 1);
+			return { value: result, done: false };
+		},
+	);
 
 	/**
-	 * Get blob part of the file
+	 * Returns the current chunk of the file as a Blob, based on the current index and limit.
 	 */
-	getBlob = (): Blob => {
-		const start = this.currentIndex === 0 ? 0 : this.limit * this.currentIndex;
+	const getBlob = (index: number): Blob => {
+		const start = index === 0 ? 0 : limit * index;
 
-		return this.file.slice(start, start + this.limit);
+		return file.slice(start, start + limit);
 	};
 
-	public reset() {
-		this.currentIndex = 0;
-	}
+	// Calculate the parts needed to complete upload the selected file
+	const parts = calculateParts(file.size, limit);
 
-	public async forEach(callback: (value: PayloadResult) => void) {
-		const result = await this.next();
+	return { ...iterator, getBlob };
+};
 
-		// Exit when end is reached
-		if (result.done || result.value === null) {
-			return;
-		}
-
-		await callback(result.value);
-		await this.forEach(callback);
-	}
-}
-
-export { PayloadIterator, PayloadResult, calculateParts };
+export { usePayloadIterator, PayloadResult, calculateParts };
