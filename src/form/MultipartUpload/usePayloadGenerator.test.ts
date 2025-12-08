@@ -67,7 +67,7 @@ describe('PayloadGenerator', () => {
 			const { forEach } = usePayloadGenerator(new File([new Uint8Array(5000)], 'small.bin'), 1000);
 
 			const indexList: number[] = [];
-			await forEach(({ index }) => indexList.push(index));
+			await forEach(({ progress }) => indexList.push(progress.current));
 
 			expect(indexList).toEqual([0, 1, 2, 3, 4]);
 		});

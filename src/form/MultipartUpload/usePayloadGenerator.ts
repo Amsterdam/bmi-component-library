@@ -1,9 +1,13 @@
 import { getHash } from '@bmi-component-library/utils/getHash';
 
 type PayloadResult = {
+	fileName: string;
 	blob: Blob;
 	hash: string;
-	index: number;
+	progress: {
+		current: number;
+		total: number;
+	};
 };
 
 /**
@@ -31,7 +35,7 @@ const usePayloadGenerator = (file: File, limit: number) => {
 			const blob = getBlob(index);
 			const hash = await getHash(blob);
 
-			yield { blob, hash, index };
+			yield { fileName: file.name, blob, hash, progress: { current: index + 1, total: parts } };
 		}
 	}
 
@@ -49,4 +53,4 @@ const usePayloadGenerator = (file: File, limit: number) => {
 	return { forEach, getBlob, [Symbol.asyncIterator]: blobs };
 };
 
-export { usePayloadGenerator };
+export { usePayloadGenerator, PayloadResult };
