@@ -69,7 +69,7 @@ describe('PayloadGenerator', () => {
 			const indexList: number[] = [];
 			await forEach(({ progress }) => indexList.push(progress.current));
 
-			expect(indexList).toEqual([0, 1, 2, 3, 4]);
+			expect(indexList).toEqual([1, 2, 3, 4, 5]);
 		});
 
 		it('should return zero blobs for an empty file', async () => {
