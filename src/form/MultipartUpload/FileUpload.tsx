@@ -1,5 +1,5 @@
 import { useUpload } from './hooks';
-import { UploadProgressStyle } from '@bmi-component-library/form/MultipartUpload/FileUploadStyles';
+import { UploadProgressStyle } from '@amsterdam/bmi-component-library/form/MultipartUpload/FileUploadStyles';
 import { useState } from 'react';
 
 type FileUploadProps = {

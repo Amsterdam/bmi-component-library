@@ -39,7 +39,7 @@
 		"release": "standard-version"
 	},
 	"repository": {
-		"type": "git",
+    "type": "git",
 		"url": "git@github.com:Amsterdam/bmi-component-library.git"
 	},
 	"keywords": [

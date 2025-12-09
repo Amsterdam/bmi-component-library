@@ -1,4 +1,4 @@
-import { getHash } from '@bmi-component-library/utils/getHash';
+import { getHash } from '@amsterdam/bmi-component-library/utils/getHash';
 
 type PayloadResult = {
 	fileName: string;

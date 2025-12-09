@@ -1,6 +1,6 @@
-jest.mock('@bmi-component-library/utils/getHash');
-import { getHash } from '@bmi-component-library/utils/getHash';
-import { usePayloadGenerator } from '@bmi-component-library/form/MultipartUpload/usePayloadGenerator';
+jest.mock('@amsterdam/bmi-component-library/utils/getHash');
+import { getHash } from '@amsterdam/bmi-component-library/utils/getHash';
+import { usePayloadGenerator } from '@amsterdam/bmi-component-library/form/MultipartUpload/usePayloadGenerator';
 
 describe('PayloadGenerator', () => {
 	beforeEach(() => jest.clearAllMocks());
