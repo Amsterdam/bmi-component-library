@@ -1,10 +1,10 @@
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FileList, { FileListProps } from './FileList';
-import { CustomFile } from '../hooks';
+import { CustomFile } from '@form/FileUpload/hooks';
 import { filesWithRejection } from './__stubs__/files';
 
-jest.mock('../../../utils/isBase64UrlImage');
+jest.mock('@utils/isBase64UrlImage');
 
 const defaultProps: FileListProps = {
 	// Combined list of accepted and rejected file records

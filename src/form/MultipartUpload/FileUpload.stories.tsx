@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { FileUpload, FileUploadProps } from './FileUpload';
+import { FileUpload, FileUploadProps } from '@form/MultipartUpload/FileUpload';
 
 const meta: Meta<FileUploadProps> = {
 	title: 'form/MultipartUpload',

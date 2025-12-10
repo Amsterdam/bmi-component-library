@@ -1,1 +1,1 @@
-export { options } from '../../Select/__stubs__/options';
+export { options } from '@form/Select/__stubs__/options';

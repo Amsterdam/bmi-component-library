@@ -1,4 +1,4 @@
-import { Files, CustomFile } from '../../hooks';
+import { Files, CustomFile } from '@form/FileUpload/hooks';
 import { FileError, FileRejection } from 'react-dropzone';
 
 export const files = [

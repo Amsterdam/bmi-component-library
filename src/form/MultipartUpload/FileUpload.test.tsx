@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { FileUpload } from './FileUpload';
+import { FileUpload } from '@form/MultipartUpload/FileUpload';
 
 describe('<FileUpload />', () => {
 	it('should render correctly', () => {

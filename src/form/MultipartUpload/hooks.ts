@@ -1,7 +1,4 @@
-import {
-	PayloadResult,
-	usePayloadGenerator,
-} from '@amsterdam/bmi-component-library/form/MultipartUpload/usePayloadGenerator';
+import { PayloadResult, usePayloadGenerator } from '@form/MultipartUpload/usePayloadGenerator';
 import axios, { AxiosProgressEvent, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 type UploadOptions = {

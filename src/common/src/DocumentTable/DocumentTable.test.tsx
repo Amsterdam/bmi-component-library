@@ -2,8 +2,8 @@ import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { render, getByText, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import DocumentTable, { applyFilters, paginate, Props } from './DocumentTable';
-import muiTheme from '../../../theme/material-ui-theme';
-import theme from '../../../theme/theme';
+import muiTheme from '@theme/material-ui-theme';
+import theme from '@theme/theme';
 import { documents } from './__stubs__/documents';
 
 function index(el: HTMLDivElement | null) {

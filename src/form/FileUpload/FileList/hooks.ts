@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { RefObject } from 'react';
 
-import { generateBase64FromImageFile } from '../../../utils/';
-import type { CustomFileOrRejection } from '../hooks';
+import { generateBase64FromImageFile } from '@utils/generateBase64FromImageFile';
+import type { CustomFileOrRejection } from '@form/FileUpload/hooks';
 
 export const useBase64PreviewValue = (file: CustomFileOrRejection, mountedRef: RefObject<boolean>) => {
 	const [preview, setPreview] = useState<string | undefined>(file.preview);

@@ -1,10 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import ModalTopBar from './ModalTopBar';
-import { generateDisabledControls } from '../../../../utils';
+import type { ModalTopBarProps } from './ModalTopBar';
+import { generateDisabledControls } from '@utils/storybook';
 
-const disabledControls = generateDisabledControls(['children']);
+const disabledControls = generateDisabledControls<ModalTopBarProps>(['children']);
 
-const meta: Meta<typeof ModalTopBar> = {
+const meta: Meta<ModalTopBarProps> = {
 	title: 'common/Modal/ModalTopBar',
 	component: ModalTopBar,
 	argTypes: {
@@ -12,7 +13,7 @@ const meta: Meta<typeof ModalTopBar> = {
 	},
 };
 
-const Template: StoryFn<typeof ModalTopBar> = (args) => {
+const Template: StoryFn<ModalTopBarProps> = (args) => {
 	return <ModalTopBar {...args}>Afgerond - Assetnaam</ModalTopBar>;
 };
 

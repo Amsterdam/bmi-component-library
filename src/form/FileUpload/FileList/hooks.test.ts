@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { useBase64PreviewValue } from './hooks';
-import { CustomFileOrRejection } from '../hooks';
+import { CustomFileOrRejection } from '@form/FileUpload/hooks';
 
-jest.mock('../../../utils/generateBase64FromImageFile');
+jest.mock('@utils/generateBase64FromImageFile');
 
 const createCustomFileOrRejection = (
 	file: File,
