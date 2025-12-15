@@ -2,8 +2,8 @@ const { defineConfig } = require('eslint/config');
 
 const globals = require('globals');
 const tsParser = require('@typescript-eslint/parser');
-const react = require('eslint-plugin-react');
-const typescriptEslint = require('@typescript-eslint/eslint-plugin');
+const reactPlugin = require('eslint-plugin-react');
+const tsEslintPlugin = require('@typescript-eslint/eslint-plugin');
 const js = require('@eslint/js');
 
 const { FlatCompat } = require('@eslint/eslintrc');
@@ -41,8 +41,8 @@ module.exports = defineConfig([
 		),
 
 		plugins: {
-			react,
-			'@typescript-eslint': typescriptEslint,
+			reactPlugin,
+			'@typescript-eslint': tsEslintPlugin,
 		},
 
 		rules: {
@@ -51,13 +51,13 @@ module.exports = defineConfig([
 			'no-unused-vars': 'off',
 
 			'@typescript-eslint/no-unused-vars': [
-				2,
+				'error',
 				{
 					args: 'none',
 				},
 			],
 
-			'react/prop-types': 0,
+			'react/prop-types': 'off',
 			'react/jsx-boolean-value': 2,
 			'react/no-array-index-key': 2,
 		},
