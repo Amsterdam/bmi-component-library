@@ -24,7 +24,7 @@ jobs:
                     fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
 
             -   name: Read .nvmrc
-                run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+                run: echo "NVMRC=$(cat .nvmrc)" >> $GITHUB_OUTPUT
                 id: nvm
 
             -   name: Use Node.js ${{ steps.nvm.outputs.NVMRC }}
