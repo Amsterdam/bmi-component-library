@@ -42,7 +42,9 @@ jobs:
 
             -   name: Prepare stable release
                 if: github.ref == 'refs/heads/main'
-                run: npm run release -- --release-as ${{ github.event.inputs.version_bump_type }} --no-verify
+                run: |
+                    npm version ${{ github.event.inputs.version_bump_type }} --no-git-tag-version
+                    npm run release -- release-pr
 
             -   name: Status
                 run: |

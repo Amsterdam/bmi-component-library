@@ -38,7 +38,7 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "commit": "cz",
-    "release": "standard-version"
+    "release": "release-please"
   },
   "repository": {
     "type": "git",
