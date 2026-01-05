@@ -1,17 +1,26 @@
-import type { Meta, StoryFn } from '@storybook/react';
-import { FileUpload, FileUploadProps } from '@form/MultipartUpload/FileUpload';
+import {FileUpload, FileUploadProps} from '@form/MultipartUpload/FileUpload';
 
-const meta: Meta<FileUploadProps> = {
-	title: 'form/MultipartUpload',
-	component: FileUpload,
-	args: {
-		name: 'single',
-		limit: 2048,
+export default { component: FileUpload }
+
+const options: Partial<FileUploadProps> = {
+	name: 'single',
+	limit: 2048,
+	dropZone: {
+		text: 'Sleep het bestand in dit vlak. U kunt ook ',
+		button: {
+			text: 'een bestand of foto selecteren of een foto maken'
+		}
 	},
-};
+}
 
-const Template: StoryFn<typeof FileUpload> = (args) => <FileUpload {...args} />;
+export const Default = {
+	args: options
+}
 
-export const Default = Template.bind({});
-
-export default meta;
+export const Limit4Mb: {args: Partial<FileUploadProps>} = {
+	args: {
+		...options,
+		name: 'single-4mb',
+		limit: 4096
+	}
+}
