@@ -65,11 +65,7 @@ const FileUpload = (props: FileUploadProps) => {
 		<>
 			<div {...getRootProps()}>
 				<FileSelectorZone>
-					<input {...getInputProps({
-						onClick: event => console.log(event),
-						role: 'button',
-						'aria-label': 'drag and drop area',
-					})} />
+					<input {...getInputProps({id: props.name})} data-testid={props.name} />
 					{props.dropZone?.text ?? "Drag 'n' drop some file here or "}
 					<button>{props.dropZone?.button?.text ?? 'click to select files'}</button>
 				</FileSelectorZone>
