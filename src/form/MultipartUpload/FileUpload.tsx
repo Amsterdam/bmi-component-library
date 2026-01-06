@@ -1,4 +1,10 @@
-import {FileSelectorZone, UploadProgressStyle} from '@form/MultipartUpload/FileUploadStyles';
+import {
+	AbortButton,
+	FileItem,
+	FileSelectorZone,
+	ProgressBar,
+	ProgressFill
+} from '@form/MultipartUpload/FileUploadStyles';
 import {useUpload} from '@form/MultipartUpload/hooks';
 import {useCallback, useState} from 'react';
 import {useDropzone} from "react-dropzone";
@@ -19,7 +25,7 @@ let abortCallback: (() => void) | null = null;
 const FileUpload = (props: FileUploadProps) => {
 	const [progress, setProgress] = useState(0);
 	const [isUploading, setUploading] = useState(false);
-
+	const [fileName, setFileName] = useState('');
 	/**
 	 * Handle file changed event
 	 *
@@ -40,6 +46,7 @@ const FileUpload = (props: FileUploadProps) => {
 			limit: props.limit * 1024, // 2MByte
 		});
 
+		setFileName(acceptedFiles[0].name);
 		setUploading(true);
 
 		// Set abortCallback
@@ -65,17 +72,25 @@ const FileUpload = (props: FileUploadProps) => {
 		<>
 			<div {...getRootProps()}>
 				<FileSelectorZone>
-					<input {...getInputProps({id: props.name})} data-testid={props.name} />
+					<input {...getInputProps({id: props.name})} data-testid={props.name}/>
 					{props.dropZone?.text ?? "Drag 'n' drop some file here or "}
 					<button>{props.dropZone?.button?.text ?? 'click to select files'}</button>
 				</FileSelectorZone>
 			</div>
-			<UploadProgressStyle style={{width: progress + '%'}}>
-				{progress}%{' '}
-				<button id="abortBtn" onClick={handleAbort} style={{display: isUploading ? 'inline-block' : 'none'}}>
+			<FileItem style={{display: isUploading ? 'flex' : 'none'}}>
+				{fileName}
+				<ProgressBar>
+					<ProgressFill style={{width: progress + '%'}}>
+						  {progress}%{' '}
+					</ProgressFill>
+				</ProgressBar>
+				<AbortButton
+					id="abortBtn"
+					onClick={handleAbort}
+				>
 					Abort
-				</button>
-			</UploadProgressStyle>
+				</AbortButton>
+			</FileItem>
 		</>
 	);
 };
