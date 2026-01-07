@@ -50,7 +50,7 @@ jobs:
                     npm run release -- release-pr --prerelease --prerelease-tag ${{ github.event.inputs.tag }}
 
             -   name: Push release commit + tag
-                uses: ad-m/github-push-action@v1
+                uses: ad-m/github-push-action@master
                 with:
                     tags: true
                     github_token: ${{ secrets.GITHUB_TOKEN }}

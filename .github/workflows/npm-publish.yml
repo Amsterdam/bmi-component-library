@@ -44,7 +44,7 @@ jobs:
                 if: github.ref == 'refs/heads/main'
                 run: |
                     npm version ${{ github.event.inputs.version_bump_type }} --no-git-tag-version
-                    npm run release -- release-pr
+                    npm run release -- release-pr --repo-url=${{ github.repository }}
 
             -   name: Status
                 run: |
