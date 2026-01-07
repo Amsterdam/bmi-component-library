@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import DocumentTable from '../DocumentTable';
+import DocumentTable from '@common/DocumentTable/DocumentTable';
 
 export const documents: ComponentProps<typeof DocumentTable>['rows'] = [
 	{

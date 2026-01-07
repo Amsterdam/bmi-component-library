@@ -1,7 +1,7 @@
 import type { ComponentProps, FC } from 'react';
 import ReactSelectAsyncSelect from 'react-select/async';
 import { getSelectStyle } from './AsyncSelectStyles';
-import { DropdownIndicator } from '../Select/Select';
+import { DropdownIndicator } from '@form/Select/Select';
 
 export type Props = {
 	error?: boolean;

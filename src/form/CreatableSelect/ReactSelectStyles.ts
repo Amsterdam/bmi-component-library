@@ -5,7 +5,7 @@
 
 import styled from 'styled-components';
 import { Label } from '@amsterdam/asc-ui';
-export { getSelectStyle } from '../Select/SelectStyles';
+export { getSelectStyle } from '@form/Select/SelectStyles';
 
 export const StyledLabel = styled(Label)`
 	font-weight: 700;

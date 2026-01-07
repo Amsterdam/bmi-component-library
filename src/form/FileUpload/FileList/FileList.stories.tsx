@@ -1,14 +1,16 @@
-import type { StoryFn, Meta } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
+import type { ComponentProps } from 'react';
 
 import { files, filesWithRejection } from './__stubs__/files';
 
 import FileList from './FileList';
-import { generateDisabledControls } from '../../../utils/storybook';
-import type { CustomFileOrRejection } from '../hooks';
+import { generateDisabledControls } from '@utils/storybook';
+import type { CustomFileOrRejection } from '@form/FileUpload/hooks';
 
-const disabledControls = generateDisabledControls(['files']);
+type FileListProps = ComponentProps<typeof FileList>;
+const disabledControls = generateDisabledControls<FileListProps>(['files']);
 
-const meta: Meta<typeof FileList> = {
+const meta: Meta<FileListProps> = {
 	title: 'common/FileList',
 	component: FileList,
 	args: {
@@ -24,7 +26,7 @@ const meta: Meta<typeof FileList> = {
 	},
 };
 
-const Template: StoryFn<typeof FileList> = (props) => <FileList {...props} />;
+const Template: StoryFn<FileListProps> = (props) => <FileList {...props} />;
 
 export const Default = Template.bind({});
 

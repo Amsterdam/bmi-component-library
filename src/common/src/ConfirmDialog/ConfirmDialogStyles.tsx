@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { themeSpacing, Button } from '@amsterdam/asc-ui';
-import { ModalBlockStyle } from '../Modal/ModalStyles';
+import { ModalBlockStyle } from '@common/Modal/ModalStyles';
 
 import type { ReactNode } from 'react';
 

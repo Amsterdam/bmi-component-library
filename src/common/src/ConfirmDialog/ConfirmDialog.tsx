@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import type { ReactNode, FC } from 'react';
 
 import { BehaviorSubject } from 'rxjs';
-import Modal from '../Modal/Modal';
+import Modal from '@common/Modal/Modal';
 import { ButtonStyles, MessageStyle } from './ConfirmDialogStyles';
 
 export interface IState {

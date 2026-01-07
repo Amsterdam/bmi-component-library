@@ -1,11 +1,9 @@
-import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import muiTheme from '../src/theme/material-ui-theme';
 import theme from '../src/theme/theme';
 
 export const parameters = {
-	actions: { argTypesRegex: '^on[A-Z].*' },
 	controls: {
 		expanded: true,
 		matchers: {

@@ -1,8 +1,14 @@
-export const DISABLED_CONTROL = { description: 'Disabled control for this story', control: false };
+import type {Args, ArgTypes, InputType} from '@storybook/types';
 
-export function generateDisabledControls(propertyNames: string[] = []): { [key: string]: typeof DISABLED_CONTROL } {
-	return propertyNames.reduce((acc: Record<string, typeof DISABLED_CONTROL>, propertyName: string) => {
-		acc[propertyName] = DISABLED_CONTROL;
+export const DISABLED_CONTROL: InputType = {
+	description: 'Disabled control for this story',
+	control: false,
+};
+
+export const generateDisabledControls = <T extends Args>(
+	propertyNames: Array<keyof T & string>,
+): Partial<ArgTypes<T>> =>
+	propertyNames.reduce<Partial<ArgTypes<T>>>((acc, key) => {
+		acc[key] = DISABLED_CONTROL as ArgTypes<T>[keyof T];
 		return acc;
 	}, {});
-}

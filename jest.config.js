@@ -71,6 +71,10 @@ module.exports = {
 		'~/(.*)$': '<rootDir>/src/$1',
 		'^.+\\.(css|scss)$': '<rootDir>/tests/jest-cssstub.js',
 		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/tests/jest-imagestub.js',
+		'^@common/(.*)$': ['<rootDir>/src/common/src/$1'],
+		'^@form/(.*)$': ['<rootDir>/src/form/$1'],
+		'^@theme/(.*)$': ['<rootDir>/src/theme/$1'],
+		'^@utils/(.*)$': ['<rootDir>/src/utils/$1'],
 	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

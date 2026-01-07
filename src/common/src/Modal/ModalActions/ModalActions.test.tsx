@@ -13,20 +13,20 @@ describe('<ModalActions />', () => {
 		const { container } = render(<ModalActions hideDivider={false}>Foo</ModalActions>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).not.toBe('transparent');
+		expect(style.backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
 	});
 
 	it('Divider should be transparent, when hideDivider is true', () => {
 		const { container } = render(<ModalActions hideDivider>Foo</ModalActions>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).toBe('transparent');
+		expect(style.backgroundColor).toBe('rgba(0, 0, 0, 0)');
 	});
 
 	it('Divider should be transparent as default', () => {
 		const { container } = render(<ModalActions>Foo</ModalActions>);
 		const divider = container.querySelector('hr');
 		const style = window.getComputedStyle(divider as Element);
-		expect(style.backgroundColor).toBe('transparent');
+		expect(style.backgroundColor).toBe('rgba(0, 0, 0, 0)');
 	});
 });

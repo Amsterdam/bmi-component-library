@@ -17,7 +17,7 @@ import {
 } from './FileListStyles';
 
 import { useBase64PreviewValue } from './hooks';
-import type { CustomFile, CustomFileOrRejection, Files } from '../hooks';
+import type { CustomFile, CustomFileOrRejection, Files } from '@form/FileUpload/hooks';
 
 export type FileListProps = {
 	files: Files;

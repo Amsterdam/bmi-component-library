@@ -6,7 +6,7 @@ import { Modal, ThemeProvider } from '@amsterdam/asc-ui';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { mockComponentProps } from '~/tests/helpers';
 
-import theme from '../../../theme/theme';
+import theme from '@theme/theme';
 
 describe('<ConfirmDialog />', () => {
 	const onClick = jest.fn();

@@ -14,17 +14,17 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
-                uses: actions/checkout@v2
+                uses: actions/checkout@v6
                 with:
                     persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
                     fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
             -   name: Read .nvmrc
-                run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+                run: echo "NVMRC=$(cat .nvmrc)" >> $GITHUB_OUTPUT
                 id: nvm
 
             -   name: Use Node.js ${{ steps.nvm.outputs.NVMRC }}
-                uses: actions/setup-node@v2
+                uses: actions/setup-node@v6
                 with:
                     node-version: "${{ steps.nvm.outputs.NVMRC }}"
                     registry-url: 'https://registry.npmjs.org'
@@ -42,7 +42,9 @@ jobs:
 
             -   name: Prepare stable release
                 if: github.ref == 'refs/heads/main'
-                run: npm run release -- --release-as ${{ github.event.inputs.version_bump_type }} --no-verify
+                run: |
+                    npm version ${{ github.event.inputs.version_bump_type }} --no-git-tag-version
+                    npm run release -- release-pr
 
             -   name: Status
                 run: |
@@ -51,14 +53,14 @@ jobs:
                     git show --summary
 
             -   name: Push release commit + tag
-                uses: ad-m/github-push-action@master
+                uses: ad-m/github-push-action@v1
                 with:
                     tags: true
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     branch: ${{ github.ref }}
 
             -   name: Publish production release to NPM
-                uses: JS-DevTools/npm-publish@v1
+                uses: JS-DevTools/npm-publish@v4
                 with:
                     token: ${{ secrets.NPM_TOKEN }}
                     access: public

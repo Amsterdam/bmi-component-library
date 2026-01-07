@@ -7,5 +7,10 @@
 		"outDir": "./es",
 		"rootDir": "./src"
 	},
-	"exclude": ["tests/**/*", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__mocks__/**/*"]
+	"exclude": [
+		"tests/**/*",
+		"src/**/*.test.ts",
+		"src/**/*.test.tsx",
+		"src/**/__mocks__/**/*"
+	]
 }

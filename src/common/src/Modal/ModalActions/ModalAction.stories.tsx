@@ -1,11 +1,11 @@
-import type { StoryFn, Meta } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Button, Paragraph } from '@amsterdam/asc-ui';
-import ModalActions from './ModalActions';
-import { generateDisabledControls } from '../../../../utils/storybook';
+import ModalActions, {ModalActionsProps} from './ModalActions';
+import {generateDisabledControls} from "@utils/storybook";
 
-const disabledControls = generateDisabledControls(['children']);
+const disabledControls = generateDisabledControls<ModalActionsProps>(['children']);
 
-const meta: Meta<typeof ModalActions> = {
+const meta: Meta<ModalActionsProps> = {
 	title: 'common/Modal/ModalActions',
 	component: ModalActions,
 	argTypes: {
@@ -13,7 +13,7 @@ const meta: Meta<typeof ModalActions> = {
 	},
 };
 
-const TemplateSingleChild: StoryFn<typeof ModalActions> = (args) => {
+const TemplateSingleChild: StoryFn<ModalActionsProps> = (args) => {
 	return (
 		<ModalActions {...args}>
 			<ModalActions.Right>

@@ -1,4 +1,4 @@
-import { options as options_ } from '../../Select/__stubs__/options';
+import { options as options_ } from '@form/Select/__stubs__/options';
 
 export const options = options_;
 

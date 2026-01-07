@@ -90,7 +90,7 @@ describe('<FileUpload />', () => {
 
 			await user.upload(input, file);
 
-			expect(xhrMock.open).toBeCalledWith(httpMethod, 'api/endpoint', true);
+			expect(xhrMock.open).toHaveBeenCalledWith(httpMethod, 'api/endpoint', true);
 			expect(input.files[0]).toStrictEqual(file);
 			expect(input.files.item(0)).toStrictEqual(file);
 			expect(input.files).toHaveLength(1);
@@ -108,7 +108,7 @@ describe('<FileUpload />', () => {
 
 		await user.upload(input, files);
 
-		expect(xhrMock.open).toBeCalledWith('POST', 'api/endpoint', true);
+		expect(xhrMock.open).toHaveBeenCalledWith('POST', 'api/endpoint', true);
 		expect(input.files).toHaveLength(2);
 		expect(input.files[0]).toStrictEqual(files[0]);
 		expect(input.files[1]).toStrictEqual(files[1]);

@@ -1,22 +1,24 @@
-import { useState } from 'react';
-import { Button, Divider, Heading, Paragraph } from '@amsterdam/asc-ui';
-import { StoryFn, Meta } from '@storybook/react';
-import Modal from './Modal';
-import { ModalBlockStyle } from './ModalStyles';
-import { generateDisabledControls, DISABLED_CONTROL } from '../../../utils/storybook';
+import {useState} from 'react';
+import {Button, Divider, Heading, Paragraph} from '@amsterdam/asc-ui';
+import type {Meta, StoryFn} from '@storybook/react';
+import Modal, {ModalProps} from './Modal';
+import {ModalBlockStyle} from './ModalStyles';
+import {DISABLED_CONTROL, generateDisabledControls} from '@utils/storybook';
 
-const disabledControls = generateDisabledControls(['blurredNodeSelector', 'element', 'children', 'blurredNode']);
+const disabledControls = generateDisabledControls<ModalProps>([
+	'children',
+]);
 
-const meta: Meta<typeof Modal> = {
+const meta: Meta<ModalProps> = {
 	title: 'common/Modal',
 	component: Modal,
 	argTypes: {
 		backdropOpacity: { control: { type: 'range', min: 0, max: 1, step: 0.1 } },
-		...disabledControls,
-	},
+		...disabledControls
+	}
 };
 
-const Template: StoryFn<typeof Modal> = (args) => {
+const Template: StoryFn<ModalProps> = (args) => {
 	const [isModalVisible, setModalVisibility] = useState<boolean>(true);
 
 	return (
@@ -41,7 +43,7 @@ const Template: StoryFn<typeof Modal> = (args) => {
 							horen het graag.
 						</Paragraph>
 					</ModalBlockStyle>
-					<Divider gutter />
+					<Divider gutter/>
 					<ModalBlockStyle>
 						<Heading forwardedAs="h4">Vraag of een klacht?</Heading>
 						<Paragraph>
