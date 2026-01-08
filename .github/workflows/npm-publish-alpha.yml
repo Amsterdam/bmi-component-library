@@ -47,7 +47,7 @@ jobs:
             -   name: Prepare alpha release
                 run: |
                     npm version ${{ github.event.inputs.version_bump_type }} --no-git-tag-version
-                    npm run release -- release-pr --prerelease --prerelease-tag ${{ github.event.inputs.tag }}
+                    npm run release -- release-pr --prerelease --prerelease-tag ${{ github.event.inputs.tag }} --repo-url=${{ github.repository }}
 
             -   name: Push release commit + tag
                 uses: ad-m/github-push-action@master
